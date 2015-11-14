@@ -6,8 +6,8 @@
     <description>Thoughts on music, technology, policy, startups, and anything else.
 </description>
     <atom:link href="http://rabid.audio/blog/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sat, 14 Nov 2015 00:47:56 -0500</pubDate>
-    <lastBuildDate>Sat, 14 Nov 2015 00:47:56 -0500</lastBuildDate>
+    <pubDate>Sat, 14 Nov 2015 03:10:04 -0500</pubDate>
+    <lastBuildDate>Sat, 14 Nov 2015 03:10:04 -0500</lastBuildDate>
     <generator>Jekyll v3.0.0</generator>
     
       <item>
@@ -16,7 +16,7 @@
         <description>&lt;p&gt;I’ve tried out a few bass guitar distortion effects pedals in the past (as well as a few designed for guitar), but none of them really sounded
 great. Mostly they killed all the punchiness of the bass so that it just sounded flat and empty. 
 Then one day a few years ago, I plugged my &lt;a href=&quot;http://www.musiciansfriend.com/bass/esp-ltd-b-50-bass-guitar&quot;&gt;(budget, nothing special) electric bass&lt;/a&gt;
-and was suprised to find this smooth, crunchy, synth-like distortion sound coming out, with no other effects plugged in. It took me a while to
+and was surprised to find this smooth, crunchy, synth-like distortion sound coming out, with no other effects plugged in. It took me a while to
 figure out, but eventually I learned what happened was the 9V battery for the active pickups had gotten pretty old, and was in a sweet spot
 to deliver just enough voltage for the amplification circuit to still function but clip ever so slightly. I replaced the battery, but I wanted
 a way to get that sound on demand.&lt;/p&gt;
@@ -27,21 +27,21 @@ a way to get that sound on demand.&lt;/p&gt;
 pretty solution, so I removed it and forgot about it. But today I was reminiscing, and decided I could probably whip up a better solution.&lt;/p&gt;
 
 &lt;p&gt;One issue is the sweet spot for the voltage is in a narrow range around 1.5V. Too low, and the active circuitry shuts off, and two high and it
-functons like normal. Also, as the battery voltage sags, the knob position for the spot moves. I found it very hard to dial in just the right
+functions like normal. Also, as the battery voltage sags, the knob position for the spot moves. I found it very hard to dial in just the right
 amount with a potentiometer tracking the voltage between 0 and 9V. The ideal control would be a choice between 9V and a sweep from around .5V
 to 2.5V. One option was to use a regulator such as the &lt;a href=&quot;http://www.ti.com/lit/ds/symlink/lm317.pdf&quot;&gt;LM317&lt;/a&gt; to regulate the voltage down to 2.5V
 and then sweep 0 to 2.5V.  Unfortunately I didn’t have a &lt;a href=&quot;http://www.musiciansfriend.com/potentiometers-knobs-for-fretted-instruments/dimarzio-500k-push-pull-pot&quot;&gt;switch pot&lt;/a&gt; on hand, and a regulator is a constant current drain, which would probably eat the battery faster.&lt;/p&gt;
 
 &lt;p&gt;The ideal solution would be a sweep which swept the sweet spot range slowly and then quickly accelerated to the 9V range at one end.
-I ended up acomplishing this using diodes. A very simplifed model of an ideal diode is that it has zero resistance if the voltage is above a certain
+I ended up accomplishing this using diodes. A very simplified model of an ideal diode is that it has zero resistance if the voltage is above a certain
 threshold and infinite below. For most diodes, this is around 0.6V. We can exploit this feature to get a nonlinear response out of a linear
 potentiometer. I played around in a circuit simulator for a while, and eventually came up with this.&lt;/p&gt;
 
 &lt;div class=&quot;img-wrapper full center&quot;&gt;&lt;a class=&quot;img-description-link&quot;&gt;&lt;img src=&quot;/blog/assets/images/bass/graph.png&quot; alt=&quot;&quot; license=&quot;&quot; /&gt;&lt;/a&gt;&lt;/div&gt;
 
 &lt;p&gt;The x axis is wiper position (0 to 100%). The upper graph is the output voltage, and the lower graph is the current sunk (that is, the current that)
-wouldn’t go out to the rest of the cirucit. Notice the gradual voltage increase through most of the turn, and then the quick jump to 9V at the end.
-At first, I had a cirucit with 4 diodes (thinking that 4*0.6 = 2.4V would be important to set my critical range), but after some experimentation,
+wouldn’t go out to the rest of the circuit. Notice the gradual voltage increase through most of the turn, and then the quick jump to 9V at the end.
+At first, I had a circuit with 4 diodes (thinking that 4*0.6 = 2.4V would be important to set my critical range), but after some experimentation,
 this seemed to work better. Below is an image of the earlier circuit, but the mounting I did for the final version was essentially the same, just with different components.&lt;/p&gt;
 
 &lt;div class=&quot;img-wrapper large center&quot;&gt;&lt;a class=&quot;img-description-link&quot;&gt;&lt;img src=&quot;/blog/assets/images/bass/underneath.jpg&quot; alt=&quot;So cute!&quot; license=&quot;&quot; /&gt;&lt;div class=&quot;img-description&quot;&gt;&lt;div&gt;So cute!&lt;/div&gt;&lt;/div&gt;&lt;/a&gt;&lt;/div&gt;
