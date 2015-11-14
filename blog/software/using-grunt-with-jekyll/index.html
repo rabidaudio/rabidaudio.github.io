@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width initial-scale=1">
+
+  <title>RabidAudio | Using Grunt with Jekyll</title>
+  <meta name="description" content="As you can see, I finally have my new blog going. I was originally going to write a Jekyll-like CMS with Node and Backbone,but I finally gave in and used the...">
+
+  <link rel="stylesheet" href="/blog/css/main.css">
+  <link rel="canonical" href="http://rabid.audio/blog/software/using-grunt-with-jekyll/">
+  <link rel="alternate" type="application/atom+xml" title="RabidAudio" href="http://rabid.audio/blog/feed.xml" />
+  
+  <style>
+  
+    
+    /* No suitable color found:  */
+  
+  body {
+    background-color: #ffffff;
+  }
+  pre, code {
+    background-color: #ffffff;
+    color: #000000;
+  }
+  @media screen and (max-width: 600px) {
+    pre, code {
+      background-color: #ffffff;
+    }
+  }
+  h1, h2, h3, h4, h5 {
+    color: #000000;
+  }
+  a {
+    color: #424242;
+  }
+  a:visited {
+    color: #000000;
+  }
+  blockquote {
+    border-left: 4px solid #828282;
+  }
+  .site-header {
+    border-top: 10px solid #424242;
+    background-color: #fdfdfd;
+  }
+  .headshot {
+    border: 2px solid #424242;
+  }
+
+  .bio {
+    background-color: #ffffff;
+  }
+  a.read-more {
+    color: #424242;
+  }
+
+  .post-list-container {
+    background-color: #828282;
+  }
+  
+    
+    /* purple */
+    .post-container--music {
+      background-color: #97397B;
+    }
+  
+    
+    /* green */
+    .post-container--policy {
+      background-color: #72BA76;
+    }
+  
+    
+    /* red */
+    .post-container--hardware {
+      background-color: #DF2D4F;
+    }
+  
+    
+    /* blue */
+    .post-container--software {
+      background-color: #367FA3;
+    }
+  
+
+  .post-tag { background-color: #626262 }
+  
+    
+      .tag--genre { background-color: #630948}
+    
+      .tag--last-fm { background-color: #630948}
+    
+      .tag--music { background-color: #630948}
+    
+      .tag--new-music { background-color: #630948}
+    
+      .tag--riaa { background-color: #630948}
+    
+      .tag--car-audio { background-color: #630948}
+    
+      .tag--bass { background-color: #630948}
+    
+      .tag--effects { background-color: #630948}
+    
+  
+    
+      .tag--free-software-movement { background-color: #16831C}
+    
+      .tag--piracy { background-color: #16831C}
+    
+      .tag--soapbox { background-color: #16831C}
+    
+      .tag--tech-policy { background-color: #16831C}
+    
+  
+    
+      .tag--computing { background-color: #0D5578}
+    
+      .tag--dsp { background-color: #0D5578}
+    
+      .tag--android { background-color: #0D5578}
+    
+      .tag--networking { background-color: #0D5578}
+    
+      .tag--server { background-color: #0D5578}
+    
+      .tag--software { background-color: #0D5578}
+    
+      .tag--web-development { background-color: #0D5578}
+    
+      .tag--windows { background-color: #0D5578}
+    
+      .tag--javascript { background-color: #0D5578}
+    
+      .tag--java { background-color: #0D5578}
+    
+  
+    
+      .tag--arduino { background-color: #BF0E30}
+    
+      .tag--bluetooth { background-color: #BF0E30}
+    
+      .tag--electronics { background-color: #BF0E30}
+    
+      .tag--wearables { background-color: #BF0E30}
+    
+      .tag--analog { background-color: #BF0E30}
+    
+      .tag--555-timer { background-color: #BF0E30}
+    
+      .tag--jfet { background-color: #BF0E30}
+    
+      .tag--triac { background-color: #BF0E30}
+    
+  
+</style>
+
+  <script type="text/javascript" src="/blog/assets/js/output.js"></script>
+  
+
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-15955870-10', 'auto');
+  ga('require', 'displayfeatures');
+  ga('send', 'pageview');
+  </script>
+</head>
+
+
+  <body>
+
+    <header class="site-header" id="top">
+  <div class="wrapper">
+    <a class="site-title" href="/blog/">
+      <h1>RabidAudio</h1>
+    </a>
+    <nav class="site-nav">
+      <a href="#" class="menu-icon"><i class="fa fa-list-ul"></i></a>
+      <div class="trigger">
+        
+          
+          <a class="page-link" href="/blog/all" name="all-posts">All Posts</a>
+          
+        
+      </div>
+    </nav>
+  </div>
+</header>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        
+<div class="post">
+  <header class="post-header">
+    <h1 class="post-title">Using Grunt with Jekyll</h1>
+    <h3 class="post-subtitle">An introduction to Node's task runner</h3>
+    <div class="post-meta">
+      
+      <div>
+        <a href="/blog/software/using-grunt-with-jekyll/" class="date" date="Fri, 19 Dec 2014 01:16:00 -0500" title="Dec 19, 2014,  1:16">
+          Dec 19, 2014
+        </a>
+         by <a href="mailto:cjk@rabidaudio.com" class="author">Charles Julian Knight</a>
+        
+      </div>
+    </div>
+      <div class="bio-float-right">
+        <div class="bio">
+  <div>
+    <span class="name">Charles Julian Knight</span>
+  </div>
+  <div class="holder">
+    
+    <div class="leftcol">
+      <div class="headshot">
+        <img src="http://www.gravatar.com/avatar/e3f99640d60577f72086b54087423593.png?s=200" alt="Charles Julian Knight">
+      </div>
+    </div>
+    
+
+    <div class="rightcol">
+      <span class="minibio"></span>
+      <div class="info">
+        <ul class="social-media-list">
+  <!-- http://fortawesome.github.io/Font-Awesome/cheatsheet/ -->
+
+  
+  
+  
+    <!-- no op -->
+  
+
+  
+  
+  
+    <!-- no op -->
+  
+
+  
+  
+  
+    <li>
+      <span class="icon  icon--school"><i class="fa fa-graduation-cap"></i></span>
+      <span class="school" title="school">Georgia Tech</span>
+    </li>
+  
+
+  
+  
+  
+    <li>
+      <a href="https://twitter.com/charlesjuliank" target="_blank">
+        <span class="icon icon--twitter"><i class="fa fa-twitter"></i></span>
+        <span class="username" title="twitter">charlesjuliank</span>
+      </a>
+    </li>
+  
+
+  
+  
+  
+    <li>
+      <a href="mailto:cjk@rabidaudio.com">
+        <span class="icon icon--email"><i class="fa fa-envelope"></i></span>
+        <span class="email" title="email">cjk@rabidaudio.com</span>
+      </a>
+    </li>
+  
+
+  
+  
+  
+    <li>
+      <a href="https://github.com/rabidaudio" target="_blank">
+        <span class="icon  icon--github"><i class="fa fa-github"></i></span>
+        <span class="username" title="github">rabidaudio</span>
+      </a>
+    </li>
+  
+
+  
+  
+  
+    <li>
+      <a href="https://last.fm/user/rabidaudio" target="_blank">
+        <span class="icon  icon--lastfm"><i class="fa fa-lastfm-square"></i></span>
+        <span class="lastfm" title="lastfm">rabidaudio</span>
+      </a>
+    </li>
+  
+
+  
+  
+  
+    <li>
+      <a href="https://plus.google.com/+CharlesJulianKnight" target="_blank">
+        <span class="icon  icon--google"><i class="fa fa-google-plus"></i></span>
+        <span class="google" title="google">CharlesJulianKnight</span>
+      </a>
+    </li>
+  
+
+  
+  
+  
+    <li>
+      <a href="http://https://www.linkedin.com/in/charlesjulianknight" target="_blank">
+        <span class="icon  icon--linkedin"><i class="fa fa-linkedin"></i></span>
+        <span class="linkedin" title="linkedin">LinkedIn Profile</span>
+      </a>
+    </li>
+  
+
+
+
+</ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+//TODO find a css-friendly solution
+// $('.leftcol').css('max-width', Math.min.apply(null, $('.rightcol').map(function(){ return $(this).height() }) )+'px');
+
+var $bio = $('.post-header .bio');
+$('.author').click(function(e){
+  e.stopPropagation();
+  e.preventDefault();
+  $bio.slideToggle();
+});
+$(document).click(function(e){
+  if($bio.is(':visible') && !$(e.target).closest('.bio').length){
+    e.stopPropagation();
+    e.preventDefault();
+    $bio.slideToggle();
+  }
+});
+</script>
+      </div>
+  </header>
+
+  <article class="post-content">
+    <p>As you can see, I finally have my new blog going. I was originally going to write a Jekyll-like CMS with Node and Backbone,
+but I finally gave in and used the real thing. It’s a lot more flexible than I expected, and over all I’m loving it. There
+was just one thing I learned in my previous attempt that I really wanted, and that was Grunt.</p>
+
+<p>If you aren’t familiar, <a href="http://gruntjs.com"><code>grunt</code></a> is a script runner for javascript, analogous to <code>rake</code> in the Rails
+world. My first experience with it was trying to fix a broken Gruntfile from a Yeoman generator, and I was quite intimidated.
+But I’ve picked up enough now to know it is really not so bad. I’m going to build up my Gruntfile for Jekyll step-by-step,
+and hopefully explain how to use Grunt in the process.</p>
+
+<h3 id="preparation">Preparation</h3>
+
+<p>You want to start by making a <code>package.json</code> file for your project if you don’t already have one. This will be useful for
+saving all the <code>npm</code> packages your grunt needs to work for anyone who clones/forks your code at a later date. Simply run</p>
+
+<pre><code>npm init
+</code></pre>
+
+<p>and follow the prompts.</p>
+
+<p>You then need to install the command line interface globally, so that you can run it from the terminal:</p>
+
+<pre><code>npm install -g grunt-cli
+</code></pre>
+
+<p>And you need to install an instance of grunt locally:</p>
+
+<pre><code>npm install --save-dev grunt
+</code></pre>
+
+<p>The <code>--save-dev</code> will save this as a required development package for your project. Other developers can use
+<code>npm install --dev</code> to install all the dependencies. This is separate from <code>--save</code> so that you can separate the executing
+dependencies of your project (perhaps <code>connect</code> or <code>express</code> if you are running a web server) from the packages useful
+for developing the project (your test suite, for example).</p>
+
+<p>Now you need to make a file called <code>Gruntfile.js</code> in the root directory of your project. This is where you define all of
+the tasks you can run. Here’s the skeleton:</p>
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">grunt</span><span class="p">)</span> <span class="p">{</span>
+
+  <span class="nx">grunt</span><span class="p">.</span><span class="nx">initConfig</span><span class="p">({</span>
+
+  <span class="p">});</span>
+
+  <span class="nx">grunt</span><span class="p">.</span><span class="nx">registerTask</span><span class="p">(</span><span class="s1">'default'</span><span class="p">,</span> <span class="p">[]);</span>
+<span class="p">});</span></code></pre></figure>
+
+<h2 id="adding-tasks">Adding Tasks</h2>
+
+<h3 id="jekyll">Jekyll</h3>
+
+<p>Common Grunt tasks are shared via <code>npm</code>. All(?) of them have a name that starts with <code>grunt-</code>. For example, here’s one
+that’s really useful for me: <a href="https://www.npmjs.com/package/grunt-jekyll"><code>grunt-jekyll</code></a>. It allows me to run <code>jekyll build</code>
+from inside a grunt task. Since this is one of the most important things to do in my project, that’s pretty important.</p>
+
+<p>We start by installing the package, the same way we did with <code>grunt</code>:</p>
+
+<pre><code>npm install --save-dev grunt-jekyll
+</code></pre>
+
+<p>Now there are three things we need to do to get this task configured in our <code>Gruntfile.js</code>. First, we need to load the task with</p>
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">grunt</span><span class="p">.</span><span class="nx">loadNpmTasks</span><span class="p">(</span><span class="s1">'grunt-jekyll'</span><span class="p">);</span></code></pre></figure>
+
+<p>This makes the package available to <code>grunt</code>. Then we need to add the configuration. If we look at the documentation, it tells us
+all the configuration options for this package. Inside <code>grunt.initConfig</code>, we need to add a <code>jekyll</code> configuration. Each item
+inside is a specific task.</p>
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">grunt</span><span class="p">.</span><span class="nx">initConfig</span><span class="p">({</span>
+  <span class="na">jekyll</span><span class="p">:</span> <span class="p">{</span>
+    <span class="c1">//Production Build</span>
+    <span class="na">dist</span><span class="p">:</span> <span class="p">{</span>
+      <span class="na">options</span><span class="p">:</span> <span class="p">{</span>
+        <span class="na">dest</span><span class="p">:</span> <span class="s1">'_site/blog'</span><span class="p">,</span>
+        <span class="na">config</span><span class="p">:</span> <span class="s1">'_config.yml'</span>
+      <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="c1">//Develpemnt Build</span>
+    <span class="na">dev</span><span class="p">:</span> <span class="p">{</span>
+      <span class="na">options</span><span class="p">:</span> <span class="p">{</span>
+        <span class="na">dest</span><span class="p">:</span> <span class="s1">'_site/blog'</span><span class="p">,</span>
+        <span class="na">config</span><span class="p">:</span> <span class="s1">'_config.yml'</span><span class="p">,</span>
+        <span class="na">drafts</span><span class="p">:</span> <span class="kc">true</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">});</span></code></pre></figure>
+
+<p>Here I have two <code>jekyll</code> tasks, one for each target. On my production builds, I want to simply do <code>jekyll build</code>, but for development
+builds, I want to also include drafts so I can see what my current draft looks like. I tell it which configuration file to use. Now
+you can run both of these tasks:</p>
+
+<pre><code>grunt jekyll:dist
+grunt jekyll:dev
+</code></pre>
+
+<p>If we simply run <code>grunt jekyll</code>, it will run all the targets, one after another. Now, there are a lot more options we can set for this
+task, but I’m using mostly the default options, so we can simplify this significantly:</p>
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">jekyll</span><span class="err">:</span> <span class="p">{</span>
+  <span class="nl">dist</span><span class="p">:</span> <span class="p">{},</span>
+  <span class="nx">dev</span><span class="err">:</span> <span class="p">{</span> <span class="nl">options</span><span class="p">:</span> <span class="p">{</span> <span class="nl">drafts</span><span class="p">:</span> <span class="kc">true</span> <span class="p">}</span> <span class="p">}</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>Here’s our whole file at present:</p>
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">grunt</span><span class="p">)</span> <span class="p">{</span>
+
+  <span class="c1">//load tasks</span>
+  <span class="nx">grunt</span><span class="p">.</span><span class="nx">loadNpmTasks</span><span class="p">(</span><span class="s1">'grunt-jekyll'</span><span class="p">);</span>
+
+  <span class="c1">//configure tasks</span>
+  <span class="nx">grunt</span><span class="p">.</span><span class="nx">initConfig</span><span class="p">({</span>
+    <span class="na">jekyll</span><span class="p">:</span> <span class="p">{</span>
+      <span class="na">dist</span><span class="p">:</span> <span class="p">{},</span>
+      <span class="na">dev</span><span class="p">:</span> <span class="p">{</span> <span class="na">options</span><span class="p">:</span> <span class="p">{</span> <span class="na">drafts</span><span class="p">:</span> <span class="kc">true</span> <span class="p">}</span> <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">});</span>
+
+  <span class="nx">grunt</span><span class="p">.</span><span class="nx">registerTask</span><span class="p">(</span><span class="s1">'default'</span><span class="p">,</span> <span class="p">[]);</span>
+<span class="p">});</span></code></pre></figure>
+
+<p>We will talk about that last line, <code>grunt.registerTask</code>, in just a minute, but to see it’s value, let’s add another task first.</p>
+
+<h3 id="jshint">JSHint</h3>
+
+<p>Let’s add another step to our build process, and lint our javascript with <a href="https://www.npmjs.com/package/grunt-contrib-jshint"><code>jshint</code></a>.
+I keep my custom javascript files in <code>_src</code> and my third party files from <a href="http://bower.io">Bower</a> in <code>_vendor</code>, for reasons
+which will be more apparent shortly. I’m assuming you are familiar with <code>jshint</code> already. To install another task, it’s the
+same process: install, load, configure:</p>
+
+<pre><code>npm install --save-dev grunt-contrib-jshint
+</code></pre>
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">grunt</span><span class="p">.</span><span class="nx">loadNpmTasks</span><span class="p">(</span><span class="s1">'grunt-contrib-jshint'</span><span class="p">);</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">grunt</span><span class="p">.</span><span class="nx">initConfig</span><span class="p">({</span>
+  <span class="p">...</span>
+  <span class="na">jshint</span><span class="p">:{</span>
+    <span class="na">src</span><span class="p">:</span> <span class="p">[</span><span class="s1">'_src/**/*.js'</span><span class="p">]</span>
+  <span class="p">}</span>
+<span class="p">});</span></code></pre></figure>
+
+<p>I have a <code>.jshintrc</code> file already in my project, so it knows what rules to follow. I made one task, <code>src</code>, which takes as options
+an array of files or directories to lint, in this case any javascript file inside my <code>_src</code> directory (no need to lint <code>bower</code> packages).
+Since there is only one task, we can run this like</p>
+
+<pre><code>grunt jshint
+</code></pre>
+
+<p>Nice! Now, while I’m developing and constantly testing some javascript, it would be annoying to have jshint run after every change, but
+I would like it to run before I push a real production build. But running</p>
+
+<pre><code>grunt jshint &amp;&amp; grunt jekyll:dist
+</code></pre>
+
+<p>is kind of annoying. The real value of a task runner is that you can string together multiple tasks. So let’s make a <code>build</code> and a
+<code>devbuild</code> task, the first which runs <code>jshint</code> and then <code>jekyll:dist</code> and the second which runs <code>jekyll:dev</code>:</p>
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">grunt</span><span class="p">.</span><span class="nx">registerTask</span><span class="p">(</span><span class="s1">'build'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'jshint'</span><span class="p">,</span> <span class="s1">'jekyll:dist'</span><span class="p">]);</span>
+<span class="nx">grunt</span><span class="p">.</span><span class="nx">registerTask</span><span class="p">(</span><span class="s1">'devbuild'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'jekyll:dev'</span><span class="p">]);</span>
+<span class="nx">grunt</span><span class="p">.</span><span class="nx">registerTask</span><span class="p">(</span><span class="s1">'default'</span><span class="p">,</span> <span class="p">[]);</span></code></pre></figure>
+
+<p>We simply <code>registerTask</code> with the name of the task and an array of subtasks to run in the order we want to run them. Simple and awesome.
+That <code>default</code> one is special, it’s the task to run if we don’t specify a task. Let’s set it to run <code>build</code>:</p>
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">grunt</span><span class="p">.</span><span class="nx">registerTask</span><span class="p">(</span><span class="s1">'default'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'build'</span><span class="p">]);</span></code></pre></figure>
+
+<p>Now try it with</p>
+
+<pre><code>grunt
+</code></pre>
+
+<p>and it should run <code>jshint</code> first and then <code>jekyll:dist</code>.</p>
+
+<h3 id="divshot">Divshot</h3>
+
+<p>Now that we’ve got  the hang of this, I’m going to quickly throw in a <code>deploy</code> task. GitHub has free hosting for Jekyll blogs, but I’m
+currently trying out <a href="http://divshot.io">Divshot</a>, which is kind of similar to Heroku but for static sites. There’s a package already,
+<a href="https://www.npmjs.com/package/grunt-divshot"><code>grunt-divshot</code></a>, which I install, load, and make some default tasks for. This package
+has a webserver built in, but I’m going to use connect, so I simply don’t use the <code>divshot</code> task (which runs <code>divshot:server</code>), and
+instead make a separate task, <code>divshot:push</code>, with two sub-targets, <code>development</code> and <code>production</code>. No need to configure anything
+because it’s already in my <code>divshot.json</code> config file. This dimonstrates another cool feature of <code>grunt</code>: tasks are infinitely sub-
+dividable. To deploy to production would be <code>grunt divshot:push:production</code> while to push to both would be <code>runt divshot:push</code>. And
+naturally, I make two deploy tasks which build first:</p>
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">grunt</span><span class="p">.</span><span class="nx">registerTask</span><span class="p">(</span><span class="s1">'devdeploy'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'devbuild'</span><span class="p">,</span> <span class="s1">'divshot:push:development'</span><span class="p">]);</span>
+<span class="nx">grunt</span><span class="p">.</span><span class="nx">registerTask</span><span class="p">(</span><span class="s1">'deploy'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'build'</span><span class="p">,</span> <span class="s1">'divshot:push:production'</span><span class="p">]);</span></code></pre></figure>
+
+<h3 id="javascript-compiling">Javascript Compiling</h3>
+
+<p>Including a whole bunch of separate javascript files can really slow down your page load. Every separate resource (individual <code>js</code> or
+<code>css</code> file, image, etc.) causes the browser to make a separate HTTP request, opening a separate TCP connection to the server, creating
+all this overhead to send a few kilobytes. With <code>sass</code> (already built into Jekyll), all our stylesheets get compiled into a single
+<code>css/main.css</code> file. We can do a similar thing for our javascript, compressing it in the process. Two popular packages are
+<a href="https://www.npmjs.com/package/grunt-contrib-concat"><code>grunt-contrib-concat</code></a>, which will concatenate files together, and
+<a href="https://www.npmjs.com/package/grunt-contrib-uglify"><code>grunt-contrib-uglify</code></a>, which can combine and compress javascript
+files to a single minified script. On production builds, I want my output javascript file (which I’m keeping in <code>js/output.js</code>) to be
+minified for speed. But when developing, I want un-minifed versions of my javascript so I can step through it with the debugger if I
+need it. So I use <code>concat</code> for development builds and <code>uglify</code> for production. Same song: install, load, and configure.</p>
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">grunt</span><span class="p">.</span><span class="nx">initConfig</span><span class="p">({</span>
+  <span class="p">...</span>
+  <span class="c1">//js compilation (production version)</span>
+  <span class="na">uglify</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">dist</span><span class="p">:</span> <span class="p">{</span>
+      <span class="na">files</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">'js/output.js'</span><span class="p">:</span> <span class="p">[</span><span class="s1">'&lt;%= cfg.vendor %&gt;'</span><span class="p">,</span> <span class="s1">'_src/**/*.js'</span><span class="p">]</span>
+      <span class="p">},</span>
+      <span class="na">options</span><span class="p">:</span> <span class="p">{</span>
+        <span class="na">compress</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">},</span>
+
+  <span class="c1">//js compilation (dev version)</span>
+  <span class="na">concat</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">options</span><span class="p">:</span> <span class="p">{</span>
+      <span class="na">separator</span><span class="p">:</span> <span class="s1">'\n\n\n'</span><span class="p">,</span>
+      <span class="na">banner</span><span class="p">:</span> <span class="s1">'/*! &lt;%= pkg.name %&gt; - v&lt;%= pkg.version %&gt; - '</span> <span class="o">+</span>
+        <span class="s1">'&lt;%= grunt.template.today("yyyy-mm-dd") %&gt; */'</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="na">dev</span><span class="p">:</span> <span class="p">{</span>
+      <span class="na">src</span><span class="p">:</span> <span class="p">[</span><span class="s1">'&lt;%= cfg.vendor %&gt;'</span><span class="p">,</span> <span class="s1">'_src/**/*.js'</span><span class="p">],</span>
+      <span class="na">dest</span><span class="p">:</span> <span class="s1">'js/output.js'</span><span class="p">,</span>
+    <span class="p">},</span>
+  <span class="p">},</span>
+<span class="p">});</span></code></pre></figure>
+
+<p>The <code>&lt;%= %&gt;</code> parts are templates. Grunt will execute what’s inside as javascript and put the result there. We can grab variables from
+JSON or YAML files as such:</p>
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">grunt</span><span class="p">.</span><span class="nx">initConfig</span><span class="p">({</span>
+
+  <span class="c1">//config files</span>
+  <span class="na">pkg</span><span class="p">:</span> <span class="nx">grunt</span><span class="p">.</span><span class="nx">file</span><span class="p">.</span><span class="nx">readJSON</span><span class="p">(</span><span class="s1">'package.json'</span><span class="p">),</span>
+  <span class="na">cfg</span><span class="p">:</span> <span class="nx">grunt</span><span class="p">.</span><span class="nx">file</span><span class="p">.</span><span class="nx">readYAML</span><span class="p">(</span><span class="s1">'_config.yml'</span><span class="p">),</span>
+
+  <span class="p">...</span></code></pre></figure>
+
+<p>In this case, I’m reading from <code>package.json</code> for some variables and <code>_config.yml</code> for others. In my <code>_config.yml</code>, I made a list
+of the javascript files from my <code>bower</code> packages to include, called <code>vendor</code>, so once I’ve loaded the config file, I can access this
+with <code>cfg.vendor</code>. Grunt is smart enough to take the string <code>'&lt;%= cfg.vendor %&gt;'</code>, replace it with my YAML array, and then flatten the
+whole files array so that <code>output.js</code> is made of first my included bower javascript files, followed by all javascript files inside the
+<code>_src</code> directory. Note that while <code>uglify</code> has one task, <code>dist</code>, with options, <code>concat</code> has an <code>options</code> object which applies to all
+tasks (of which there is only <code>dev</code>). Most grunt tasks allow for global options which can be overwritten by individual tasks.</p>
+
+<h2 id="advanced-tasks">Advanced Tasks</h2>
+
+<p>Up to this point, all these tasks have been pretty simple. You might be wondering why you’d bother with grunt at all and not just make
+some shell scripts. Well, one benefit is cross-compatibility; any platform with Node.js can use it. Another is the ability to make 
+hierarchies of tasks. To do the same in scripts would require one script for each task or a bunch of function definitions. Still,
+that’s a pretty reasonable point. The next task is something that would be significantly more work to script but is painless in grunt.
+But first, let’s add some cool features to our existing Gruntfile.</p>
+
+<h3 id="autoload-tasks-and-time-them">Autoload Tasks and Time Them</h3>
+
+<p>Right now, we have a stack of these <code>loadNpmTasks</code> commands:</p>
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">grunt</span><span class="p">.</span><span class="nx">loadNpmTasks</span><span class="p">(</span><span class="s1">'grunt-jekyll'</span><span class="p">);</span>
+<span class="nx">grunt</span><span class="p">.</span><span class="nx">loadNpmTasks</span><span class="p">(</span><span class="s1">'grunt-contrib-jshint'</span><span class="p">);</span>
+<span class="nx">grunt</span><span class="p">.</span><span class="nx">loadNpmTasks</span><span class="p">(</span><span class="s1">'grunt-divshot'</span><span class="p">);</span>
+<span class="nx">grunt</span><span class="p">.</span><span class="nx">loadNpmTasks</span><span class="p">(</span><span class="s1">'grunt-contrib-concat'</span><span class="p">);</span>
+<span class="nx">grunt</span><span class="p">.</span><span class="nx">loadNpmTasks</span><span class="p">(</span><span class="s1">'grunt-contrib-uglify'</span><span class="p">);</span></code></pre></figure>
+
+<p>This could potentially get really long if we keep adding tasks at this rate. Of course, all of these packages are listed in our
+<code>package.json</code> file, since we are using <code>--save-dev</code>. So there’s a neat package
+<a href="https://www.npmjs.com/package/load-grunt-tasks"><code>load-grunt-tasks</code></a> which will run all of these automatically. Just install it and
+replace all of these <code>loadNpmTasks</code> statements with a single line:</p>
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">require</span><span class="p">(</span><span class="s1">'load-grunt-tasks'</span><span class="p">)(</span><span class="nx">grunt</span><span class="p">);</span></code></pre></figure>
+
+<p>Now, even if we install more grunt tasks, we don’t need to load them. We can simply skip that step and jump straight to the configuration.</p>
+
+<p>Here’s another little one, <a href="https://www.npmjs.com/package/time-grunt"><code>time-grunt</code></a>, which will tell us the execution time of every
+grunt task. Simply install it and add</p>
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">require</span><span class="p">(</span><span class="s1">'time-grunt'</span><span class="p">)(</span><span class="nx">grunt</span><span class="p">);</span></code></pre></figure>
+
+<h3 id="watch-and-serve-locally">Watch and Serve Locally</h3>
+
+<p>Now the real magic happens. One of the most popular grunt tasks is
+<a href="https://www.npmjs.com/package/grunt-contrib-watch"><code>grunt-contrib-watch</code></a>, which allows you to run tasks when files change.
+We can also add a local server to see what the site looks like currently. Since we’re using Node, we can use the amazing
+<a href="https://www.npmjs.com/package/connect"><code>connect</code></a>, specifically the grunt task implementation,
+<a href="https://www.npmjs.com/package/grunt-contrib-connect"><code>grunt-contrib-connect</code></a>. Combining these two together with a feature
+<a href="https://www.npmjs.com/package/connect-livereload"><code>connect-livereload</code></a>, we can make a task which starts a webserver
+and listens for file changes, automatically rebuilding the project and <strong>refreshing the page in the browser.</strong></p>
+
+<pre><code>npm install --save-dev grunt-contrib-watch grunt-contrib-connect connect-livereload
+</code></pre>
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">grunt</span><span class="p">.</span><span class="nx">initConfig</span><span class="p">({</span>
+  <span class="p">...</span>
+  <span class="na">watch</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">options</span><span class="p">:{</span>
+      <span class="na">spawn</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+      <span class="na">livereload</span><span class="p">:</span> <span class="nx">grunt</span><span class="p">.</span><span class="nx">option</span><span class="p">(</span><span class="s1">'livereloadport'</span><span class="p">)</span> <span class="o">||</span> <span class="nx">LIVERELOAD_PORT</span>
+    <span class="p">},</span>
+    <span class="na">scripts</span><span class="p">:</span> <span class="p">{</span>
+      <span class="na">files</span><span class="p">:</span> <span class="p">[</span><span class="s1">'_src/**/*.js'</span><span class="p">,</span> <span class="s1">'_vendor/**/*.js'</span><span class="p">],</span>
+      <span class="na">tasks</span><span class="p">:</span> <span class="p">[</span><span class="s1">'devbuild'</span><span class="p">],</span>
+    <span class="p">},</span>
+    <span class="na">content</span><span class="p">:</span> <span class="p">{</span>
+      <span class="na">files</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s1">'*.*'</span><span class="p">,</span>
+        <span class="s1">'_sass/*css'</span><span class="p">,</span>
+        <span class="s1">'css/*css'</span><span class="p">,</span>
+        <span class="s1">'_drafts/*'</span><span class="p">,</span>
+        <span class="s1">'_posts/*'</span><span class="p">,</span>
+        <span class="s1">'_layouts/*'</span><span class="p">,</span>
+        <span class="s1">'_includes/*'</span><span class="p">,</span>
+        <span class="s1">'images/*'</span><span class="p">,</span>
+        <span class="s1">'_plugins/*'</span><span class="p">,</span>
+        <span class="s1">'_config.yml'</span>
+      <span class="p">],</span>
+      <span class="na">tasks</span><span class="p">:</span> <span class="p">[</span><span class="s1">'jekyll:dev'</span><span class="p">],</span>
+    <span class="p">},</span>
+  <span class="p">},</span>
+
+  <span class="c1">//serve it up</span>
+  <span class="na">connect</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">options</span><span class="p">:</span> <span class="p">{</span>
+      <span class="na">port</span><span class="p">:</span> <span class="nx">grunt</span><span class="p">.</span><span class="nx">option</span><span class="p">(</span><span class="s1">'port'</span><span class="p">)</span> <span class="o">||</span> <span class="nx">SERVER_PORT</span><span class="p">,</span>
+      <span class="na">hostname</span><span class="p">:</span> <span class="s1">'0.0.0.0'</span>
+    <span class="p">},</span>
+    <span class="na">livereload</span><span class="p">:</span> <span class="p">{</span>
+      <span class="na">options</span><span class="p">:</span> <span class="p">{</span>
+        <span class="na">middleware</span><span class="p">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">connect</span><span class="p">)</span> <span class="p">{</span>
+          <span class="k">return</span> <span class="p">[</span>
+            <span class="nx">require</span><span class="p">(</span><span class="s1">'connect-livereload'</span><span class="p">)({</span><span class="na">port</span><span class="p">:</span> <span class="nx">LIVERELOAD_PORT</span><span class="p">}),</span>
+            <span class="nx">mountFolder</span><span class="p">(</span><span class="nx">connect</span><span class="p">,</span> <span class="s1">'_site'</span><span class="p">)</span>
+          <span class="p">];</span>
+        <span class="p">}</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">});</span></code></pre></figure>
+
+<p>Let’s break this down. <code>watch</code> has some global options and two file sets to watch, <code>scripts</code> which runs our whole <code>devbuild</code>
+task including recompiling our javascript, while <code>content</code> just runs <code>jekyll:dev</code>. To get <code>connect</code> to host the livereload
+script, we need to return <code>require('connect-livereload')({port: LIVERELOAD_PORT})</code> as the first middleware object. Meanwhile,
+<code>mountFolder</code> is a simple function at the top of the script to serve up static files:</p>
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">mountFolder</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">connect</span><span class="p">,</span> <span class="nx">dir</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">connect</span><span class="p">.</span><span class="kr">static</span><span class="p">(</span><span class="nx">require</span><span class="p">(</span><span class="s1">'path'</span><span class="p">).</span><span class="nx">resolve</span><span class="p">(</span><span class="nx">dir</span><span class="p">));</span>
+<span class="p">};</span></code></pre></figure>
+
+<p>Finally, we tack on <a href="https://www.npmjs.com/package/grunt-open"><code>grunt-open</code></a> and we can even automatically open the site in
+a new tab.</p>
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">open</span><span class="err">:</span> <span class="p">{</span>
+  <span class="nl">server</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nl">path</span><span class="p">:</span> <span class="s1">'http://localhost:&lt;%= connect.options.port %&gt;/blog'</span>
+  <span class="p">}</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>Now that we have all of these partial tasks, let’s make the default task open the server and watch for changes.</p>
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">grunt</span><span class="p">.</span><span class="nx">registerTask</span><span class="p">(</span><span class="s1">'serve'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'devbuild'</span><span class="p">,</span> <span class="s1">'connect:livereload'</span><span class="p">,</span> <span class="s1">'open:server'</span><span class="p">,</span> <span class="s1">'watch'</span><span class="p">]);</span>
+<span class="nx">grunt</span><span class="p">.</span><span class="nx">registerTask</span><span class="p">(</span><span class="s1">'default'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'serve'</span><span class="p">]);</span></code></pre></figure>
+
+<h2 id="custom-tasks">Custom Tasks</h2>
+
+<p>Last but not least, let’s add a custom task for making new posts. There’s a
+<a href="https://github.com/23maverick23/sublime-jekyll">sublime package</a> that will let you do this, but my installation of
+sublime is buggy and plugins mess up. To make a custom task, simply call <code>registerTask</code> with the task name, a
+description, and a callback to execute. Any subtasks will be included as arguments to the function, e.g. ‘new:post’
+will call the <code>new</code> task with the first argument <code>"post"</code>.</p>
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">grunt</span><span class="p">.</span><span class="nx">registerTask</span><span class="p">(</span><span class="s1">'new'</span><span class="p">,</span> <span class="s1">'Start a new post or draft'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">type</span><span class="p">)</span> <span class="p">{</span>
+  <span class="p">...</span>
+<span class="p">});</span></code></pre></figure>
+
+<p>I made a function to ask for the post title and copy a file <code>_templates/post.md</code> to the correct folder
+(<code>_draft</code> or <code>_post</code>) with the correct name and current date. Then using
+<a href="https://www.npmjs.com/package/grunt-open"><code>grunt-open</code></a> it opens this file in your preferred text editor (from
+<code>package.json</code> or the <code>$EDITOR</code> environment variable).</p>
+
+<p>Here’s the link to
+<a href="https://github.com/rabidaudio/rabid.audio/blob/88e346e1eed83d3b6c5b61a0f4f69214934fd9bf/Gruntfile.js">my complete <code>Gruntfile.js</code></a>
+if you want to see it all. Looking at a complete file like this can
+be pretty intimidating, but hopefully by building it up a little bit at a time you can build one for your next
+project.</p>
+
+  </article>
+
+  <div class="dinkus">
+  <a href="#top">
+    
+      <i class="fa   fa-caret-up"></i>
+    
+      <i class="fa   fa-caret-up"></i>
+    
+      <i class="fa   fa-caret-up"></i>
+    
+  </a>
+</div>
+
+  <div class="post-nav">
+    <div class="prev"><a href="/blog/music/best-discoveries-of-last-12-months/">
+      Previous: 2014 in Music
+    </a></div>
+    <div class="next"><a href="/blog/hardware/ac-light-dimmer-circuit/">
+      Next: AC Light Dimmer Circuit
+    </a></div>
+  </div>
+
+</div>
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+  <div class="wrapper">
+    <p class="text description">Thoughts on music, technology, policy, startups, and anything else.
+</p>
+    
+    <ul class="social-media-list">
+  <!-- http://fortawesome.github.io/Font-Awesome/cheatsheet/ -->
+
+  
+  
+  
+    <li>
+      <a href="https://twitter.com/rabidaudio" target="_blank">
+        <span class="icon icon--twitter"><i class="fa fa-twitter"></i></span>
+        <span class="username" title="twitter">rabidaudio</span>
+      </a>
+    </li>
+  
+
+  
+  
+  
+    <li>
+      <a href="https://github.com/rabidaudio/rabid.audio" target="_blank">
+        <span class="icon  icon--github"><i class="fa fa-github"></i></span>
+        <span class="username" title="github">rabidaudio/rabid.audio</span>
+      </a>
+    </li>
+  
+
+
+
+  <li>
+    <a href="/blog/feed.xml">
+      <span class="icon icon--rss"><i class="fa fa-rss-square"></i></span>
+      <span class="feed">RSS/Atom Link</span>
+    </a>
+  </li>
+
+</ul>
+    <div class="licence">
+      <!-- <p> -->
+        <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><div class="creative-commons" title="The content of this blog is hereby licensed under CC-BY-SA 4.0 unless otherwise specified.">
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16">
+  <g transform="matrix(0.01777778,0,0,0.01777778,-0.8888817,-0.8780946)" style="fill:#828282;fill-opacity:1">
+    <g transform="matrix(24.992544,0,0,24.989748,-11260.201,1892.0941)" style="fill:#828282;fill-opacity:1">
+      <g transform="translate(-289.6157,99.0653)" style="fill:#828282;fill-opacity:1">
+        <path d="m 772.94165,-167.5741 c 3.48486,3.48541 5.22778,7.75336 5.22778,12.80219 0,5.04938 -1.71277,9.27203 -5.13831,12.66794 -3.63586,3.57602 -7.93176,5.36374 -12.89001,5.36374 -4.89783,0 -9.11987,-1.77264 -12.66394,-5.31955 -3.54639,-3.54526 -5.31848,-7.78244 -5.31848,-12.71213 0,-4.92859 1.77209,-9.19598 5.31848,-12.80219 3.45459,-3.48651 7.67664,-5.22949 12.66394,-5.22949 5.04883,0 9.31458,1.74298 12.80054,5.22949 z m -23.11853,2.34485 c -2.94678,2.97638 -4.42017,6.46289 -4.42017,10.46179 0,3.9989 1.45886,7.45581 4.37427,10.37122 2.9176,2.9165 6.38904,4.37476 10.4176,4.37476 4.02856,0 7.53015,-1.47281 10.50708,-4.41895 2.82593,-2.73645 4.23889,-6.17767 4.23889,-10.32703 0,-4.11749 -1.4364,-7.61292 -4.30823,-10.48419 -2.87061,-2.87061 -6.34985,-4.30652 -10.43774,-4.30652 -4.08789,0 -7.54699,1.44318 -10.3717,4.32892 z m 7.75391,8.70319 c -0.44971,-0.98169 -1.12317,-1.47284 -2.02271,-1.47284 -1.58862,0 -2.38293,1.07007 -2.38293,3.20911 0,2.13953 0.79431,3.2085 2.38293,3.2085 1.04944,0 1.79895,-0.52075 2.24866,-1.56458 l 2.20276,1.17303 c -1.05042,1.86548 -2.62561,2.79901 -4.72546,2.79901 -1.62,0 -2.91772,-0.4967 -3.89209,-1.48956 -0.97546,-0.99341 -1.46326,-2.36334 -1.46326,-4.10852 0,-1.71503 0.50342,-3.07654 1.50806,-4.08502 1.00452,-1.00854 2.25757,-1.51257 3.75781,-1.51257 2.22058,0 3.8092,0.87488 4.77136,2.62286 l -2.38513,1.22058 z m 10.36389,0 c -0.45081,-0.98169 -1.11206,-1.47284 -1.98242,-1.47284 -1.62097,0 -2.43213,1.07007 -2.43213,3.20911 0,2.13953 0.81116,3.2085 2.43213,3.2085 1.05164,0 1.78772,-0.52075 2.20728,-1.56458 l 2.25195,1.17303 c -1.04822,1.86548 -2.62109,2.79901 -4.71765,2.79901 -1.61768,0 -2.91199,-0.4967 -3.88647,-1.48956 -0.97217,-0.99341 -1.45996,-2.36334 -1.45996,-4.10852 0,-1.71503 0.49451,-3.07654 1.48352,-4.08502 0.98779,-1.00854 2.24524,-1.51257 3.77344,-1.51257 2.21619,0 3.80371,0.87488 4.76135,2.62286 l -2.43104,1.22058 z"
+           style="fill:#828282;fill-opacity:1" />
+      </g>
+    </g>
+  </g>
+</svg>
+
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16">
+  <g transform="matrix(0.01777778,0,0,0.01777778,-0.88889649,-0.88961538)" style="fill:#828282;fill-opacity:1">
+    <g transform="matrix(38.565517,0,0,38.561202,-18471.673,-2970.273)" style="fill:#828282;fill-opacity:1">
+      <g style="fill:#828282;fill-opacity:1">
+        <path d="m 495.07373,87.10498 c 0,-0.4165 -0.33789,-0.75391 -0.75391,-0.75391 l -4.77246,0 c -0.41602,0 -0.75391,0.3374 -0.75391,0.75391 l 0,4.77295 1.33105,0 0,5.65186 3.61719,0 0,-5.65186 1.33203,0 0,-4.77295 1e-5,0 z" style="fill:#828282;fill-opacity:1" />
+        <circle cx="491.93359" cy="84.090332" r="1.63232" style="fill:#828282;fill-opacity:1" />
+      </g>
+      <path d="m 491.91846,78.3252 c -3.23145,0 -5.96777,1.12793 -8.20703,3.38379 -2.29785,2.3335 -3.44629,5.0957 -3.44629,8.28467 0,3.18897 1.14844,5.93164 3.44629,8.22705 2.29785,2.29395 5.03418,3.44189 8.20703,3.44189 3.21289,0 5.99805,-1.15674 8.35449,-3.47168 2.21973,-2.19727 3.3291,-4.92969 3.3291,-8.19727 0,-3.26758 -1.12891,-6.02881 -3.3877,-8.28467 -2.25879,-2.25586 -5.02343,-3.38378 -8.29589,-3.38378 z m 0.0303,2.0996 c 2.64844,0 4.89648,0.93408 6.74609,2.80127 1.87012,1.84717 2.80469,4.10352 2.80469,6.76758 0,2.68359 -0.91504,4.91064 -2.74609,6.68066 -1.92773,1.90576 -4.19629,2.8584 -6.80469,2.8584 -2.61035,0 -4.85938,-0.94287 -6.74805,-2.82959 -1.88867,-1.88623 -2.83301,-4.12256 -2.83301,-6.70947 0,-2.58691 0.9541,-4.84229 2.8623,-6.76758 1.83107,-1.86718 4.07032,-2.80127 6.71876,-2.80127 z" style="fill:#828282;fill-opacity:1" />
+    </g>
+  </g>
+</svg>
+
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16">
+  <g transform="matrix(0.01777754,0,0,0.01777754,-0.88887421,-0.88977181)" style="fill:#828282;fill-opacity:1">
+    <g transform="matrix(24.102232,0,0,24.099535,-14622.6,9250.9195)" style="fill:#828282;fill-opacity:1">
+      <g transform="translate(-23.9521,-89.72962)" style="fill:#828282;fill-opacity:1">
+        <path d="m 651.36426,-292.05655 c -5.17188,0 -9.55005,1.80548 -13.13135,5.41333 -3.67651,3.73444 -5.51562,8.15399 -5.51562,13.25714 0,5.10315 1.83911,9.48993 5.51562,13.1626 3.67505,3.67194 8.05322,5.50787 13.13135,5.50787 5.14075,0 9.59546,-1.85236 13.36572,-5.55396 3.55164,-3.51721 5.32825,-7.88916 5.32825,-13.11652 0,-5.22742 -1.80627,-9.64697 -5.422,-13.25714 -3.61401,-3.60784 -8.03748,-5.41332 -13.27197,-5.41332 z m 0.0469,3.36096 c 4.23755,0 7.83447,1.49298 10.79541,4.48132 2.99072,2.95544 4.48596,6.56329 4.48596,10.82819 0,4.29376 -1.46399,7.85632 -4.3938,10.68994 -3.08276,3.04846 -6.71411,4.57269 -10.88757,4.57269 -4.17505,0 -7.77344,-1.5094 -10.79541,-4.5274 -3.02185,-3.01874 -4.53284,-6.59613 -4.53284,-10.73523 0,-4.1391 1.52502,-7.74847 4.57971,-10.82819 2.92823,-2.98834 6.51099,-4.48132 10.74854,-4.48132 z" style="fill:#828282;fill-opacity:1" />
+        <path d="m 643.08923,-276.02048 c 0.74377,-4.69849 4.05005,-7.20941 8.19543,-7.20941 5.95935,0 9.59216,4.32501 9.59216,10.09222 0,5.62817 -3.8656,9.99854 -9.68604,9.99854 -4.00464,0 -7.59058,-2.46332 -8.24219,-7.30084 l 4.70312,0 c 0.14062,2.51099 1.77039,3.39532 4.09851,3.39532 2.6532,0 4.37659,-2.46484 4.37659,-6.23206 0,-3.95471 -1.48901,-6.04614 -4.28442,-6.04614 -2.04846,0 -3.81726,0.74451 -4.19067,3.30237 l 1.36719,-0.009 -3.70154,3.70319 -3.70166,-3.70319 1.47352,0.009 z" style="fill:#828282;fill-opacity:1" />
+      </g>
+    </g>
+  </g>
+</svg>
+
+</div></a>
+      <!-- </p> -->
+    </div>
+  </div>
+</footer>
+
+  </body>
+
+</html>
