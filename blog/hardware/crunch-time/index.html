@@ -6,11 +6,11 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width initial-scale=1">
 
-  <title>RabidAudio | Freelance Announcement</title>
-  <meta name="description" content="Now that I’ve (finally!) completed my degree, I’m venturing out into the real world.In the back of my mind I always wanted to be my own boss. I’ve had the en...">
+  <title>RabidAudio | Crunch Time</title>
+  <meta name="description" content="I’ve tried out a few bass guitar distortion effects pedals in the past (as well as a few designed for guitar), but none of them really soundedgreat. Mostly t...">
 
   <link rel="stylesheet" href="/blog/css/main.css">
-  <link rel="canonical" href="http://rabid.audio/blog/other/freelance-announcement/">
+  <link rel="canonical" href="http://rabid.audio/blog/hardware/crunch-time/">
   <link rel="alternate" type="application/atom+xml" title="RabidAudio" href="http://rabid.audio/blog/feed.xml" />
   
   <style>
@@ -199,13 +199,13 @@
         
 <div class="post">
   <header class="post-header">
-    <h1 class="post-title">Freelance Announcement</h1>
-    <h3 class="post-subtitle">I am now for hire</h3>
+    <h1 class="post-title">Crunch Time</h1>
+    <h3 class="post-subtitle">Modding my bass guitar for a distortion knob</h3>
     <div class="post-meta">
       
       <div>
-        <a href="/blog/other/freelance-announcement/" class="date" date="Thu, 07 May 2015 02:17:39 -0400" title="May 7, 2015,  2:17">
-          May 7, 2015
+        <a href="/blog/hardware/crunch-time/" class="date" date="Fri, 13 Nov 2015 18:35:11 -0500" title="Nov 13, 2015, 18:35">
+          Nov 13, 2015
         </a>
          by <a href="mailto:cjk@rabidaudio.com" class="author">Charles Julian Knight</a>
         
@@ -348,95 +348,49 @@ $(document).click(function(e){
   </header>
 
   <article class="post-content">
-    <p>Now that I’ve <em>(finally!)</em> completed my degree, I’m venturing out into the real world.
-In the back of my mind I always wanted to be my own boss. I’ve had the entrepreneurial
-drive since before I knew what that meant. Like many of my peers, I sold candy and
-little toys to my peers when I was in grade school (at least until Mrs. Wiggins shut
-us down- shame on her!).</p>
+    <p>I’ve tried out a few bass guitar distortion effects pedals in the past (as well as a few designed for guitar), but none of them really sounded
+great. Mostly they killed all the punchiness of the bass so that it just sounded flat and empty. 
+Then one day a few years ago, I plugged my <a href="http://www.musiciansfriend.com/bass/esp-ltd-b-50-bass-guitar">(budget, nothing special) electric bass</a>
+and was suprised to find this smooth, crunchy, synth-like distortion sound coming out, with no other effects plugged in. It took me a while to
+figure out, but eventually I learned what happened was the 9V battery for the active pickups had gotten pretty old, and was in a sweet spot
+to deliver just enough voltage for the amplification circuit to still function but clip ever so slightly. I replaced the battery, but I wanted
+a way to get that sound on demand.</p>
 
-<p>I’m now officially accepting contracts for design work through RabidAudio. That’s right,
-what started as a recording studio-turned-record-label-turned-personal-blog is now a
-consulting firm.</p>
+<div class="img-wrapper float left medium"><a class="img-description-link"><img src="/blog/assets/images/bass/circuit.png" alt="" license="" /></a></div>
 
-<h2 id="areas">Areas</h2>
+<p>For a while, I had a weird attachment with a potentiometer hanging out of the bottom of my guitar by a few wires, but this was not a usable or
+pretty solution, so I removed it and forgot about it. But today I was reminiscing, and decided I could probably whip up a better solution.</p>
 
-<p>There are a few specialties I really want to focus on (and if you follow this blog at all,
-you can probably guess all of them):</p>
+<p>One issue is the sweet spot for the voltage is in a narrow range around 1.5V. Too low, and the active circuitry shuts off, and two high and it
+functons like normal. Also, as the battery voltage sags, the knob position for the spot moves. I found it very hard to dial in just the right
+amount with a potentiometer tracking the voltage between 0 and 9V. The ideal control would be a choice between 9V and a sweep from around .5V
+to 2.5V. One option was to use a regulator such as the <a href="http://www.ti.com/lit/ds/symlink/lm317.pdf">LM317</a> to regulate the voltage down to 2.5V
+and then sweep 0 to 2.5V.  Unfortunately I didn’t have a <a href="http://www.musiciansfriend.com/potentiometers-knobs-for-fretted-instruments/dimarzio-500k-push-pull-pot">switch pot</a> on hand, and a regulator is a constant current drain, which would probably eat the battery faster.</p>
 
-<h3 id="embedded-electronics">Embedded Electronics</h3>
+<p>The ideal solution would be a sweep which swept the sweet spot range slowly and then quickly accelerated to the 9V range at one end.
+I ended up acomplishing this using diodes. A very simplifed model of an ideal diode is that it has zero resistance if the voltage is above a certain
+threshold and infinite below. For most diodes, this is around 0.6V. We can exploit this feature to get a nonlinear response out of a linear
+potentiometer. I played around in a circuit simulator for a while, and eventually came up with this.</p>
 
-<p>I love working with microprocessors, doing circuit design, doing PCB layouts. There’s just
-something so fulfilling about building something you can hold in your hand and use. By chance,
-I’ve got a large amount of experience with Bluetooth, particularly microprocessor-to-smartphone
-communication. I’ve also done work with other forms of wireless networking, e.g. mesh networks,
-Wifi-Direct, low-frequency RF. I’ve also been weening myself off the development platforms (Arduino
-and friends) and doing things the old-fashioned way (real C code burned directly to a chip in
-a circuit), something I’ll post about soon. All of these align conveniently with the current
-explosion of crowdfunding and the coming explosion of the <a class="wikipedia" href="http://wki.pe/Internet_of_Things">Internet of Things</a>.
-So bring me all your “smart-<em>x</em>” ideas or prototypes and I’ll bring them to market.</p>
+<div class="img-wrapper full center"><a class="img-description-link"><img src="/blog/assets/images/bass/graph.png" alt="" license="" /></a></div>
 
-<h3 id="startups">Startups</h3>
+<p>The x axis is wiper position (0 to 100%). The upper graph is the output voltage, and the lower graph is the current sunk (that is, the current that)
+wouldn’t go out to the rest of the cirucit. Notice the gradual voltage increase through most of the turn, and then the quick jump to 9V at the end.
+At first, I had a cirucit with 4 diodes (thinking that 4*0.6 = 2.4V would be important to set my critical range), but after some experimentation,
+this seemed to work better. Below is an image of the earlier circuit, but the mounting I did for the final version was essentially the same, just with different components.</p>
 
-<p>After the many student entrepreneur courses and clubs I participated in, combined with my experience
-at <a href="http://flashpoint.gatech.edu">Flashpoint</a> and a few projects on my own, I have a bit of experience
-in the business side of things, like how to learn what your customer wants, how to express business
-concepts elegantly, how to handle founder equity, or how (and when!) to obtain intellectual property
-protection. If you’re looking to build a repeatable customer discovery or customer
-acquisition process, or if you just want some honest startup advice, let me know.</p>
+<div class="img-wrapper large center"><a class="img-description-link"><img src="/blog/assets/images/bass/underneath.jpg" alt="So cute!" license="" /><div class="img-description"><div>So cute!</div></div></a></div>
 
-<p>I also want to specialize my work (technical and non-technical) to startups. If you can sell me
-on the viability of the company, I’ll be willing to take partial or occasionally complete payment in
-equity.</p>
+<p>I decided since the tone pot (which I believe is a simple high-pass filter) only really sounded good full-on anyway, I’d keep that pot inside the guitar,
+and put my new distortion control through the body for use while playing.</p>
 
-<h3 id="software">Software</h3>
+<div class="img-wrapper xlarge center"><a class="img-description-link"><img src="/blog/assets/images/bass/surgery.jpg" alt="Surgery" license="" /><div class="img-description"><div>Surgery</div></div></a></div>
 
-<p>I do a lot of web development for fun. The browser is like a common language that everyone speaks.
-The expansion of the Internet is largely thanks to the popularity of the web, and no other “platform”
-has lived as long and yet it will continue for longer still. So the evolution of the standards and
-practices is fascinating from a historical and techno-sociological level.</p>
+<p>You can hear a sample below. Unfortunately the microphone on my old phone didn’t do the tone a lot of justice, but you can get an idea.</p>
 
-<p>The evolution of tools is directly tied to this. There has been a recent explosion of languages, package
-managers, frameworks, and tools at the web developer’s hands.</p>
+<div style="text-align: center;"><audio src="/blog/assets//other/bass-sample.wav" controls=""></audio></div>
 
-<!-- package managers
-npm
-bower
-frameworks
-frontend
-backbone ember angular polymer react
-backend
-rails express django
-runners
-grunt gulp
-test
-mocha chai jasmine
-ci
-travis, codeship
-version control github
-languages
-sass jade coffeescript handlebars
-requirejs almond browserify
-
-yeoman
- -->
-
-<p>I honestly don’t really enjoy the coding part of web development. What I really love is <em>architecture.</em>
-I like designing the most elegant system. I like mixing and matching these tools until I have code
-that is pleasing to read and also happens to work. The ideal web API server has no code, only a description
-of the tables and CRUD permissions, and the beautiful, clear documentation is self-generated (although
-no one needs to read it because the methods are so intuitive). We aren’t quite there yet, but we are
-actually very close.</p>
-
-<p>Less code means less technical debt, less tests to write, and less time spent developing. If you want
-a site built on modern tools with code so elegant that you can read it like a book, let me know.</p>
-
-<h3 id="audio">Audio</h3>
-
-<p>No surprise here, I love projects related to music or sound. I don’t really care what the tech is-
-from building tube amplifiers, guitar effects, synthesizer modules, etc. on the electronics end
-to coding DAW platforms, music apps, music tech startups, etc. on the software side, to totally
-totally off-the-wall things to just jamming. Come talk to me.</p>
-
+<div class="img-wrapper xlarge center"><a class="img-description-link"><img src="/blog/assets/images/bass/inside.jpg" alt="Switched one knob for another" license="" /><div class="img-description"><div>Switched one knob for another</div></div></a></div>
 
   </article>
 
@@ -453,12 +407,10 @@ totally off-the-wall things to just jamming. Come talk to me.</p>
 </div>
 
   <div class="post-nav">
-    <div class="prev"><a href="/blog/policy/the-war-of-the-root/">
-      Previous: The War of the Root
+    <div class="prev"><a href="/blog/other/freelance-announcement/">
+      Previous: Freelance Announcement
     </a></div>
-    <div class="next"><a href="/blog/hardware/crunch-time/">
-      Next: Crunch Time
-    </a></div>
+    <div class="next"></div>
   </div>
 
 </div>
