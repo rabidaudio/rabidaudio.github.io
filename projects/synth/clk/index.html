@@ -39,9 +39,15 @@
 
 <p>It’s entirely digital, which makes it an easier module to build since most of the complexity is in software.</p>
 
-<p><a href="https://github.com/rabidaudio/synthesizer/tree/clock/clock">Source files</a></p>
+<h2 id="source">Source</h2>
 
-<p>Status: In development. Working on a breadboard, most features software features have been implemented. PCB design in progress.</p>
+<p>Source files including code and CAD are available on <a href="https://github.com/rabidaudio/synthesizer/tree/clock/clock">GitHub</a>. Like most everything I do, this is <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">open hardware</a>.</p>
+
+<p><img src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" alt="Creative Commons License" /></p>
+
+<h2 id="status">Status</h2>
+
+<p>In development. Working on a breadboard, most features software features have been implemented. PCB design in progress.</p>
 
 <h3 id="todo">TODO</h3>
 
@@ -89,6 +95,8 @@
 <p><img src="/images/clock_schematic.png" alt="schematic" /></p>
 
 <p>The <a href="/resources#ATMega328P">ATMega328P</a> is used as the core microprocessor. Originally I planned on using the <a href="/resources#ATTiny85">ATTiny85</a> with an <a href="resources#HT16K33">HT16K33</a> LED driver, but there were just enough available pins on the Mega to drive the 7-segment displays directly, and the availability of a 16-bit timer drastically improves the resolution of the clock.</p>
+
+<p>An ISP header allows reprogramming of the firmware using any AVR programmer.</p>
 
 <p>The code uses <a href="https://platformio.org/">PlatformIO</a> for build tooling. Separate C++ classes encapsulate logic of each of the components, using header-only files to simplify file structure.</p>
 

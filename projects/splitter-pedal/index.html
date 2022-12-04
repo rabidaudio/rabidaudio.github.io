@@ -84,35 +84,11 @@
 
 <p>The right knob (3) allows some blend control between the wet and dry signals. At 12 o’clock, the blend is 50/50.</p>
 
-<h2 id="design">Design</h2>
+<h2 id="source">Source</h2>
 
-<p><img src="/images/splitter_schematic.png" alt="schematic" /></p>
+<p>CAD files, SPICE simulations, and decal designs are <a href="https://github.com/rabidaudio/effects/tree/main/splitter">on GitHub</a>. Like most everything I do, this is <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">open hardware</a>.</p>
 
-<h3 id="power-supply">Power supply</h3>
-
-<p><a href="/resources#TLE2426">TLE2426</a> provides a signal ground between 0 and 9V, providing a dual-ended 4.5V power supply for the op-amp from a 9V battery or DC adapter typical for effects pedals.</p>
-
-<h3 id="input-stage">Input stage</h3>
-
-<p>U1B is an input buffer. Since the signal goes directly into the op-amp, this input impedance is quite high (theoretically infinite, in practice upwards of 10MOhm). The input signal also goes into U1D through a voltage divider R4/R5, so the true input impedance on the input pin is 2MOhm. This makes this pedal suitable as a buffer.</p>
-
-<h3 id="filter">Filter</h3>
-
-<p>C1/C2/R1/R2/RV1/U1A act as a variable <a href="https://en.wikipedia.org/wiki/Sallen%E2%80%93Key_topology">2nd-order active high pass filter</a> with a Q of 0.5 and a cutoff from 7.2Hz to 7.2kHz. U1D subtracts the high pass signal from the input to get a low pass signal.</p>
-
-<p>To vary both R components of a 2nd order filter, it simply uses a dual audio taper pot. Rather than a true <a href="https://en.wikipedia.org/wiki/Linkwitz%E2%80%93Riley_filter">LR active crossover filter</a>, this circuit simply subtracts the original signal from the filtered signal to get the opposite frequencies. This creates a comb filter with an uneven phase shift, which means this pedal will have moderate a tonal effect. Both of these limitations are for cost savings and simplicity. A more robust circuit would use two LR VCFs but this would drastically increase cost and complexity.</p>
-
-<p><img src="/images/splitter_comb_bode.png" alt="comb effect" /></p>
-
-<h3 id="jumpers">Jumpers</h3>
-
-<p>From there the signals are routed using the switches and jacks. A complex set of jumpers and test points allow reconfiguring the behavior of the circuit. An additional send + receive pair of jacks for the “dry” signal can be added using JP2/J6/J8, while the behavior of the stereo channel can be changed with JP1/J7 and JP3/J9, for example wiring them to a second PCB for stereo support.</p>
-
-<h3 id="mixer">Mixer</h3>
-
-<p>Finally U1C/RV2 mixes the wet and dry signals and buffers them to the output. Cost-cutting measures were also used on the mixer design. At this point we’ve used 3 of the op-amps in a quad package. Rather than adding more op-amps to create VCAs, this design simply uses an <a href="https://en.wikipedia.org/wiki/Operational_amplifier_applications#Summing_amplifier">inverting summing amplifier</a> with a pot to vary the gain of each signal. R7 and R8 are necessary to set a lower-bound on the input impedance. In the center position, each signal sees a gain of ~1 (<code class="highlighter-rouge">1MOhm/(470KOhm + 500KOhm)</code>). At the extremes, the lesser signal has a gain of <code class="highlighter-rouge">1MOhm/(470KOhm + 1MOhm) = ~0.68</code> while the larger signal gets a gain of <code class="highlighter-rouge">1MOhm/470KOhm = ~2.13</code>. This means it’s not linear and will boost one side or the other in extreme settings. It also limits the effective ratio of wet/dry to about 25%-75%, while a more robust circuit would provide a 0%-100% control without any variation in gain.</p>
-
-<!-- panel -->
+<p><img src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" alt="Creative Commons License" /></p>
 
 <h2 id="parts">Parts</h2>
 
@@ -151,6 +127,36 @@
 <p>No calibration required.</p>
 
 <p><img src="/images/splitter_pcb.png" alt="pcb" /></p>
+
+<h2 id="design">Design</h2>
+
+<p><img src="/images/splitter_schematic.png" alt="schematic" /></p>
+
+<h3 id="power-supply">Power supply</h3>
+
+<p><a href="/resources#TLE2426">TLE2426</a> provides a signal ground between 0 and 9V, providing a dual-ended 4.5V power supply for the op-amp from a 9V battery or DC adapter typical for effects pedals.</p>
+
+<h3 id="input-stage">Input stage</h3>
+
+<p>U1B is an input buffer. Since the signal goes directly into the op-amp, this input impedance is quite high (theoretically infinite, in practice upwards of 10MOhm). The input signal also goes into U1D through a voltage divider R4/R5, so the true input impedance on the input pin is 2MOhm. This makes this pedal suitable as a buffer.</p>
+
+<h3 id="filter">Filter</h3>
+
+<p>C1/C2/R1/R2/RV1/U1A act as a variable <a href="https://en.wikipedia.org/wiki/Sallen%E2%80%93Key_topology">2nd-order active high pass filter</a> with a Q of 0.5 and a cutoff from 7.2Hz to 7.2kHz. U1D subtracts the high pass signal from the input to get a low pass signal.</p>
+
+<p>To vary both R components of a 2nd order filter, it simply uses a dual audio taper pot. Rather than a true <a href="https://en.wikipedia.org/wiki/Linkwitz%E2%80%93Riley_filter">LR active crossover filter</a>, this circuit simply subtracts the original signal from the filtered signal to get the opposite frequencies. This creates a comb filter with an uneven phase shift, which means this pedal will have moderate a tonal effect. Both of these limitations are for cost savings and simplicity. A more robust circuit would use two LR VCFs but this would drastically increase cost and complexity.</p>
+
+<p><img src="/images/splitter_comb_bode.png" alt="comb effect" /></p>
+
+<h3 id="jumpers">Jumpers</h3>
+
+<p>From there the signals are routed using the switches and jacks. A complex set of jumpers and test points allow reconfiguring the behavior of the circuit. An additional send + receive pair of jacks for the “dry” signal can be added using JP2/J6/J8, while the behavior of the stereo channel can be changed with JP1/J7 and JP3/J9, for example wiring them to a second PCB for stereo support.</p>
+
+<h3 id="mixer">Mixer</h3>
+
+<p>Finally U1C/RV2 mixes the wet and dry signals and buffers them to the output. Cost-cutting measures were also used on the mixer design. At this point we’ve used 3 of the op-amps in a quad package. Rather than adding more op-amps to create VCAs, this design simply uses an <a href="https://en.wikipedia.org/wiki/Operational_amplifier_applications#Summing_amplifier">inverting summing amplifier</a> with a pot to vary the gain of each signal. R7 and R8 are necessary to set a lower-bound on the input impedance. In the center position, each signal sees a gain of ~1 (<code class="highlighter-rouge">1MOhm/(470KOhm + 500KOhm)</code>). At the extremes, the lesser signal has a gain of <code class="highlighter-rouge">1MOhm/(470KOhm + 1MOhm) = ~0.68</code> while the larger signal gets a gain of <code class="highlighter-rouge">1MOhm/470KOhm = ~2.13</code>. This means it’s not linear and will boost one side or the other in extreme settings. It also limits the effective ratio of wet/dry to about 25%-75%, while a more robust circuit would provide a 0%-100% control without any variation in gain.</p>
+
+<!-- panel -->
 
 <h2 id="prototype">Prototype</h2>
 
