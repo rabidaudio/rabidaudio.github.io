@@ -13,9 +13,15 @@
 <meta name="description" content="Documenting my work at the intersection of technology and music."/>
 <link rel="me" href="https://mastodon.lol/@okay_sure_cool"/>
 
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cutive+Mono&family=Oxygen&display=swap" rel="stylesheet"><link rel="stylesheet" href="/_bridgetown/static/index.YFRNRHIN.css"/>
+<link href="https://fonts.googleapis.com/css2?family=Cutive+Mono&family=Oxygen&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="/_bridgetown/static/index.C4U2HVKQ.css"/>
 <script src="/_bridgetown/static/index.LQD2JBNB.js" defer></script>
 
   </head>
@@ -214,7 +220,9 @@ They don’t make good comparators because they aren’t rail-to-rail, and they 
       </p>
 
       <p><a href="/resources/datasheets/Thonkiconn_Jack_Datasheet.pdf" target="_blank">Datasheet</a></p>
-      <p><a href="https://www.thonk.co.uk/shop/thonkiconn/" target="_blank">Purchase</a></p>
+      <p>
+        <a href="https://www.thonk.co.uk/shop/thonkiconn/" target="_blank">Purchase</a>
+      </p>
   <h2 id="led">LED</h2>
 
     <h3 id="HT16K33">HT16K33</h3>
@@ -235,6 +243,33 @@ They don’t make good comparators because they aren’t rail-to-rail, and they 
       </p>
 
       <p><a href="/resources/datasheets/SM460281N-10mm-7-segement.pdf" target="_blank">Datasheet</a></p>
+  <h2 id="microprocessor">MICROPROCESSOR</h2>
+
+    <h3 id="ATTiny85">ATTiny85</h3>
+
+    <p>A full 8-bit AVR microprocessor in a tiny 8-pin package</p>
+
+      <p class="note">
+        <p>Can be programmed via Arduino as long as you have a programmer (I use a <a href="https://www.fischl.de/usbasp/">USBasp</a>) and the attiny library installed. It’s got an internal oscillator which is good enough for situations which aren’t time-critical, meaning it works with zero external parts required.</p>
+
+<p><img src="images/ATtiny45-85.png" alt="pinout" /></p>
+      </p>
+
+      <p><a href="/resources/datasheets/Atmel-2586-AVR-8-bit-Microcontroller-ATtiny25-ATtiny45-ATtiny85_Datasheet.pdf" target="_blank">Datasheet</a></p>
+      <p>
+        <a href="https://highlowtech.org/?p=1695" target="_blank">Docs</a>
+      </p>
+    <h3 id="ATMega328P">ATMega328P</h3>
+
+    <p>8-bit AVR microprocessor that powers Arduino</p>
+
+      <p class="note">
+        <p>The benefit of building around this chip is you can prototype with an Arduino, and then once you’re happy with the design, switch to operating the chip directly with <a href="https://docs.arduino.cc/built-in-examples/arduino-isp/ArduinoToBreadboard">a minimum of parts</a>.</p>
+
+<p><img src="images/Atmega168PinMap2.png" alt="pinout" /></p>
+      </p>
+
+      <p><a href="/resources/datasheets/Atmel-7810-Automotive-Microcontrollers-ATmega328P_Datasheet.pdf" target="_blank">Datasheet</a></p>
   <h2 id="pot">POT</h2>
 
     <h3 id="Alpha 9mm pot">Alpha 9mm pot</h3>
@@ -246,7 +281,9 @@ They don’t make good comparators because they aren’t rail-to-rail, and they 
       </p>
 
       <p><a href="/resources/datasheets/Alpha 9mm Vertical - Linear Taper B1K-B500K.pdf" target="_blank">Datasheet</a></p>
-      <p><a href="https://www.thonk.co.uk/shop/alpha-9mm-pots-vertical-t18/" target="_blank">Purchase</a></p>
+      <p>
+        <a href="https://www.thonk.co.uk/shop/alpha-9mm-pots-vertical-t18/" target="_blank">Purchase</a>
+      </p>
     <h3 id="Alpha 9mm pot (dual gang)">Alpha 9mm pot (dual gang)</h3>
 
     <p></p>
@@ -271,18 +308,18 @@ They don’t make good comparators because they aren’t rail-to-rail, and they 
       </p>
 
       <p><a href="/resources/datasheets/MD100AM2B-15A10K-6H_spec.pdf" target="_blank">Datasheet</a></p>
-    <h3 id="Bourns PDB18">Bourns PDB18</h3>
+    <h3 id="PDB18">PDB18</h3>
 
-    <p>Mini instrument potentiometers</p>
+    <p>Bourns mini instrument potentiometers</p>
 
       <p class="note">
         <p>Used in guitars. Available in linear and audio taper in several configurations.</p>
       </p>
 
       <p><a href="/resources/datasheets/PDB18.pdf" target="_blank">Datasheet</a></p>
-    <h3 id="Bourns PTV09">Bourns PTV09</h3>
+    <h3 id="PTV09">PTV09</h3>
 
-    <p>9mm potentiometer</p>
+    <p>Bourns 9mm potentiometer</p>
 
       <p class="note">
         <p>Competitor to the Alpha ones</p>
@@ -341,15 +378,15 @@ They don’t make good comparators because they aren’t rail-to-rail, and they 
 
 
       <p><a href="/resources/datasheets/rm.pdf" target="_blank">Datasheet</a></p>
-    <h3 id="Bourns 12mm incremental rotary encoder">Bourns 12mm incremental rotary encoder</h3>
+    <h3 id="PEC11R">PEC11R</h3>
 
-    <p></p>
+    <p>Bourns 12mm incremental rotary encoder</p>
 
 
       <p><a href="/resources/datasheets/PEC11R.pdf" target="_blank">Datasheet</a></p>
-    <h3 id="Bourns 11mm incremental rotary encoder">Bourns 11mm incremental rotary encoder</h3>
+    <h3 id="PEC11H">PEC11H</h3>
 
-    <p></p>
+    <p>Bourns 11mm incremental rotary encoder</p>
 
 
       <p><a href="/resources/datasheets/pec11h.pdf" target="_blank">Datasheet</a></p>
