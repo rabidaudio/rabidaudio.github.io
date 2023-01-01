@@ -6,7 +6,7 @@
 <title>
   
     
-  Headphone breakout board | rabid.audio
+  Synthesizer - Envelope module | rabid.audio
   
 </title>
 
@@ -25,7 +25,7 @@
 <script src="/_bridgetown/static/index.LQD2JBNB.js" defer></script>
 
   </head>
-  <body class="post ">
+  <body class="default ">
     <header><a href="/">
     <h1 class="logo">rabid.audio</h1>
   </a>
@@ -49,18 +49,25 @@
 
     <main>
       
-        <h1>Headphone breakout board</h1>
+        <h1>Synthesizer - Envelope module</h1>
       
-      <p><a href="/resources#35RAPC4BHN3">35RAPC4BHN3</a> is a very common Stereo 3.5mm jack, you can even find them on <a href="https://www.amazon.com/gp/product/B07XX9ZPZM">Amazon</a> if you don’t want to wait for shipping from a more traditional parts supplier. This jack has connection switches for both tip and sleeve. However the layout of the pins is not conducive to using on a breadboard.</p>
+      <p>This is an ADSR-style envelope module. It’s dual channel with the knobs controlling both channels.</p>
 
-<p>I put together a small breakout board for it and printed them via OSHPark.</p>
+<p>To my knowledge this circuit is a unique approach to the problem. It uses an LM13700 as a slew-rate-limited buffer and a cheap analog latch.</p>
 
-<p><a href="https://github.com/rabidaudio/synthesizer/tree/master/hp_breakout">Source code</a></p>
+<h2 id="source">Source</h2>
 
-<p><img src="/images/hp_layout.png" alt="Breakout layout" /></p>
+<p>Source files including code and CAD are available on <a href="https://github.com/rabidaudio/synthesizer/tree/clock/clock">GitHub</a>. Like most everything I do, this is <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">open hardware</a>.</p>
 
-<p><img src="/images/hp_image.jpg" alt="Breakout -halfwidth" /></p>
+<p><img src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" alt="Creative Commons License" /></p>
 
+<h2 id="status">Status</h2>
+
+<p>This module is still a work-in-progress. The design has been confirmed on a breadboard, but the PCB still needs to be designed.</p>
+
+<h2 id="design">Design</h2>
+
+<!-- https://github.com/rabidaudio/synthesizer/tree/master/adsr -->
 
     </main>
 
