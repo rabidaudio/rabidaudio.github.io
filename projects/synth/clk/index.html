@@ -21,7 +21,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cutive+Mono&family=Oxygen&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="/_bridgetown/static/index.JBE75XOG.css"/>
+<link rel="stylesheet" href="/_bridgetown/static/index.GCL2Q73U.css"/>
 <script src="/_bridgetown/static/index.LQD2JBNB.js" defer></script>
 
   </head>
@@ -108,7 +108,7 @@
 
 <h2 id="design">Design</h2>
 
-<p><img src="/images/clock_schematic.png" alt="schematic" /></p>
+<div class="image-container full"><img src="/images/clock_schematic.png" /></div>
 
 <p>The <a href="/resources#ATMega328P">ATMega328P</a> is used as the core microprocessor. Originally I planned on using the <a href="/resources#ATTiny85">ATTiny85</a> with an <a href="resources#HT16K33">HT16K33</a> LED driver, but there were just enough available pins on the Mega to drive the 7-segment displays directly, and the availability of a 16-bit timer drastically improves the resolution of the clock.</p>
 
@@ -128,7 +128,7 @@
 
 <p>The timer has a maximum error of 0.06% for pulses less than 5 Hz (300 BPM) and less than 0.25% for the maximum pulse rate of 20 Hz.</p>
 
-<p><img src="/images/clock_module_bpm_error.png" alt="BPM vs Error" /></p>
+<div class="image-container big center"><img src="/images/clock_module_bpm_error.png" /></div>
 
 <p><a href="https://en.wikipedia.org/wiki/Swing_(jazz_performance_style)">Swing</a> works by alternating each beat between two different timer values. These timer values average to the base clock frequency, but their ratio is controlled by the swing value. At <code class="highlighter-rouge">0</code>, the beats are even and there is no swing. At maximum value the swing beats are triplets.</p>
 
@@ -187,7 +187,7 @@ power.</p>
     </main>
 
     <footer><div class="blurb"><a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC-BY-SA</a>.</div>
-  <div class="blurb">Last Updated <a href="https://github.com/rabidaudio/rabid.audio">2023-01-03</a>.</div>
+  <div class="blurb">Last Updated <a href="https://github.com/rabidaudio/rabid.audio">2023-01-07</a>.</div>
   <div class="blurb">Made with ♥ in Atlanta.</div>
 </footer>
 

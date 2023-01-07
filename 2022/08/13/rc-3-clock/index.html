@@ -21,7 +21,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cutive+Mono&family=Oxygen&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="/_bridgetown/static/index.JBE75XOG.css"/>
+<link rel="stylesheet" href="/_bridgetown/static/index.GCL2Q73U.css"/>
 <script src="/_bridgetown/static/index.LQD2JBNB.js" defer></script>
 
   </head>
@@ -55,15 +55,14 @@
 
 <p>I googled for a solution and ran across a post on Reddit that referenced a defunct blog post. The Wayback Machine didn’t archive the images but from <a href="https://web.archive.org/web/20180818065127/http://luxmonday.com/2018/07/26/modifying-a-boss-rc-3-to-add-a-korg-sync-output/">the text</a> I was able to put together enough information to recreate it. The original user found two test pads on the PCB that dipped in voltage when the tempo LEDs blinked.</p>
 
-<p><img src="/images/looper-hack-scope.jpg" alt="oscilloscope-halfwidth" /></p>
+<div class="image-container"><img src="/images/looper-hack-scope.jpg" /></div>
 
 <p>I connected these and a 3.3V power line to an ATTiny85, using two analog inputs to read the LED blinks. A state machine waits through the startup process where the LEDs blink a few times, and through one complete bar to get the tempo information before outputting clock signals to a 3.5mm jack. I also 4x’ed the clock frequency to output 16th notes instead of quarter notes.</p>
 
-<p><img src="/images/looper-hack-pcb.jpg" alt="pcb-halfwidth" /></p>
-
 <!-- <blockquote class="twitter-tweet"><p lang="en" dir="ltr">Wanted my loop pedal to sync with my drum machine but the RC-3 doesn&#39;t have MIDI so I hacked it to output a clock signal 1/ <a href="https://t.co/OSuETAM5EN">pic.twitter.com/OSuETAM5EN</a></p>&mdash; Julian (@okay_sure_cool) <a href="https://twitter.com/okay_sure_cool/status/1558580820289458179?ref_src=twsrc%5Etfw">August 13, 2022</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> -->
 
-<p><img src="/images/looper-hack-demo.gif" alt="demo-halfwidth" /></p>
+<div class="image-container small"><img src="/images/looper-hack-pcb.jpg" />
+<img src="/images/looper-hack-demo.gif" /></div>
 
 <p>The source code for this is pretty simple. Feel free to use it as you see fit!</p>
 
@@ -134,7 +133,7 @@
     </main>
 
     <footer><div class="blurb"><a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC-BY-SA</a>.</div>
-  <div class="blurb">Last Updated <a href="https://github.com/rabidaudio/rabid.audio">2023-01-03</a>.</div>
+  <div class="blurb">Last Updated <a href="https://github.com/rabidaudio/rabid.audio">2023-01-07</a>.</div>
   <div class="blurb">Made with ♥ in Atlanta.</div>
 </footer>
 

@@ -21,7 +21,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cutive+Mono&family=Oxygen&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="/_bridgetown/static/index.JBE75XOG.css"/>
+<link rel="stylesheet" href="/_bridgetown/static/index.GCL2Q73U.css"/>
 <script src="/_bridgetown/static/index.LQD2JBNB.js" defer></script>
 
   </head>
@@ -55,7 +55,7 @@
 
 <p>To explain this pedal, I think it’s easiest to start with the problem it addresses. Sometimes you want to apply an effect not to the whole signal but only to one part of the frequency spectrum. A good DAW wil be able to split a signal chain and apply effects separately. One common use of this is in bass guitar, where applying effects like gain to the low end can cause it to sound muddy. <a href="https://origineffects.com/product/cali76-compact-bass/">Some pedals</a> for bass include a built-in high-pass filter to keep the low-end clean.</p>
 
-<p><img src="/images/splitter_garageband.png" alt="Example of very primitive splitter from GarageBand" /></p>
+<div class="image-container center"><img src="/images/splitter_garageband.png" /></div>
 
 <h2 id="usage">Usage</h2>
 
@@ -68,7 +68,7 @@
   <li>Bypass switch</li>
 </ol>
 
-<p><img src="/images/splitter_cuts.png" alt="layout" /></p>
+<div class="image-container short"><img src="/images/splitter_cuts.png" /></div>
 
 <p>This pedal provides the ability to route certain frequencies through a different effects chain and mix back together again. The wet signal is passed through a pair of send/receive jacks, and mixed back with the dry signal to the output.</p>
 
@@ -142,11 +142,11 @@
 
 <p>No calibration required.</p>
 
-<p><img src="/images/splitter_pcb.png" alt="pcb" /></p>
+<div class="image-container small"><img src="/images/splitter_pcb.png" /></div>
 
 <h2 id="design">Design</h2>
 
-<p><img src="/images/splitter_schematic.png" alt="schematic" /></p>
+<div class="image-container full"><img src="/images/splitter_schematic.png" /></div>
 
 <h3 id="power-supply">Power supply</h3>
 
@@ -162,7 +162,7 @@
 
 <p>To vary both R components of a 2nd order filter, it simply uses a dual audio taper pot. Rather than a true <a href="https://en.wikipedia.org/wiki/Linkwitz%E2%80%93Riley_filter">LR active crossover filter</a>, this circuit simply subtracts the original signal from the filtered signal to get the opposite frequencies. This creates a comb filter with an uneven phase shift, which means this pedal will have moderate a tonal effect. Both of these limitations are for cost savings and simplicity. A more robust circuit would use two LR VCFs but this would drastically increase cost and complexity.</p>
 
-<p><img src="/images/splitter_comb_bode.png" alt="comb effect" /></p>
+<div class="image-container center big"><img src="/images/splitter_comb_bode.png" /></div>
 
 <h3 id="jumpers">Jumpers</h3>
 
@@ -182,12 +182,13 @@
   <source src="/raw/splitter.mp3" type="audio/mpeg" />
 </audio>
 
-<p><img src="/images/splitter_proto.jpg" alt="prototype" /></p>
+<div class="image-container small"><img src="/images/splitter_proto.jpg" /></div>
+
 
     </main>
 
     <footer><div class="blurb"><a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC-BY-SA</a>.</div>
-  <div class="blurb">Last Updated <a href="https://github.com/rabidaudio/rabid.audio">2023-01-03</a>.</div>
+  <div class="blurb">Last Updated <a href="https://github.com/rabidaudio/rabid.audio">2023-01-07</a>.</div>
   <div class="blurb">Made with ♥ in Atlanta.</div>
 </footer>
 
