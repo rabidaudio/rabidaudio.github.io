@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" /><meta name="viewport" content="initial-scale=1.0, width=device-width, user-scalable=yes, minimum-scale=1.0, maximum-scale=2.0">
+
+<title>
+  
+    
+  Bass Chorus Pedal | rabid.audio
+  
+</title>
+
+<meta name="description" content="Documenting my work at the intersection of technology and music." />
+<link rel="me" href="https://hachyderm.io/@okay_sure_cool" />
+
+<link
+  rel="apple-touch-icon"
+  sizes="180x180"
+  href="/apple-touch-icon.png">
+<link
+  rel="icon"
+  type="image/png"
+  sizes="32x32"
+  href="/favicon-32x32.png">
+<link
+  rel="icon"
+  type="image/png"
+  sizes="16x16"
+  href="/favicon-16x16.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link
+  rel="preconnect"
+  href="https://fonts.gstatic.com"
+  crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cutive+Mono&family=Oxygen:wght@400;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="/_bridgetown/static/index.GCL2Q73U.css" />
+<script src="/_bridgetown/static/index.LQD2JBNB.js" defer></script>
+
+  </head>
+  <body class="default ">
+    <header><a href="/">
+    <h1 class="logo">rabid.audio</h1>
+  </a>
+  <p class="tagline">Documenting my work at the intersection of technology and music.</p>
+
+  <nav>
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/projects/synth">Synthesizer</a></li>
+      <li><a href="/posts">Posts</a></li>
+      <li><a href="/resources">Resources</a></li>
+      <li><a href="/music">Music</a></li>
+      <li><a href="/resume">Resume</a></li>
+      <li><a href="/links">Links</a></li>
+    </ul>
+  </nav>
+</header>
+
+    <main>
+      
+        <h1>Bass Chorus Pedal</h1>
+      
+      <p>I’m working on a custom analog chorus pedal, focused for bass. It’s “analog”, based on MN3102/MN3207 <a href="https://en.wikipedia.org/wiki/Bucket-brigade_device">Bucket-brigade (BBD)</a> chips. Analog is in quotes because BBD is really a form of digital sampling, but done in a very analog way.</p>
+
+<h2 id="source">Source</h2>
+
+<p>Source files including code and CAD are available on <a href="https://github.com/rabidaudio/effects/tree/main/chorus/chorus">GitHub</a>. Like most everything I do, this is <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">open hardware</a>.</p>
+
+<p><img src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" alt="Creative Commons License" /></p>
+
+<h2 id="status">Status</h2>
+
+<p><strong>Work in progress.</strong> Parameters have been selected, needs confirmation on breadboard, some final schematic tweaking, and then PCB design.</p>
+
+<h2 id="design">Design</h2>
+
+<h3 id="view-online"><a href="https://kicanvas.org/?github=https%3A%2F%2Fgithub.com%2Frabidaudio%2Feffects%2Ftree%2Fmain%2Fchorus%2Fchorus">View online</a></h3>
+
+<h3 id="bbd">BBD</h3>
+
+<p>The Panasonic MN3xxx chips are popular choices for BBD. The <a href="/resources/#MN3207">MN3207</a> is the actual BBD, effectively a large chain of switched capacitors. The <a href="/resources/#MN3102">MN3102</a> eases generating the clock signals and voltages the MN3207 needs (but you could certainly design without it).</p>
+
+<p>Sadly most BBD chips are no longer manufactured. The chips I got are <a href="https://www.youtube.com/watch?v=7epnv43jGV8">likely counterfeit</a>; more then half of them didn’t work at all. However I was able to find at least one good pair in a set of 10. Once the design is finalized, I’ll see if I can find any new old-stock or something like that.</p>
+
+<h3 id="filtering">Filtering</h3>
+
+<p><a href="https://www.electrosmash.com/mn3007-bucket-brigade-devices">This blog post</a> has a pretty good summary of designing with BBDs. Importantly, a decent amount of filtering is required both before and after the delay. This post also recommends using compression and expansion to increase the dynamic range, but I decided against that; it would have made the circuit significantly more complex and expensive. Instead I tuned the parameters to the way I actually play. It means the tone will vary with dynamics, but to me this is just more character for the effect.</p>
+
+<p>With bass guitar, applying effects to the low end can make the tone sound muddy and not very bass-like. Therefore, I apply the chorus effect to only the high band, using a <a href="splitter-pedal">tone filter circuit that I’ve used elsewhere</a>.</p>
+
+<p>For a flange effect, some amount of the wet signal is fed back into the input, which gives it a wider, reverb-y sound. This design includes allowing up to 50% of the wet signal to feed back.</p>
+
+<p>The delay amount is controlled by a clock signal, that switches the capacitors. The formula for the delay time is <code class="highlighter-rouge">1024 stages / 2 / clock frequency (Hz)</code>, so 200Khz becomes a 2.56ms delay and 10KHz a 51.2ms delay. The <a href="/resources/#MN3207">datasheet</a> suggests that these are the bounds of what the chip can support, but it does seem to work beyond these bounds, particularly on the higher frequency (lower delay end). I’ve designed the clock output to be ~250KHz to ~20KHz, or a delay range from 2ms to 25.6ms.</p>
+
+<p>The clock is a square wave VCO made from an <a href="/resources#LM13700">LM13700</a>. A triangle LFO signal oscillates the clock frequency. This LFO is generated from a microprocessor, which keeps the required number of parts low and allows for flexibility in LFO generation (e.g. switching from triangle to sine, non-linear control parameters, etc). In theory the whole clock signal could be generated this way and the LM13700 VCO could be removed; I may still do this in a future revision.</p>
+
+<p>Stages:</p>
+
+<ol>
+  <li>Input buffer - sets the input impedance, and mixes in feedback signal</li>
+  <li>Tone filter - separates the highs from lows. passes highs along effects chain</li>
+  <li>Anti-aliasing filter - gets the input signal within the requirements of the <a href="https://en.wikipedia.org/wiki/Nyquist%E2%80%93Shannon_sampling_theorem">Nyquist limit</a></li>
+  <li>BBD - delays the input signal by a few milliseconds</li>
+  <li>Reconstruction filter - filter out any aliasing and clock noise</li>
+  <li>Output buffer - the wet highs are mixed back with the dry lows. these are then mixed with the pure dry signal to limit the intensity of the effect</li>
+</ol>
+
+<h3 id="simulation">Simulation</h3>
+
+<p>In order to properly select the control parameter ranges and experiment with filter requirements, I simulated the circuit in Max MSP and played bass through that simulation. It simulates aliasing using <code class="highlighter-rouge">downsamp~</code>. It also uses a non-linear control function for LFO rate, which was derived from picking a range of rates that sounded good and roughly evenly-spaced from a “goodness” perspective, and <a href="https://docs.google.com/spreadsheets/d/1kvplbcg9_sloKRhXaWvJHcXoQZFK4X6Lk1JHIbradk8/edit?usp=sharing#gid=524353718">fitting a function to that ideal curve</a>. The result was <code class="highlighter-rouge">1.25 ^ (19.2 * rate - 15.4)</code> (where rate is 0-1 and the result is in Hz).</p>
+
+<p>The parameters I settled on:</p>
+
+<ul>
+  <li>HP cutoff: 50Hz to 5KHz, center: 500Hz</li>
+  <li>LFO rate: 0.032Hz to 2.296Hz</li>
+  <li>Delay: 2ms to 25ms</li>
+  <li>Wet/Dry mix: 0%/100% to 50%/50%</li>
+  <li>Feedback amount: 0% to 50%</li>
+  <li>AA filter: 3rd order Butterworth LP with 7KHz cutoff</li>
+  <li>Reconstruction filter: 5th order Butterworth LP with 4.4KHz cutoff</li>
+</ul>
+
+<div class="image-container full"><img src="/images/chorus-max.png" /></div>
+
+    </main>
+
+    <footer><div class="blurb"><a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC-BY-SA</a>.</div>
+  <div class="blurb">Last Updated <a href="https://github.com/rabidaudio/rabid.audio">2023-04-23</a>.</div>
+  <div class="blurb">Made with ♥ in Atlanta.</div>
+</footer>
+
+  </body>
+</html>
