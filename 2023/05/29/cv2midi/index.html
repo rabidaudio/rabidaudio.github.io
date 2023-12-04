@@ -11,6 +11,7 @@
 </title>
 
 <meta name="description" content="Documenting my work at the intersection of technology and music." />
+<meta name="theme-color" content="#d01040" />
 <link rel="me" href="https://hachyderm.io/@okay_sure_cool" />
 
 <link
@@ -33,9 +34,19 @@
   rel="preconnect"
   href="https://fonts.gstatic.com"
   crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cutive+Mono&family=Oxygen:wght@400;700&display=swap" rel="stylesheet">
+<link
+  rel="preload"
+  href="https://fonts.googleapis.com/css2?family=Cutive+Mono&family=Oxygen:wght@400;700&display=swap"
+  as="style"
+  onload="this.onload=null;this.rel='stylesheet'" />
+<noscript>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cutive+Mono&family=Oxygen:wght@400;700&display=swap"
+    rel="stylesheet"
+    type="text/css" />
+</noscript>
 
-<link rel="stylesheet" href="/_bridgetown/static/index.QAC5TIDQ.css" />
+<link rel="stylesheet" href="/_bridgetown/static/index.HDN32OKM.css" />
 <script src="/_bridgetown/static/index.LQD2JBNB.js" defer></script>
 
   </head>
@@ -153,7 +164,7 @@ unsigned integers to be around 16us on the ATmega32U4 at 4MHz.</p>
   </li>
 </ol>
 
-<div class="image-container center short"><img src="/images/2023-05-29-cv2midi/normal.png" /></div>
+<div class="image-container center"><img src="/images/2023-05-29-cv2midi/normal.png" /></div>
 
 <p>This debugging chart shows the typical behavior. Here, the red signal is Timer3,
 the blue is Timer1, and the purple represents the number of MIDI clock messages left.
@@ -165,18 +176,18 @@ input clocks that get faster or slower. If getting slower, all we have to do is 
 only the first 24 clocks of the beat. When the next input clock eventually comes in,
 the new clocks will start at the updated tempo.</p>
 
-<div class="image-container center short"><img src="/images/2023-05-29-cv2midi/getting-slower.png" /></div>
+<div class="image-container center"><img src="/images/2023-05-29-cv2midi/getting-slower.png" /></div>
 
 <p>If the input clock is getting faster, the best solution I could find is to quickly
 beat any of the remaining 24 beats and then start at the new rate.</p>
 
-<div class="image-container center short"><img src="/images/2023-05-29-cv2midi/getting-faster.png" /></div>
+<div class="image-container center"><img src="/images/2023-05-29-cv2midi/getting-faster.png" /></div>
 
 <p>You can see the <a href="https://github.com/rabidaudio/clock2midi/blob/main/clock2midi/clock2midi.ino">well-commented source code here</a>. Eventually I’d like to make a helper library for
 generating these timer registers. In the meantime I simply commented the
 configuration of the registers.</p>
 
-<div class="image-container center short"><img src="/images/2023-05-29-cv2midi/getting-faster.png" /></div>
+<div class="image-container center"><img src="/images/2023-05-29-cv2midi/getting-faster.png" /></div>
 
 <p>Finally, I added a button to start and stop the signal. I left room for a MIDI-in
 jack to pass through any signals along to the keyboard, but I didn’t solder it yet.</p>
@@ -195,7 +206,7 @@ back.</p>
     </main>
 
     <footer><div class="blurb"><a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC-BY-SA</a>.</div>
-  <div class="blurb">Last Updated <a href="https://github.com/rabidaudio/rabid.audio">2023-10-02</a>.</div>
+  <div class="blurb">Last Updated <a href="https://github.com/rabidaudio/rabid.audio">2023-12-04</a>.</div>
   <div class="blurb">Made with ♥ in Atlanta.</div>
 </footer>
 

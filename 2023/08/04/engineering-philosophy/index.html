@@ -11,6 +11,7 @@
 </title>
 
 <meta name="description" content="Documenting my work at the intersection of technology and music." />
+<meta name="theme-color" content="#d01040" />
 <link rel="me" href="https://hachyderm.io/@okay_sure_cool" />
 
 <link
@@ -33,9 +34,19 @@
   rel="preconnect"
   href="https://fonts.gstatic.com"
   crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cutive+Mono&family=Oxygen:wght@400;700&display=swap" rel="stylesheet">
+<link
+  rel="preload"
+  href="https://fonts.googleapis.com/css2?family=Cutive+Mono&family=Oxygen:wght@400;700&display=swap"
+  as="style"
+  onload="this.onload=null;this.rel='stylesheet'" />
+<noscript>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cutive+Mono&family=Oxygen:wght@400;700&display=swap"
+    rel="stylesheet"
+    type="text/css" />
+</noscript>
 
-<link rel="stylesheet" href="/_bridgetown/static/index.QAC5TIDQ.css" />
+<link rel="stylesheet" href="/_bridgetown/static/index.HDN32OKM.css" />
 <script src="/_bridgetown/static/index.LQD2JBNB.js" defer></script>
 
   </head>
@@ -108,7 +119,9 @@
 
 <h3 id="run-a-data-team-like-a-product-team">Run a data team like a product team</h3>
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/zoqyefI5VKU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen=""></iframe>
+<div style="text-align: center">
+    <iframe style="max-width: 560px" width="100%" height="315" src="https://www.youtube.com/embed/zoqyefI5VKU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen=""></iframe>
+</div>
 
 <h3 id="code-reviews">Code reviews</h3>
 
@@ -292,7 +305,9 @@
 
 <p>In the mid 2010s, React revolutionized the frontend JS world by designing a framework around the concept of one-way data flows. In this paradigm, UIs are declarative, and pass data down to their children. When data changes, the UIs are simply re-rendered with the new state. Events (typically user interaction) bubble back up or trigger background operations which eventually change the state at a higher level, causing new data to flow downwards and re-render the UI.</p>
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/nYkdrAPrdcw?start=616" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen=""></iframe>
+<div style="text-align: center">
+    <iframe style="max-width: 560px" width="100%" height="315" src="https://www.youtube.com/embed/nYkdrAPrdcw?start=616" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen=""></iframe>
+</div>
 
 <p>React is not the only JS framework that uses this paradigm, and the design pattern can be implemented in any language/framework. Following this pattern makes it easy to reason about and change.</p>
 
@@ -415,7 +430,7 @@
     </main>
 
     <footer><div class="blurb"><a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC-BY-SA</a>.</div>
-  <div class="blurb">Last Updated <a href="https://github.com/rabidaudio/rabid.audio">2023-10-02</a>.</div>
+  <div class="blurb">Last Updated <a href="https://github.com/rabidaudio/rabid.audio">2023-12-04</a>.</div>
   <div class="blurb">Made with ♥ in Atlanta.</div>
 </footer>
 
