@@ -48,6 +48,10 @@
 <link rel="stylesheet" href="/_bridgetown/static/index.HDN32OKM.css" />
 <script src="/_bridgetown/static/index.LQD2JBNB.js" defer></script>
 
+
+
+<script type="module" src="https://kicanvas.org/kicanvas/kicanvas.js"></script>
+
   </head>
   <body class="default ">
     <header><a href="/">
@@ -123,7 +127,240 @@
   <li>Un-pause the output by pressing DIV and SWING at the same time again.</li>
 </ul>
 
-<!-- ## Assembly instructions -->
+<h2 id="assembly-instructions">Assembly Instructions</h2>
+
+<h3 id="bom">BOM</h3>
+
+<p>There’s a small number of components necessary here, and most are generic. Passive components do not require
+high tolerances; 20% resistors will work just fine. Here I used a 1N4148 diode, but any general-purpose diode
+should be fine (1N4001, etc). The firmware will run on a ATmega168P but you can also use a higher-memory version
+such as the more-common ATmega328P used by Arduino. Unfortunately, it’s really hard to find 7-segment displays
+in a 10mm wide form factor. I settled on the <a href="/resources#SM460281N"><code class="highlighter-rouge">SM460281N</code></a> which can be shipped from
+China from <a href="https://www.lcsc.com/product-detail/Led%20Segment%20Display_ARKLED-Wuxi-ARK-Tech-Elec-SM460281N-7_C252194.html">LCSC</a>.
+The jacks are standard Thonkiconn 3.5mm which you can get from [ThonkDIY] (and probably other places too?).</p>
+
+<table>
+  <thead>
+    <tr>
+      <th> </th>
+      <th><strong>Resistors</strong></th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1x</td>
+      <td>180K</td>
+      <td>R1</td>
+    </tr>
+    <tr>
+      <td>1x</td>
+      <td>100K</td>
+      <td>R2</td>
+    </tr>
+    <tr>
+      <td>5x</td>
+      <td>1K</td>
+      <td>R3, R4, R5, R9, R10</td>
+    </tr>
+    <tr>
+      <td>6x</td>
+      <td>10K</td>
+      <td>R6, R7, R8, R11, R12, R13</td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td> </td>
+      <td><strong>Capacitors</strong></td>
+      <td> </td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td>1x</td>
+      <td>10u electrolytic</td>
+      <td>C1</td>
+    </tr>
+    <tr>
+      <td>3x</td>
+      <td>10n</td>
+      <td>C2, C5, C6</td>
+    </tr>
+    <tr>
+      <td>2x</td>
+      <td>22p</td>
+      <td>C3, C4</td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td> </td>
+      <td><strong>Diodes</strong></td>
+      <td> </td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td>2x</td>
+      <td>3mm LED</td>
+      <td>D1, D2</td>
+    </tr>
+    <tr>
+      <td>1x</td>
+      <td>1N4148 (or similar)</td>
+      <td>D3</td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td> </td>
+      <td><strong>Everything else</strong></td>
+      <td> </td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td>1x</td>
+      <td><a href="/resources#ATMega328P">ATMega168P</a></td>
+      <td>U1</td>
+    </tr>
+    <tr>
+      <td>1x</td>
+      <td><a href="/resources#LM7805">LM7805 5V regulator</a></td>
+      <td>U2</td>
+    </tr>
+    <tr>
+      <td>3x</td>
+      <td><a href="/resources#SM460281N">SM460281N 10mm 7-segment display</a></td>
+      <td>U3, U4, U5</td>
+    </tr>
+    <tr>
+      <td>1x</td>
+      <td>16MHz crystal oscillator</td>
+      <td>Y1</td>
+    </tr>
+    <tr>
+      <td>1x</td>
+      <td><a href="/resources#PEC11R">PEC11R Rotary encoder</a></td>
+      <td>RE1</td>
+    </tr>
+    <tr>
+      <td>2x</td>
+      <td><a href="/resources#TL1105">TL1105SP pushbutton switches</a></td>
+      <td>SW1, SW2</td>
+    </tr>
+    <tr>
+      <td>1x</td>
+      <td>2x3 2.5mm male pin headers</td>
+      <td>J1</td>
+    </tr>
+    <tr>
+      <td>1x</td>
+      <td>2x5 2.5mm male pin headers</td>
+      <td>J2</td>
+    </tr>
+    <tr>
+      <td>3x</td>
+      <td>1x5 2.5mm female pin headers</td>
+      <td>J3, J5, J7</td>
+    </tr>
+    <tr>
+      <td>3x</td>
+      <td>1x5 2.5mm male pin headers</td>
+      <td>J4, J6, J8</td>
+    </tr>
+    <tr>
+      <td>1x</td>
+      <td>1x7 2.5mm female pin headers</td>
+      <td>J9</td>
+    </tr>
+    <tr>
+      <td>1x</td>
+      <td>1x7 2.5mm male pin headers</td>
+      <td>J10</td>
+    </tr>
+    <tr>
+      <td>3x</td>
+      <td><a href="/resources#Thonkiconn">Thonkiconn 3.5mm jacks</a></td>
+      <td>J11, J12, J13</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="purchase">Purchase</h4>
+
+<ul>
+  <li>SM460281N 10mm 7-segment display: <a href="https://www.lcsc.com/product-detail/Led%20Segment%20Display_ARKLED-Wuxi-ARK-Tech-Elec-SM460281N-7_C252194.html">LCSC</a></li>
+  <li>Thonkiconn 3.5mm jacks: <a href="https://www.thonk.co.uk/shop/thonkiconn/">Thonk</a></li>
+  <li>Everything else (except passives and pin headers) <a href="https://www.digikey.com/short/nm5fr5jc">Digikey</a></li>
+</ul>
+
+<h3 id="steps">Steps</h3>
+
+<ol>
+  <li>Start by soldering the resistors to both boards. Note that they go on both sides of the top board:
+  Top board, top face: R9, R10, R13
+  Top board, bottom face: R1, R2, R7, R8, R11, R12
+  Bottom board, bottom face: R3, R4, R5, R6</li>
+</ol>
+
+<p>Clip the legs close</p>
+
+<ol>
+  <li>
+    <p>Capacitors
+  Top board, top face: C6
+  Top board, bottom face: C5
+  Bottom board, bottom face: 
+Orientation</p>
+  </li>
+  <li>
+    <p>Diode 
+  top board, bottom face
+  orientation</p>
+  </li>
+  <li>
+    <p>Crystal oscillator, bottom board bottom face</p>
+  </li>
+  <li>ISR and eurorack headers</li>
+  <li>LM7805, bottom board, bottom face</li>
+  <li>IC holder</li>
+  <li>Female headers bottom board + Male headers, top board
+ sandwich together and solder</li>
+</ol>
+
+<p>Take a break</p>
+
+<p>insert components, but <strong>dont solder yet</strong>
+switches, with caps
+rotary encoder. electrical tape on bottom. put nut ~50% of the way down
+LEDs - long legs positive (jack side)
+Jacks
+7 segment displays (period down, rotary encoder side)
+put panel on - nuts for jack and rotary encoder. adjust lower rotary encoder jack for level panel height
+Solder jacks, encoder, and switches (NOT LEDs yet)
+Push LEDs into position in panel. can use tape. may have to angle/bend LEDs.Solder.
+Push up 7-segments. legs probably too short for flush with panel. use tape to</p>
+
+<h3 id="programming-firmware">Programming firmware</h3>
+
+<p>You’ll need a programmer in order to load the firmware onto the chip. The simplest way to do this is to use an Arduino Uno and swap the chip into the 28-pin header. You can also use a programmer with the standard ISP header pinout such as the USBtinyISP, USBasp, Atmel-ICE, etc. to program the chip directly onto the assembled board.</p>
+
+<p>If you’ve got a brand new bare chip, you’ll need to start by setting the <a href="https://www.xanthium.in/how-to-configuring-atmega328p-fuse-low-byte-embedded-design-use-external-crystal-fuse-settings">clock fuse byte</a>. You’ll need to be sure to set the clock to an external 16MHz clock or else the display will blink annoyingly and the beat output will be too slow. You can do this using the Arduino IDE or using avrdude directly:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># NOTE: you'll likely need to tweak this command for your programmer, and for the chip if you're using a 328p instead</span>
+avrdude <span class="nt">-c</span> usbasp <span class="nt">-p</span> m168p <span class="nt">-U</span> lfuse:w:0xFF:m
+</code></pre></div></div>
+
+<p>After that, you can program the chip using <a href="platformio.org">PlatformIO</a>:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>platformio run <span class="nt">-t</span> upload <span class="nt">--verbose</span>
+</code></pre></div></div>
+
+<p>No calibration is required.</p>
+
+<p>Reduce brightness of LEDs by increasing the value of R9 and R10</p>
 
 <h2 id="design">Design</h2>
 
@@ -218,10 +455,33 @@
 
 <!-- TODO: pictures -->
 
+<h2 id="fix-in-a-future-iteration">Fix in a future iteration</h2>
+
+<p>As this is my first fully-complete module, I learned a lot. There’s some things I’d do differently that I may fix in a future revision, but weren’t worth fixing at this time.</p>
+
+<ul>
+  <li>Add standoffs to hold the two boards together. Relying on pin-header friction is not the best</li>
+  <li>Rethink components beneath rotary encoder. Too easy to short out</li>
+  <li>Make the front panel symmetrical</li>
+  <li>More intuitive keyboard shortcuts</li>
+  <li>CV in isn’t all that valuable; another output (or an external clock input) would be more useful</li>
+  <li>Reduce brightness of LEDs by increasing R9 and R10</li>
+  <li>More space around programmer so it’s not running into regulator</li>
+</ul>
+
+<!--
+1. finish directions
+2. video
+3. pictures
+4. Remove panel design note from alt panel
+5. ensure component values are on pcb gerbers
+6. re-export gerbers for final revb
+-->
+
     </main>
 
     <footer><div class="blurb"><a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC-BY-SA</a>.</div>
-  <div class="blurb">Last Updated <a href="https://github.com/rabidaudio/rabid.audio">2024-05-14</a>.</div>
+  <div class="blurb">Last Updated <a href="https://github.com/rabidaudio/rabid.audio">2024-11-26</a>.</div>
   <div class="blurb">Made with ♥ in Atlanta.</div>
 </footer>
 

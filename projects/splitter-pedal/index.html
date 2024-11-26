@@ -48,6 +48,10 @@
 <link rel="stylesheet" href="/_bridgetown/static/index.HDN32OKM.css" />
 <script src="/_bridgetown/static/index.LQD2JBNB.js" defer></script>
 
+
+
+<script type="module" src="https://kicanvas.org/kicanvas/kicanvas.js"></script>
+
   </head>
   <body class="default ">
     <header><a href="/">
@@ -74,20 +78,20 @@
 
 <p>To explain this pedal, I think it’s easiest to start with the problem it addresses. Sometimes you want to apply an effect not to the whole signal but only to one part of the frequency spectrum. A good DAW wil be able to split a signal chain and apply effects separately. One common use of this is in bass guitar, where applying effects like gain to the low end can cause it to sound muddy. <a href="https://origineffects.com/product/cali76-compact-bass/">Some pedals</a> for bass include a built-in high-pass filter to keep the low-end clean.</p>
 
-<div class="image-container center"><img src="/images/splitter_garageband.png" /></div>
+<div class="image-container center"><img src="/images/splitter/splitter_garageband.png" /></div>
 
 <h2 id="usage">Usage</h2>
 
 <h3 id="controls">Controls</h3>
 
 <ol>
-  <li>Cutoff (7Hz to 7kHz)</li>
+  <li>Cutoff (45Hz to 20kHz)</li>
   <li>Send mode switch (highs, all, lows)</li>
   <li>Wet/Dry mix</li>
   <li>Bypass switch</li>
 </ol>
 
-<div class="image-container short"><img src="/images/splitter_cuts.png" /></div>
+<!-- TODO: picture of case -->
 
 <p>This pedal provides the ability to route certain frequencies through a different effects chain and mix back together again. The wet signal is passed through a pair of send/receive jacks, and mixed back with the dry signal to the output.</p>
 
@@ -109,15 +113,15 @@
 
 <h3 id="send-mode-2--center-all">Send mode (2) = center (all)</h3>
 
-<p>In the center position mode, the full spectrum is sent down both paths. This mode can be used to turn a separate parallel effects chain on and off.</p>
+<p>In the center position mode, the full spectrum is sent down both paths. This mode can be used to turn a separate parallel effects chain on and off, and wet/dry mix the effects signal.</p>
 
 <p>IN is sent to SEND. IN and RECV are mixed (3) and sent to OUT. Cutoff (1) has no effect.</p>
 
 <h3 id="cutoff">Cutoff</h3>
 
-<p>The left knob (1) controls the cutoff point between high and low frequencies, from ~7Hz to ~7KHz. In the center position mode it has no effect.</p>
+<p>The left knob (1) controls the cutoff point between high and low frequencies, from ~45Hz to ~20kHz. In the center position mode it has no effect.</p>
 
-<p>The right knob (3) allows some blend control between the wet and dry signals. At 12 o’clock, the blend is 50/50.</p>
+<p>The right knob (3) allows some blend control between the wet and dry signals. At 12 o’clock, the blend is 50%/50%. Full counter-clockwise is 100% dry and full clockwise is 100% wet.</p>
 
 <h2 id="source">Source</h2>
 
@@ -127,18 +131,24 @@
 
 <h2 id="parts">Parts</h2>
 
+<div class="image-container center"><img src="/images/splitter/amoeba_case.jpg" /></div>
+
+<p>Passives are 0805 surface mount, and ICs are SOIC.</p>
+
 <ul>
-  <li>2x 0.1u ceramic capacitors</li>
-  <li>2x 22n ceramic or mylar capacitors</li>
-  <li>3x 1K resistor</li>
-  <li>2x 470K resistor</li>
-  <li>5x 1M resistor</li>
+  <li>6x 0.1u ceramic capacitors</li>
+  <li>4x 1u ceramic capacitors</li>
+  <li>2x 680p ceramic or mylar capacitors</li>
+  <li>1x 22k resistor</li>
+  <li>4x 220 resistor</li>
+  <li>1x 2.2k resistor</li>
+  <li>3x 10k resistor</li>
   <li>1x 3mm LED</li>
   <li>1x <a href="/resources#TLE2426">TLE2426 virtual ground IC</a></li>
   <li>1x <a href="/resources#TL07x">TL074</a> quad op-amp</li>
-  <li>1x 14-pin DIP IC holder</li>
-  <li>1x <a href="/resources#Alpha%209mm%20pot">Alpha 9mm A1M Dual pot</a> (dual gang audio-taper 1M)</li>
-  <li>1x <a href="/resources#Alpha%209mm%20pot">Alpha 9mm B1M pot</a> (linear taper 1M pot)</li>
+  <li>1x <a href="/resources#LM13700">LM13700</a> dual OTA</li>
+  <li>1x <a href="/resources#Alpha%209mm%20pot">Alpha 9mm A1M pot</a> (audio-taper 1M)</li>
+  <li>1x <a href="/resources#Alpha%209mm%20pot">Alpha 9mm B100K pot</a> (linear taper 100K)</li>
   <li>1x <a href="/resources#EG2301">EG2301</a> DPDT switch</li>
   <li>1x 3PDT stompbox foot switch [<a href="https://www.amazon.com/gp/product/B012CF181K">Amazon</a>]</li>
   <li>1x 2.1mm Barrel jack [<a href="https://www.amazon.com/gp/product/B096XJWZJQ">Amazon</a>]</li>
@@ -151,21 +161,21 @@
 <h2 id="assembly-instructions">Assembly instructions</h2>
 
 <ol>
-  <li>Solder jumpers JP1, JP2, and JP3 closed</li>
-  <li>Solder resistors, capacitors, TLE2426, and IC holder</li>
-  <li>Solder 9 wires from PCB to SW2 and two wires to power supply pins, both coming out the back side of the board</li>
-  <li>Solder the jacks on the back side of the board</li>
-  <li>Insert TL074 into IC holder. Place SW1, the pots, and the LED in board but don’t solder them yet. Align the parts with the case. Put the LED through the whole and hold it in place with a bit of electrical tape. Attach the pots and jacks to the case. When everything is aligned properly and flush, solder the LED, pots, and SW1</li>
+  <li>Solder ICs. Note orientation of pin 1</li>
+  <li>Solder resistors, capacitors, and finally TLE2426</li>
+  <li>Solder ribbon cable PCB to SW2 and two wires to power supply pins</li>
+  <li>Solder jumpers JP1, JP2, and JP3 appropriately. See <a href="#jumpers">Jumpers</a> below</li>
+  <li>Solder the jacks on the back side of the board. If including optional jacks JACKSEND2 and JACKRECV2, don’t solder those yet</li>
+  <li>Place SW1, the pots, and the LED in board but don’t solder them yet. Align the parts with the case. Put the LED through the whole and hold it in place with a bit of electrical tape. Attach the pots and jacks to the case. When everything is aligned properly and flush, solder the LED, pots, and SW1</li>
   <li>Attach DC jack to case and solder power wires</li>
+  <li>If including optional jacks JACKSEND2 and JACKRECV2, disconnect board from case, solder remaining jacks, and reassemble</li>
 </ol>
 
 <p>No calibration required.</p>
 
-<div class="image-container small"><img src="/images/splitter_pcb.png" /></div>
-
 <h2 id="design">Design</h2>
 
-<div class="image-container full"><img src="/images/splitter_schematic.png" /></div>
+<kicanvas-embed src="https://raw.githubusercontent.com/rabidaudio/effects/redesign/splitter/splitter/splitter.kicad_sch" controls="basic"></kicanvas-embed>
 
 <h3 id="power-supply">Power supply</h3>
 
@@ -173,11 +183,21 @@
 
 <h3 id="input-stage">Input stage</h3>
 
-<p>U1B is an input buffer. Since the signal goes directly into the op-amp, this input impedance is quite high (theoretically infinite, in practice upwards of 10MOhm). The input signal also goes into U1D through a voltage divider R4/R5, so the true input impedance on the input pin is 2MOhm. This makes this pedal suitable as a buffer.</p>
+<p>U1A is an input buffer. Since the signal goes directly into the op-amp, this input impedance is quite high (theoretically infinite, in practice upwards of 10MOhm). This makes this pedal suitable as a buffer.</p>
 
 <h3 id="filter">Filter</h3>
 
-<p>C1/C2/R1/R2/RV1/U1A act as a variable <a href="https://en.wikipedia.org/wiki/Sallen%E2%80%93Key_topology">2nd-order active high pass filter</a> with a Q of 0.5 and a cutoff from 7.2Hz to 7.2kHz. U1D subtracts the high pass signal from the input to get a low pass signal.</p>
+<p>Two voltage-controlled filters (VCFs), one highpass and one lowpass, with the same cutoff form a <a href="https://en.wikipedia.org/wiki/Audio_crossover">crossover filter</a>.</p>
+
+<p>R1/R2/R4/R6/C1/U2A act as a 1st-order active low pass filter with a cutoff which is controlled by the current into pin 16. This topology comes directly from the <a href="/resources#LM13700">LM13700 datasheet</a>. Similarly, R3/R5/R7/C2/U2C are a 1st-order active high-pass filter. The filter is identical except for the input is into the capacitor rather than the differential input.</p>
+
+<p>The maximum control current for the LM13700 is 2mA. When RV1 is fully shorted, the total current out of the pot is 4 mA which is then split between the two OTAs.</p>
+
+<p>The formula for the cutoff of both filters is <code class="highlighter-rouge">f0 = (R6*gm)/((R4+R6)*2*pi*C1)</code> where <code class="highlighter-rouge">gm ~= 19.2*Iabc</code>. Thus, a 680pF capacitor gives a filter cutoff of 20.17KHz at 2mA. As the control current decreases, the cutoff</p>
+
+<p>https://docs.google.com/spreadsheets/d/e/2PACX-1vT8rBejbugFlT3EW5vfu0i-iW_NIMdOeeCCaixy12qmzPs54GQdZPlqS4ZHJ6NFuLR04HVoCBH7RM92/pubhtml</p>
+
+<p>with a Q of 0.5 and a cutoff from 7.2Hz to 7.2kHz. U1D subtracts the high pass signal from the input to get a low pass signal.</p>
 
 <p>To vary both R components of a 2nd order filter, it simply uses a dual audio taper pot. Rather than a true <a href="https://en.wikipedia.org/wiki/Linkwitz%E2%80%93Riley_filter">LR active crossover filter</a>, this circuit simply subtracts the original signal from the filtered signal to get the opposite frequencies. This creates a comb filter with an uneven phase shift, which means this pedal will have moderate a tonal effect. Both of these limitations are for cost savings and simplicity. A more robust circuit would use two LR VCFs but this would drastically increase cost and complexity.</p>
 
@@ -201,13 +221,13 @@
   <source src="/raw/splitter.mp3" type="audio/mpeg" />
 </audio>
 
-<div class="image-container small"><img src="/images/splitter_proto.jpg" /></div>
+<div class="image-container small"><img src="/images/splitter/splitter_proto.jpg" /></div>
 
 
     </main>
 
     <footer><div class="blurb"><a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC-BY-SA</a>.</div>
-  <div class="blurb">Last Updated <a href="https://github.com/rabidaudio/rabid.audio">2024-05-14</a>.</div>
+  <div class="blurb">Last Updated <a href="https://github.com/rabidaudio/rabid.audio">2024-11-26</a>.</div>
   <div class="blurb">Made with ♥ in Atlanta.</div>
 </footer>
 
