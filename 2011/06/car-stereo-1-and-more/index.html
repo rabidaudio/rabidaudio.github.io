@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" /><meta name="viewport" content="initial-scale=1.0, width=device-width, user-scalable=yes, minimum-scale=1.0, maximum-scale=2.0">
+
+<title>
+  
+    
+  Car Stereo 1 | rabid.audio
+  
+</title>
+
+<meta name="description" content="Documenting my work at the intersection of technology and music." />
+<meta name="theme-color" content="#d01040" />
+
+<link
+  rel="apple-touch-icon"
+  sizes="180x180"
+  href="/apple-touch-icon.png">
+<link
+  rel="icon"
+  type="image/png"
+  sizes="32x32"
+  href="/favicon-32x32.png">
+<link
+  rel="icon"
+  type="image/png"
+  sizes="16x16"
+  href="/favicon-16x16.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link
+  rel="preconnect"
+  href="https://fonts.gstatic.com"
+  crossorigin>
+<link
+  rel="preload"
+  href="https://fonts.googleapis.com/css2?family=Cutive+Mono&family=Oxygen:wght@400;700&display=swap"
+  as="style"
+  onload="this.onload=null;this.rel='stylesheet'" />
+<noscript>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cutive+Mono&family=Oxygen:wght@400;700&display=swap"
+    rel="stylesheet"
+    type="text/css" />
+</noscript>
+
+<link rel="stylesheet" href="/_bridgetown/static/index.LYLSXJQT.css" />
+<script src="/_bridgetown/static/index.LQD2JBNB.js" defer></script>
+
+
+
+<script type="module" src="https://kicanvas.org/kicanvas/kicanvas.js"></script>
+
+  </head>
+  <body class="blogspot_post ">
+    <header><a href="/">
+    <h1 class="logo">rabid.audio</h1>
+  </a>
+  <p class="tagline">Documenting my work at the intersection of technology and music.</p>
+
+  <nav>
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/projects/synth">Synthesizer</a></li>
+      <li><a href="/resources">Resources</a></li>
+      <li><a href="/music">Music</a></li>
+      <li><a href="/links">Links</a></li>
+    </ul>
+  </nav>
+</header>
+
+    <main>
+      
+        <h1>Car Stereo 1</h1>
+      
+      <div class="post-timestamp">
+    Published: 13 May 2013
+</div>
+
+
+    <ul class="post-categories">
+            
+                <li>car audio</li>
+            
+                <li>electronics</li>
+            
+                <li>music</li>
+            
+                <li>new music</li>
+            
+    </ul>
+
+
+<div class="alert">
+    <h3>Note</h3>
+    <p>
+        This is an old post which was migrated from blogspot. It may have broken links,
+        and it definitely has questionable opinions. Consume at your own risk.
+    </p>
+</div>
+
+I just got an '03 Accord. The stereo is in that time period between when people had cassette players (for which you can get an aux input adapter, <a href="http://amzn.com/B003YFG12E">like this</a>) and when everyone had mp3 players and the cars included a direct aux input.<br />
+FM transmitters suck; they are too expensive, break easily, are a pain to use, and above all, are awful quality. Surely you can plug a Research shows there are basically 2 options for installing one yourself: <a href="http://blitzsafe.com/catalog/honda/hon-/-aux-dmx-v-2x/prod_67.html">Blitzsafe</a> and <a href="http://www.pie.net/index.php?option=com_content&amp;view=article&amp;id=29&amp;Itemid=37&amp;vid=1&amp;year=2003&amp;makeId=30&amp;modelId=263">PIE</a>. You won't find either for less than about $75. This is obviously a bit excessive, since there is a 14-pin output on the back of the head, which surely has at least the left/right/ground audio wires accessible.<br />
+<br />
+A little more research, and I found a pinout for the connector (once I find a copy of it again, I will post it), although I have no idea if it is right. I also did a little delving into Apple's iPod cable <a href="http://www.google.com/url?sa=t&amp;source=web&amp;cd=2&amp;ved=0CCsQFjAB&amp;url=http%3A%2F%2Fpinouts.ru%2FPortableDevices%2Fipod_pinout.shtml&amp;rct=j&amp;q=apple%20accessory%20protocol&amp;ei=yCLuTcWZBMPW0QGD7qzwBw&amp;usg=AFQjCNGZolcurBO5f6yRpAJpkJ7GafAUAg&amp;sig2=4Dqd6G0TkFWPncrqDWS5oA&amp;cad=rja">pinout</a>. Sure, once I had the audio wires, I could also wire up the cable to play audio and charge an iPod, but is that really enough? For docking stations, etc, Apple uses a proprietary Accessory Protocol, which is very <a href="http://web.student.tuwien.ac.at/~e0026607/aap/ipod_aap.html">well documented</a>. The pinout from the car appears to use a serial connection of some kind. Wouldn't it be cool to have the car's stereo controls control the iPod? I looked at using an Arduino to handle the translation between the car and the iPod. LCD screens are surprisingly cheap; I could even get a screen to display the track info. I haven't really worked with Arduino before (though I had heard all good things) so I hadn't realized how huge the community is. Not only was there already library for controlling an 16x2 character LCD and for serial input/output, there is even a library for <a href="https://github.com/blalor/arduinaap">controlling iPods via AAP</a>!<br />
+<br />
+This removes most of the technical work of the project (especially the programming). I ordered a y-cable adapter for the 14pin output (at a freaking $20, car parts are too expensive) and the other parts necessary (Arduino, iPod breakout board, etc). I went ahead and asked Honda support for more information about the pinout on the stereo, but I am pretty confident that they will never get back to me (prove me wrong, Honda!). I am expecting to have to test the car's input/output on my own, connecting the pin to HyperTerminal or something and pressing all the buttons on my stereo. Once I have all the materials and info, I will post my results. In the meantime, I am driving around with a big hole in my dashboard.<br />
+<hr /><br />
+<iframe align="left" frameborder="0" marginheight="0" marginwidth="0" scrolling="no" src="http://rcm.amazon.com/e/cm?t=rabid04-20&amp;o=1&amp;p=8&amp;l=bpl&amp;asins=B00535RSVQ&amp;fc1=000000&amp;IS2=1&amp;lt1=_blank&amp;m=amazon&amp;lc1=FF4242&amp;bc1=FFFFFF&amp;bg1=FFFFFF&amp;f=ifr" style="align: left; height: 245px; padding-right: 10px; padding-top: 5px; width: 131px;"></iframe><br />
+<br />
+One last note of interest, City and Color (that's Alexisonfire's Dallas Green's side project) released his new album today, <a href="http://amzn.com/B00535RSVQ">Little Hell</a>. I am listening to it at this very moment, and am fairly impressed. Check it out.
+
+
+    </main>
+
+    <footer><div class="blurb"><a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC-BY-SA</a>.</div>
+  <div class="blurb">Last Updated <a href="https://github.com/rabidaudio/rabid.audio">2025-03-13</a>.</div>
+  <div class="blurb">Made with ♥ in Atlanta.</div>
+</footer>
+
+  </body>
+</html>

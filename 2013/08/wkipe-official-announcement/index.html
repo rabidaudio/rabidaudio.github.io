@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" /><meta name="viewport" content="initial-scale=1.0, width=device-width, user-scalable=yes, minimum-scale=1.0, maximum-scale=2.0">
+
+<title>
+  
+    
+  wki.pe - Official Announcement | rabid.audio
+  
+</title>
+
+<meta name="description" content="Documenting my work at the intersection of technology and music." />
+<meta name="theme-color" content="#d01040" />
+
+<link
+  rel="apple-touch-icon"
+  sizes="180x180"
+  href="/apple-touch-icon.png">
+<link
+  rel="icon"
+  type="image/png"
+  sizes="32x32"
+  href="/favicon-32x32.png">
+<link
+  rel="icon"
+  type="image/png"
+  sizes="16x16"
+  href="/favicon-16x16.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link
+  rel="preconnect"
+  href="https://fonts.gstatic.com"
+  crossorigin>
+<link
+  rel="preload"
+  href="https://fonts.googleapis.com/css2?family=Cutive+Mono&family=Oxygen:wght@400;700&display=swap"
+  as="style"
+  onload="this.onload=null;this.rel='stylesheet'" />
+<noscript>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cutive+Mono&family=Oxygen:wght@400;700&display=swap"
+    rel="stylesheet"
+    type="text/css" />
+</noscript>
+
+<link rel="stylesheet" href="/_bridgetown/static/index.LYLSXJQT.css" />
+<script src="/_bridgetown/static/index.LQD2JBNB.js" defer></script>
+
+
+
+<script type="module" src="https://kicanvas.org/kicanvas/kicanvas.js"></script>
+
+  </head>
+  <body class="blogspot_post ">
+    <header><a href="/">
+    <h1 class="logo">rabid.audio</h1>
+  </a>
+  <p class="tagline">Documenting my work at the intersection of technology and music.</p>
+
+  <nav>
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/projects/synth">Synthesizer</a></li>
+      <li><a href="/resources">Resources</a></li>
+      <li><a href="/music">Music</a></li>
+      <li><a href="/links">Links</a></li>
+    </ul>
+  </nav>
+</header>
+
+    <main>
+      
+        <h1>wki.pe - Official Announcement</h1>
+      
+      <div class="post-timestamp">
+    Published: 29 Aug 2013
+</div>
+
+
+    <ul class="post-categories">
+            
+                <li>free software movement</li>
+            
+                <li>server</li>
+            
+                <li>software</li>
+            
+                <li>web development</li>
+            
+    </ul>
+
+
+<div class="alert">
+    <h3>Note</h3>
+    <p>
+        This is an old post which was migrated from blogspot. It may have broken links,
+        and it definitely has questionable opinions. Consume at your own risk.
+    </p>
+</div>
+
+<a href="http://wki.pe/wkipe-dir/img/wkipe-logo.png" imageanchor="1" style="clear: left; float: left; margin-bottom: 1em; margin-right: 1em;"><img border="0" height="60" src="http://wki.pe/wkipe-dir/img/wkipe-logo.png" width="200" /></a><br />
+<br />
+<br />
+<br />
+<br />
+<br />
+I finally have reached a point on <a href="http://wki.pe/">Wki.pe</a> that I feel comfortable announcing it to the world.<br />
+<br />
+<br />
+For those of you who don't know, for over a year (I think it has been closer to two), I've been tossing around the idea of creating a URL shortener for Wikipedia. The idea is that there are several social media platforms (Twitter, Facebook, Google+, SMS, etc.) where you cannot create hyperlinks with custom text. Instead, the platform recognizes URLs and formats them as links for you. Often (e.g. Twitter), you are limited by the number of characters you can have, so URL shorteners are popular. However, often these services give you a nonsense URL (e.g.<a href="http://bit.ly/1865N9v" target="_blank">bit.ly/1865N9v</a>). If you want to link to Wikipedia, and you want it to be clear that that is where it is going, you can use <a href="http://wki.pe/">Wki.pe</a>. That way, you can use the URL inside your sentence, for example:<br />
+<blockquote class="tr_bq">
+<i>TIL that <a href="http://wki.pe/Aldous_Huxley">wki.pe/Aldous_Huxley</a> 's brother <a href="http://a.wki.pe/julian">a.wki.pe/julian</a> was a pretty cool guy.</i></blockquote>
+The link to the Wikipedia article on Aldous Huxley is simply the name of the article on Wikipedia. I didn't have to generate this on the site (although I still could), I just knew the name of the article. Also notice the second link has an "a." at the beginning. This is a link I generated on the site. I told Wki.pe I wanted a URL that said "julian" to point to the article on&nbsp;<a href="http://en.wikipedia.org/wiki/Julian_Huxley" target="_blank">Julian Huxley</a>. For the time being, I'm calling this aliasing (but I'm looking for a more clear name).<br />
+<br />
+The service allows for multiple articles for the same alias (that's where the "a." part comes from). If you try to go to an article that doesn't exist, it will take you to the search results page. It also handles languages relatively well. By default, it will detect your language and send you to the right version of Wikipedia. You can also force a particular language by generating it on the site. For now only a handful of languages are supported, but soon I will add all language versions of Wikipedia (and there are hundreds).<br />
+<br />
+The base functionality has been working for a while (this was my first foray into databases, well before I knew SQL). Over the last few weeks, I've really been working on the UI and learning some fancy Javascript tricks in the process. The site uses jQuery (and jQuery-UI), and uses aAjax calls to PHP pages. You can see the <a href="https://github.com/rabidaudio/wkipe" target="_blank">source code on GitHub</a> if you are curious. There is a bug with IE&lt;=9 I still need to fix and two more features I plan to add (and I'm sure there are some Unicode bugs to still be worked out), but I think it is ready to be used.<br />
+<br />
+Please, use it! Give me the satisfaction that I made something useful. :)
+
+
+    </main>
+
+    <footer><div class="blurb"><a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC-BY-SA</a>.</div>
+  <div class="blurb">Last Updated <a href="https://github.com/rabidaudio/rabid.audio">2025-03-13</a>.</div>
+  <div class="blurb">Made with ♥ in Atlanta.</div>
+</footer>
+
+  </body>
+</html>

@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" /><meta name="viewport" content="initial-scale=1.0, width=device-width, user-scalable=yes, minimum-scale=1.0, maximum-scale=2.0">
+
+<title>
+  
+    
+  CV-MIDI clock converter | rabid.audio
+  
+</title>
+
+<meta name="description" content="Documenting my work at the intersection of technology and music." />
+<meta name="theme-color" content="#d01040" />
+
+<link
+  rel="apple-touch-icon"
+  sizes="180x180"
+  href="/apple-touch-icon.png">
+<link
+  rel="icon"
+  type="image/png"
+  sizes="32x32"
+  href="/favicon-32x32.png">
+<link
+  rel="icon"
+  type="image/png"
+  sizes="16x16"
+  href="/favicon-16x16.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link
+  rel="preconnect"
+  href="https://fonts.gstatic.com"
+  crossorigin>
+<link
+  rel="preload"
+  href="https://fonts.googleapis.com/css2?family=Cutive+Mono&family=Oxygen:wght@400;700&display=swap"
+  as="style"
+  onload="this.onload=null;this.rel='stylesheet'" />
+<noscript>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cutive+Mono&family=Oxygen:wght@400;700&display=swap"
+    rel="stylesheet"
+    type="text/css" />
+</noscript>
+
+<link rel="stylesheet" href="/_bridgetown/static/index.LYLSXJQT.css" />
+<script src="/_bridgetown/static/index.LQD2JBNB.js" defer></script>
+
+
+
+<script type="module" src="https://kicanvas.org/kicanvas/kicanvas.js"></script>
+
+  </head>
+  <body class="post ">
+    <header><a href="/">
+    <h1 class="logo">rabid.audio</h1>
+  </a>
+  <p class="tagline">Documenting my work at the intersection of technology and music.</p>
+
+  <nav>
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/projects/synth">Synthesizer</a></li>
+      <li><a href="/resources">Resources</a></li>
+      <li><a href="/music">Music</a></li>
+      <li><a href="/links">Links</a></li>
+    </ul>
+  </nav>
+</header>
+
+    <main>
+      
+        <h1>CV-MIDI clock converter</h1>
+      
+      <div class="post-timestamp">
+    Published: 29 May 2023
+</div>
+
+
+    <ul class="post-categories">
+            
+                <li>music tech</li>
+            
+                <li>synthesizer</li>
+            
+                <li>electronics</li>
+            
+    </ul>
+
+
+<p>In addition to <a href="/music-tech/synthesizer/electronics/2023/05/28/niftykeyz-mod/">my other NiftyKeyz mod from this weekend</a>,
+I also modded the clock behavior.</p>
+
+<p>My <a href="/projects/synth/clk">new clock module</a> works great. It’s designed to be the source clock
+for the whole rack. However, the NiftyKeyz has it’s own internal clock, which it uses for the
+arpeggiator and for it’s clock output CV. There’s no external clock input jack, but there is
+the ability for it to take in an external clock over MIDI.</p>
+
+<p>So I used a <a href="https://www.pjrc.com/store/teensy.html">Teensy 2.0</a> to take in clock signals
+from a CV input and output MIDI clock messages.</p>
+
+<div class="image-container center short"><img src="/images/2023-05-29-cv2midi/schematic.png" /></div>
+
+<h2 id="midi-clocks">MIDI clocks</h2>
+
+<p>Unfortunately it seems the MIDI org has put a lot of the spec behind a login page, and
+the clock function doesn’t seem to be all that well documented. Fortunately it’s pretty simple
+and I was able to figure it out with a little Googling and some trial-and-error.</p>
+
+<p>Unlike other messages such as note-on/note-off, these are global messages that aren’t sent
+to a specific channel but instead broadcast to the whole chain. The clock source sends a start
+message <code class="highlighter-rouge">0xFA</code>, followed by a series of clock messages <code class="highlighter-rouge">0xF8</code>, 24 per beat. It can be stopped with
+a stop message <code class="highlighter-rouge">0xFC</code>.</p>
+
+<p>The choice of 24 clocks per beat is curious. This is likely to make it easier to support 3/4 and 6/8
+time signatures, but it’s pretty annoying from a microprocessor perspective to have a prime factor
+of 3 in the math.</p>
+
+<h2 id="implementation">Implementation</h2>
+
+<p>While I could have used just about any microprocessor, I used the Teensy because it’s got native USB
+including MIDI-over-USB, which was useful for testing, and the ATmega32U4 includes 2x 16-bit timers,
+which ended up being central to the solution.</p>
+
+<p>I wanted to be able to send in the base beat clock and have the module sub-divide it into 24 clocks.
+First, Timer1 is configured to run in normal mode, where it just counts up to 65535 and triggers an
+interrupt when it overflows. If I set the timer counter to zero on the first clock, I can very accurately
+measure the time between internal beats by checking the counter value on the next pulse.</p>
+
+<p>I wanted to support as close a range to my clock module as possible. After
+<a href="https://docs.google.com/spreadsheets/d/1g4524OfD0_E4A0NEvMrxJ7bmIm48AA12Qg5VNazYFxo/edit?usp=sharing">some math</a>,
+a prescaler of 1024 on a clock speed of 4MHz allows the input clock as low as ~3.5 BPM before the timer
+overflows. At a 1600 BPM, the counter value would be 145, which is still a reasonable resolution.</p>
+
+<p>So with Timer1 we are able to measure the input clock speed. Then, we can set Timer3 in CTC mode to
+trigger at that rate / 24. When it’s interrupt triggers, we output a MIDI clock message. A prescaler
+value of 64 gives counter values from 96 to 41665 over the same range (1600 to 3.75 input BPM, or
+MIDI clock messages at 640Hz to 1.5Hz).</p>
+
+<p>In order to convert the counter values of Timer1 to the counter values of Timer3, we have to
+take these prescaler values into account.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>T3 = T1 * (1024 / 64) / 24
+T3 = T1 / 1.5
+</code></pre></div></div>
+
+<p>Again unfortunately since there’s a factor of 3 in here, we do have to do floating point math
+in order to calculate this. Fortunately I measured the time of this computation on 16-bit
+unsigned integers to be around 16us on the ATmega32U4 at 4MHz.</p>
+
+<h2 id="logic">Logic</h2>
+
+<p>The code works mostly from within interrupts:</p>
+
+<ol>
+  <li>Clock input rising edge interrupt:
+    <ul>
+      <li>First time:
+        <ul>
+          <li>Reset and start Timer1</li>
+        </ul>
+      </li>
+      <li>Subsequent time:
+        <ul>
+          <li>Check Timer1 counter value</li>
+          <li>Set Timer3 to Timer1 / 24</li>
+          <li>Reset both timers</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Timer3 interrupt:
+    <ul>
+      <li>Trigger MIDI clock message</li>
+    </ul>
+  </li>
+  <li>Timer1 overflow:
+    <ul>
+      <li>Turn off timers, as it seems the clock inputs have stopped</li>
+    </ul>
+  </li>
+</ol>
+
+<div class="image-container center"><img src="/images/2023-05-29-cv2midi/normal.png" /></div>
+
+<p>This debugging chart shows the typical behavior. Here, the red signal is Timer3,
+the blue is Timer1, and the purple represents the number of MIDI clock messages left.
+Timer3 is often aliased due to undersampling, but at slower rates you can see that
+it does indeed trigger 24 times for each blue line.</p>
+
+<p>All of this works if the input clock is stable. However, we also need to account for
+input clocks that get faster or slower. If getting slower, all we have to do is send
+only the first 24 clocks of the beat. When the next input clock eventually comes in,
+the new clocks will start at the updated tempo.</p>
+
+<div class="image-container center"><img src="/images/2023-05-29-cv2midi/getting-slower.png" /></div>
+
+<p>If the input clock is getting faster, the best solution I could find is to quickly
+beat any of the remaining 24 beats and then start at the new rate.</p>
+
+<div class="image-container center"><img src="/images/2023-05-29-cv2midi/getting-faster.png" /></div>
+
+<p>You can see the <a href="https://github.com/rabidaudio/clock2midi/blob/main/clock2midi/clock2midi.ino">well-commented source code here</a>. Eventually I’d like to make a helper library for
+generating these timer registers. In the meantime I simply commented the
+configuration of the registers.</p>
+
+<div class="image-container center"><img src="/images/2023-05-29-cv2midi/getting-faster.png" /></div>
+
+<p>Finally, I added a button to start and stop the signal. I left room for a MIDI-in
+jack to pass through any signals along to the keyboard, but I didn’t solder it yet.</p>
+
+<div class="image-container center"><img src="/images/2023-05-29-cv2midi/pcb.png" /></div>
+
+<p>I may eventually run a board of this and hack on the keyboard to put it in the case
+itself. In the meantime though I just made a protoboard version and taped it to the
+back.</p>
+
+<div class="image-container center"><img src="/images/2023-05-29-cv2midi/module.jpg" /></div>
+
+<p>As usual, <a href="https://github.com/rabidaudio/clock2midi">source code and schematics on GitHub</a>!</p>
+
+
+    </main>
+
+    <footer><div class="blurb"><a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC-BY-SA</a>.</div>
+  <div class="blurb">Last Updated <a href="https://github.com/rabidaudio/rabid.audio">2025-03-13</a>.</div>
+  <div class="blurb">Made with ♥ in Atlanta.</div>
+</footer>
+
+  </body>
+</html>

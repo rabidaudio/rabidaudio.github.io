@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" /><meta name="viewport" content="initial-scale=1.0, width=device-width, user-scalable=yes, minimum-scale=1.0, maximum-scale=2.0">
+
+<title>
+  
+    
+  A little thing | rabid.audio
+  
+</title>
+
+<meta name="description" content="Documenting my work at the intersection of technology and music." />
+<meta name="theme-color" content="#d01040" />
+
+<link
+  rel="apple-touch-icon"
+  sizes="180x180"
+  href="/apple-touch-icon.png">
+<link
+  rel="icon"
+  type="image/png"
+  sizes="32x32"
+  href="/favicon-32x32.png">
+<link
+  rel="icon"
+  type="image/png"
+  sizes="16x16"
+  href="/favicon-16x16.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link
+  rel="preconnect"
+  href="https://fonts.gstatic.com"
+  crossorigin>
+<link
+  rel="preload"
+  href="https://fonts.googleapis.com/css2?family=Cutive+Mono&family=Oxygen:wght@400;700&display=swap"
+  as="style"
+  onload="this.onload=null;this.rel='stylesheet'" />
+<noscript>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cutive+Mono&family=Oxygen:wght@400;700&display=swap"
+    rel="stylesheet"
+    type="text/css" />
+</noscript>
+
+<link rel="stylesheet" href="/_bridgetown/static/index.LYLSXJQT.css" />
+<script src="/_bridgetown/static/index.LQD2JBNB.js" defer></script>
+
+
+
+<script type="module" src="https://kicanvas.org/kicanvas/kicanvas.js"></script>
+
+  </head>
+  <body class="blogspot_post ">
+    <header><a href="/">
+    <h1 class="logo">rabid.audio</h1>
+  </a>
+  <p class="tagline">Documenting my work at the intersection of technology and music.</p>
+
+  <nav>
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/projects/synth">Synthesizer</a></li>
+      <li><a href="/resources">Resources</a></li>
+      <li><a href="/music">Music</a></li>
+      <li><a href="/links">Links</a></li>
+    </ul>
+  </nav>
+</header>
+
+    <main>
+      
+        <h1>A little thing</h1>
+      
+      <div class="post-timestamp">
+    Published: 04 Jan 2014
+</div>
+
+
+    <ul class="post-categories">
+            
+                <li>Android</li>
+            
+                <li>software</li>
+            
+                <li>web development</li>
+            
+    </ul>
+
+
+<div class="alert">
+    <h3>Note</h3>
+    <p>
+        This is an old post which was migrated from blogspot. It may have broken links,
+        and it definitely has questionable opinions. Consume at your own risk.
+    </p>
+</div>
+
+I've been out of town for a couple days, so as soon as I got back I was desperate to build something. My wireless charger for my new Nexus 5 happened to be here, so on a whim I looked to see if Tasker was capable of telling if this was the case. Sure enough, Tasker can detect the charger flawlessly. So what to do with it...<br />
+<br />
+I decided opening the desk clock was a little boring. I also noticed Tasker had a whole bunch of image manipulation methods and also an HTTP Get method. So I threw together <a href="https://github.com/rabidaudio/random-image" target="_blank">some Ruby to scrape Flickr for a random image</a> and <a href="http://random-flickr-image.herokuapp.com/" target="_blank">pushed it to Heroku</a>.<br />
+<br />
+It seems that you can no longer easily export Tasker profiles, or else I would post it here. But it is pretty simple:<br />
+<ol>
+<li>Add a new Profile for <i>Event &gt; Power</i> and set it to <i>Wireless</i> (or <i>Any </i>if you prefer)</li>
+<li>Create a new Task:</li>
+<ol>
+<li>Turn on Night Mode</li>
+<li>Set Variable <span style="font-family: Courier New, Courier, monospace;">%FLICKRIMG</span> to <i>Download/flickr.img</i> (a static name will replace old images to save space)</li>
+<li>HTTP Get<br />Server:<i>&nbsp;random-flickr-image.herokuapp.com</i><br />Output File: <span style="font-family: Courier New, Courier, monospace;">%FLICKRIMG</span></li>
+<li>Set Wallpaper to&nbsp;<span style="font-family: Courier New, Courier, monospace;">%FLICKRIMG</span></li>
+</ol>
+<li>Also create an Exit Task to turn Night Mode back off and set the wallpaper back to normal (or don't, and have a new wallpaper for the day!)</li>
+</ol>
+<div>
+Here's a video of it in action. For a 3 hour project, I'm pretty excited.<br />
+<div class="separator" style="clear: both; text-align: center;">
+<iframe allowfullscreen='allowfullscreen' webkitallowfullscreen='webkitallowfullscreen' mozallowfullscreen='mozallowfullscreen' width='320' height='266' src='https://www.blogger.com/video.g?token=AD6v5dwB4HfkIq2Ap5nRRg9PljFSxyaC6TV7AvT2U1b1btZKG1cwW9EnS6ZhGEqhQUzLe4G8GgRqHnaTkBO3dmaB7Q' class='b-hbp-video b-uploaded' frameborder='0'></iframe></div>
+<br /></div>
+
+
+
+    </main>
+
+    <footer><div class="blurb"><a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC-BY-SA</a>.</div>
+  <div class="blurb">Last Updated <a href="https://github.com/rabidaudio/rabid.audio">2025-03-13</a>.</div>
+  <div class="blurb">Made with ♥ in Atlanta.</div>
+</footer>
+
+  </body>
+</html>

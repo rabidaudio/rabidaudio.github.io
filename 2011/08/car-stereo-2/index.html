@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" /><meta name="viewport" content="initial-scale=1.0, width=device-width, user-scalable=yes, minimum-scale=1.0, maximum-scale=2.0">
+
+<title>
+  
+    
+  Car Stereo 2 | rabid.audio
+  
+</title>
+
+<meta name="description" content="Documenting my work at the intersection of technology and music." />
+<meta name="theme-color" content="#d01040" />
+
+<link
+  rel="apple-touch-icon"
+  sizes="180x180"
+  href="/apple-touch-icon.png">
+<link
+  rel="icon"
+  type="image/png"
+  sizes="32x32"
+  href="/favicon-32x32.png">
+<link
+  rel="icon"
+  type="image/png"
+  sizes="16x16"
+  href="/favicon-16x16.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link
+  rel="preconnect"
+  href="https://fonts.gstatic.com"
+  crossorigin>
+<link
+  rel="preload"
+  href="https://fonts.googleapis.com/css2?family=Cutive+Mono&family=Oxygen:wght@400;700&display=swap"
+  as="style"
+  onload="this.onload=null;this.rel='stylesheet'" />
+<noscript>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cutive+Mono&family=Oxygen:wght@400;700&display=swap"
+    rel="stylesheet"
+    type="text/css" />
+</noscript>
+
+<link rel="stylesheet" href="/_bridgetown/static/index.LYLSXJQT.css" />
+<script src="/_bridgetown/static/index.LQD2JBNB.js" defer></script>
+
+
+
+<script type="module" src="https://kicanvas.org/kicanvas/kicanvas.js"></script>
+
+  </head>
+  <body class="blogspot_post ">
+    <header><a href="/">
+    <h1 class="logo">rabid.audio</h1>
+  </a>
+  <p class="tagline">Documenting my work at the intersection of technology and music.</p>
+
+  <nav>
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/projects/synth">Synthesizer</a></li>
+      <li><a href="/resources">Resources</a></li>
+      <li><a href="/music">Music</a></li>
+      <li><a href="/links">Links</a></li>
+    </ul>
+  </nav>
+</header>
+
+    <main>
+      
+        <h1>Car Stereo 2</h1>
+      
+      <div class="post-timestamp">
+    Published: 13 May 2013
+</div>
+
+
+    <ul class="post-categories">
+            
+                <li>car audio</li>
+            
+                <li>electronics</li>
+            
+                <li>music</li>
+            
+    </ul>
+
+
+<div class="alert">
+    <h3>Note</h3>
+    <p>
+        This is an old post which was migrated from blogspot. It may have broken links,
+        and it definitely has questionable opinions. Consume at your own risk.
+    </p>
+</div>
+
+<iframe align="left" frameborder="0" marginheight="0" marginwidth="0" scrolling="no" src="http://rcm.amazon.com/e/cm?t=rabid04-20&amp;o=1&amp;p=8&amp;l=bpl&amp;asins=B004CG4CN4&amp;fc1=000000&amp;IS2=1&amp;lt1=_blank&amp;m=amazon&amp;lc1=FF4242&amp;bc1=FFFFFF&amp;bg1=FFFFFF&amp;f=ifr" style="align: left; height: 245px; padding-right: 10px; padding-top: 5px; width: 131px;"></iframe><iframe align="left" frameborder="0" marginheight="0" marginwidth="0" scrolling="no" src="http://rcm.amazon.com/e/cm?t=rabid04-20&amp;o=1&amp;p=8&amp;l=bpl&amp;asins=B004M5EMQM&amp;fc1=000000&amp;IS2=1&amp;lt1=_blank&amp;m=amazon&amp;lc1=FF4242&amp;bc1=FFFFFF&amp;bg1=FFFFFF&amp;f=ifr" style="align: left; height: 245px; padding-right: 10px; padding-top: 5px; width: 131px;"></iframe>Two months ago, I mentioned trying to make an interface with my stock stereo to make a car dock. Well, after a month of no luck and zero help from Honda, I went ahead and ordered one of the pre-built adapters, realizing that they weren't that expensive, and I could still build a dock that could interface with it. I went with the PIE model, as it was slightly cheaper. As soon as I got it, I popped it open. As it turns out, the biggest chip on the board is an Atmel ATMEGA168 (for those of you who don't know, that is exactly the microprocessor that Arduino uses). If someone is curious and wants to build something like this themselves, this board also uses 2 <a href="http://doc.chipfind.ru/njrc/jrc4559.htm">JFC4559 DUAL OP AMP</a> chips, a DA3664 5V regulator, a <a href="http://parts.digikey.com/1/parts/403829-cer-resonator-10-00mhz-ztt-10-00mt.html">10MHz&nbsp;ocillator</a>,&nbsp;and this interesting <a href="http://pdf1.alldatasheet.com/datasheet-pdf/view/28608/TI/SN75176.html">TI Differential Bus Transceiver [SN75176]</a>. The datasheet I found was full of typical EE jargon, but I imagine this chip is important for interfacing with the stereo's data stream (which is probably proprietary; I couldn't find any info on it anywhere online or from Honda). I should probably also note that there is a big sticker on the device that says, "Innovations Incorporated In This Product Are Protected By U.S. Trademarks &amp; Copyrights." Just so I'm not liable for giving out said info. There is a 4 input DIP switch inside, and according to the documentation with the device, the 4th switch controls weather the device pretends to be a CD changer or a Satellite radio. I suspect at least one of the other three allows you to use the ISP to interface with the ATMEGA.&nbsp;(This means, theoretically, you could reprogram the device, although what you would tell it to do, I don't know. The inputs and outputs are likely to specialized in this case, although there appear to be a number of unutilized pins on the ATMEGA, which might be usable as GPIO).<br />
+<br />
+I've been still trying to get started with Arduino, but I don't seem to have as much time as I would like. Eventually, though, I'm going to want a cool iPod dock with LCD screen that will play through the car stereo, and eventually maybe even connect via <a href="http://en.wikipedia.org/wiki/Bluetooth_profile#Advanced_Audio_Distribution_Profile_.28A2DP.29">Bluetooth using A2DP</a> to my cell phone. If I progress any further, I will certainly post. <br />
+<br />
+<div class="separator" style="clear: both; text-align: center;"><a href="http://1.bp.blogspot.com/-HEnluYTWGno/TkA8TPT9CfI/AAAAAAAAAoQ/vMRZmjgavlQ/s1600/IMG_20110808_143144.jpg" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" height="320" naa="true" src="http://1.bp.blogspot.com/-HEnluYTWGno/TkA8TPT9CfI/AAAAAAAAAoQ/vMRZmjgavlQ/s320/IMG_20110808_143144.jpg" width="240" /></a></div><br />
+<div class="separator" style="clear: both; text-align: center;"><a href="http://3.bp.blogspot.com/-FGiu2m2Am7I/TkA8RuLYmhI/AAAAAAAAAoM/41JO_pRx4ns/s1600/IMG_20110808_143237.jpg" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" height="240" naa="true" src="http://3.bp.blogspot.com/-FGiu2m2Am7I/TkA8RuLYmhI/AAAAAAAAAoM/41JO_pRx4ns/s320/IMG_20110808_143237.jpg" width="320" /></a></div>
+
+
+    </main>
+
+    <footer><div class="blurb"><a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC-BY-SA</a>.</div>
+  <div class="blurb">Last Updated <a href="https://github.com/rabidaudio/rabid.audio">2025-03-13</a>.</div>
+  <div class="blurb">Made with ♥ in Atlanta.</div>
+</footer>
+
+  </body>
+</html>

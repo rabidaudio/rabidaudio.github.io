@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" /><meta name="viewport" content="initial-scale=1.0, width=device-width, user-scalable=yes, minimum-scale=1.0, maximum-scale=2.0">
+
+<title>
+  
+    
+  Color of Music II | rabid.audio
+  
+</title>
+
+<meta name="description" content="Documenting my work at the intersection of technology and music." />
+<meta name="theme-color" content="#d01040" />
+
+<link
+  rel="apple-touch-icon"
+  sizes="180x180"
+  href="/apple-touch-icon.png">
+<link
+  rel="icon"
+  type="image/png"
+  sizes="32x32"
+  href="/favicon-32x32.png">
+<link
+  rel="icon"
+  type="image/png"
+  sizes="16x16"
+  href="/favicon-16x16.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link
+  rel="preconnect"
+  href="https://fonts.gstatic.com"
+  crossorigin>
+<link
+  rel="preload"
+  href="https://fonts.googleapis.com/css2?family=Cutive+Mono&family=Oxygen:wght@400;700&display=swap"
+  as="style"
+  onload="this.onload=null;this.rel='stylesheet'" />
+<noscript>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cutive+Mono&family=Oxygen:wght@400;700&display=swap"
+    rel="stylesheet"
+    type="text/css" />
+</noscript>
+
+<link rel="stylesheet" href="/_bridgetown/static/index.LYLSXJQT.css" />
+<script src="/_bridgetown/static/index.LQD2JBNB.js" defer></script>
+
+
+
+<script type="module" src="https://kicanvas.org/kicanvas/kicanvas.js"></script>
+
+  </head>
+  <body class="blogspot_post ">
+    <header><a href="/">
+    <h1 class="logo">rabid.audio</h1>
+  </a>
+  <p class="tagline">Documenting my work at the intersection of technology and music.</p>
+
+  <nav>
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/projects/synth">Synthesizer</a></li>
+      <li><a href="/resources">Resources</a></li>
+      <li><a href="/music">Music</a></li>
+      <li><a href="/links">Links</a></li>
+    </ul>
+  </nav>
+</header>
+
+    <main>
+      
+        <h1>Color of Music II</h1>
+      
+      <div class="post-timestamp">
+    Published: 03 Nov 2014
+</div>
+
+
+    <ul class="post-categories">
+            
+                <li>computing</li>
+            
+                <li>dsp</li>
+            
+                <li>music</li>
+            
+                <li>software</li>
+            
+    </ul>
+
+
+<div class="alert">
+    <h3>Note</h3>
+    <p>
+        This is an old post which was migrated from blogspot. It may have broken links,
+        and it definitely has questionable opinions. Consume at your own risk.
+    </p>
+</div>
+
+<div class="separator" style="clear: both; text-align: center;">
+</div>
+<span style="color: #333333; font-family: inherit;"><span style="background-color: white;"><span style="line-height: 25px;">I long time ago (ages it seems), I <a href="http://blog.rabidaudio.com/2012/11/the-color-of-music.html">posted about mapping the audio spectrum to the visual spectrum</a> after watching <a href="http://ideas.ted.com/2013/07/11/the-sound-of-color-neil-harbissons-talk-visualized/">Neil Harbisson's TED talk</a>. Well <a href="http://www.npr.org/programs/ted-radio-hour/?showDate=2014-10-31">NPR mentioned that same talk today</a> and it got me excited about the project again. I played around some more using my slightly more developed MATLAB and DSP skills, and the results are below.</span></span></span><br />
+<span style="color: #333333; font-family: inherit;"><span style="background-color: white;"><span style="line-height: 25px;"><br /></span></span></span>
+<br />
+<h4>
+<span style="color: #333333; font-family: inherit;"><span style="background-color: white;"><span style="line-height: 25px;">Quick recap:</span></span></span></h4>
+<span style="color: #333333; font-family: inherit;"><span style="background-color: white;"><span style="line-height: 25px;">Sound and light are both waves though they differ significantly in frequency, medium,&nbsp;propagation&nbsp;type, and speed. A major similarity though is that we have sensory organs for both, and those sensory organs have some interesting quirks. Humans can only perceive small bands of each spectrum. The audio band is typically quoted at 20Hz to 20KHz (point of reference: the A below middle C on a piano is 440Hz). The visible light spectrum goes from roughly 700 nm where infrared transitions to red, to about 400 nm where violet transitions into ultraviolet (it's easier to talk about light in wavelengths=speed of light/frequency&nbsp;because the frequencies are huge numbers). The exact endpoints of these bands vary from person to person, and often with age; however, the range for an average human is well known.</span></span></span><br />
+<span style="color: #333333; font-family: inherit;"><span style="background-color: white;"><span style="line-height: 25px;"><br /></span></span></span>
+<span style="color: #333333; font-family: inherit;"><span style="background-color: white;"><span style="line-height: 25px;">Another quirk of human perception is that we don't perceive equally across these bands. I know a lot more about these limitations in the audio world than in the video world, but </span><a href="http://en.wikipedia.org/wiki/Color_vision#Physiology_of_color_perception" style="line-height: 25px;" target="_blank">there is plenty to read on that if you're interested</a><span style="line-height: 25px;">. We perceive sound on a logarithmic scale, both in loudness and pitch. The decibel scale adjusts for this, so that a 20dB noise sounds twice as loud as a 10dB sound, even though the former is actually about 2.8 times the pressure. And a 40dB sound again sounds twice as loud as that, but is actually 10 times the pressure of 20dB and 28 times the pressure of 10dB. Not only this, but we don't perceive loudness evenly over all frequencies.&nbsp;</span></span></span><br />
+<table cellpadding="0" cellspacing="0" class="tr-caption-container" style="float: left; margin-right: 1em; text-align: left;"><tbody>
+<tr><td style="text-align: center;"><a href="http://upload.wikimedia.org/wikipedia/commons/4/47/Lindos1.svg" imageanchor="1" style="clear: left; margin-bottom: 1em; margin-left: auto; margin-right: auto;"><span style="font-family: inherit;"><img border="0" src="http://upload.wikimedia.org/wikipedia/commons/4/47/Lindos1.svg" height="287" width="320" /></span></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;"><a href="http://en.wikipedia.org/wiki/Equal-loudness_contour" target="_blank"><span style="font-family: inherit;">Wikipedia</span></a></td></tr>
+</tbody></table>
+<span style="color: #333333; font-family: inherit;"><span style="background-color: white;"><span style="line-height: 25px;"><br /></span></span></span>
+<span style="color: #333333; font-family: inherit;"><span style="background-color: white; line-height: 25px;">Lower frequencies sound much quieter than middle and high frequencies, and the function is not an elegant relation. Psychologists studied people's perceived loudness and created the <a href="http://en.wikipedia.org/wiki/Equal-loudness_contour" target="_blank">equal-loudness contours</a>. Along the red lines are sounds at a constant "perceived loudness" (measured in phons, a made-up unit which sets it's point of reference so that 20dB of pressure equals 20 phons). For different frequencies, different amounts of pressure are required to reach that phon level. There are a number of <a href="http://en.wikipedia.org/wiki/A-weighting" target="_blank">functions which approximate the correction factor</a>, such as the <a href="http://en.wikipedia.org/wiki/A-weighting#A" target="_blank">A-weighting filter</a>.</span></span><br />
+<div class="separator" style="clear: both; text-align: center;">
+<a href="http://upload.wikimedia.org/math/6/e/b/6ebb25bed262481926f846cc628aaa7a.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><span style="font-family: inherit;"><img border="0" src="http://upload.wikimedia.org/math/6/e/b/6ebb25bed262481926f846cc628aaa7a.png" height="38" width="400" /></span></a></div>
+<div class="separator" style="clear: both; text-align: center;">
+<a href="http://upload.wikimedia.org/math/7/4/7/747b7290d73cf4a62227627c32da184e.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><span style="font-family: inherit;"><img border="0" src="http://upload.wikimedia.org/math/7/4/7/747b7290d73cf4a62227627c32da184e.png" height="16" width="200" /></span></a></div>
+<span style="color: #333333; font-family: inherit;"><span style="background-color: white; line-height: 25px;"><br /></span></span>
+<span style="font-family: inherit;"><br /></span>
+<br />
+<table cellpadding="0" cellspacing="0" class="tr-caption-container" style="clear: left; float: left; margin-bottom: 1em; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="http://upload.wikimedia.org/wikipedia/commons/a/aa/Mel-Hz_plot.svg" imageanchor="1" style="margin-left: auto; margin-right: auto;"><span style="font-family: inherit;"><img border="0" src="http://upload.wikimedia.org/wikipedia/commons/a/aa/Mel-Hz_plot.svg" height="151" width="320" /></span></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;"><a href="http://en.wikipedia.org/wiki/Mel_scale" target="_blank"><span style="font-family: inherit;">Wikipedia</span></a></td></tr>
+</tbody></table>
+<span style="font-family: inherit;">Pitch perception is logarithmic also. Similar to the ELCs, psychologists created a unit for perceived pitch, the <a href="http://en.wikipedia.org/wiki/Mel_scale" target="_blank">mel</a> (where 1000 mel = 1KHz). A pitch that sounds about twice as high (2000 mel) is about 3.5KHz. The equation is below.</span><br />
+<div class="separator" style="clear: both; text-align: center;">
+<a href="http://upload.wikimedia.org/math/d/0/e/d0eca36a98e851a9df82d4cc5e5d955f.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><span style="font-family: inherit;"><img border="0" src="http://upload.wikimedia.org/math/d/0/e/d0eca36a98e851a9df82d4cc5e5d955f.png" /></span></a></div>
+<h4 style="clear: both; text-align: left;">
+<span style="font-family: inherit;">Results</span></h4>
+<div>
+<span style="font-family: inherit;">The goal then is to have something that hears a pitch, corrects for proper human perception of that pitch, and then maps that frequency's relative position in the audio band to a color in the same relative position in the visual band. Low frequency sounds would map to red and high frequencies to violet. I want the colors to map to the red-green-blue color space, so that they can be represented by a computer (e.g. an LCD display, a 3-color LED, etc.). Of course, there are all sorts of issues with a computer's ability to generate actual colors, which I touched on in my <a href="http://blog.rabidaudio.com/2012/11/the-color-of-music.html" target="_blank">earlier post about this</a>. However, there are rough approximations that can map the color spectrum to RGB. <a href="http://stackoverflow.com/a/22681410" target="_blank">Here's the one I used from StackOverflow</a>&nbsp;(this guy has awesome graphs and seems to have done some impressive work):</span></div>
+<div>
+<span style="font-family: inherit;"><br /></span></div>
+<div class="separator" style="clear: both; text-align: center;">
+<a href="http://i.stack.imgur.com/9YeIl.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><span style="font-family: inherit;"><img border="0" src="http://i.stack.imgur.com/9YeIl.png" height="180" width="400" /></span></a></div>
+<div class="separator" style="clear: both; text-align: center;">
+<a href="http://i.stack.imgur.com/nWns3.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><span style="font-family: inherit;"><img border="0" src="http://i.stack.imgur.com/nWns3.png" height="83" width="400" /></span></a></div>
+<div class="separator" style="clear: both; text-align: center;">
+<span style="font-family: inherit;"><br /></span></div>
+<div class="separator" style="clear: both; text-align: left;">
+<span style="font-family: inherit;">The basic algorithm is to take a FFT of an audio sample at regular intervals to find the amplitude of different frequency components. Then those frequencies are converted to mels for the perceived log scale and then mels are mapped to light wavelengths. These wavelengths are then converted into RGB vectors using the algorithm above. The brightness of each channel is then weighted by both the phasor magnitude of the signal and the A-weighting loudness filter. This results in a final RGB vector for each small sample of audio where brightness is relative loudness and color is relative perceived pitch.</span></div>
+<div class="separator" style="clear: both; text-align: left;">
+<span style="font-family: inherit;"><br /></span></div>
+<div class="separator" style="clear: both; text-align: left;">
+<span style="font-family: inherit;">I ran this against MATLAB's sample file (a clip of Handel's Messiah). These are with an FFT sampling rate of 100Hz.</span></div>
+<div class="separator" style="clear: both; text-align: center;">
+<a href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhUCPHFbNkH4v7tKme07YJ284IBozkqjs4duG4P7x3U9ebf191ECxhKh2QksDtTzCaNcLwc6nspFfEKnSO780hrfNwKWLJhvbdTk85I8mFPd4575sPUTtDuXavyYTLuRIZOiOyQbNAzNqw/s1600/handel-color.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><span style="font-family: inherit;"><img border="0" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhUCPHFbNkH4v7tKme07YJ284IBozkqjs4duG4P7x3U9ebf191ECxhKh2QksDtTzCaNcLwc6nspFfEKnSO780hrfNwKWLJhvbdTk85I8mFPd4575sPUTtDuXavyYTLuRIZOiOyQbNAzNqw/s1600/handel-color.png" height="153" width="400" /></span></a></div>
+<div class="separator" style="clear: both; text-align: left;">
+<span style="font-family: inherit;"><br /></span></div>
+<div class="separator" style="clear: both; text-align: left;">
+<span style="font-family: inherit;">I then generated a video to go along with the audio. The first is the standard result, but it flickered unpleasantly, so the second is with a 10 frame (0.1 second) averaging filter applied. Forgive the low quality of each, generating MPEG4 video in MATLAB is not an easy task, and I ended up stringing together a bunch of JPEGs).</span></div>
+<div class="separator" style="clear: both; text-align: left;">
+<span style="font-family: inherit;"><br /></span></div>
+<div style="text-align: center;">
+<span style="font-family: inherit;"><iframe allowfullscreen='allowfullscreen' webkitallowfullscreen='webkitallowfullscreen' mozallowfullscreen='mozallowfullscreen' width='320' height='266' src='https://www.blogger.com/video.g?token=AD6v5dwYxLaxh3zJf-LOvxMNvvtCQyEz2jsv6dIswDGeapMBrPGNvf5xavdoomGc2bIZUFVLiaZ3h_sBmlZkWEOraA' class='b-hbp-video b-uploaded' frameborder='0'></iframe></span></div>
+<br />
+<div class="separator" style="clear: both; text-align: left;">
+<span style="font-family: inherit;"><br /></span></div>
+<div style="text-align: center;">
+<span style="font-family: inherit;"><iframe allowfullscreen='allowfullscreen' webkitallowfullscreen='webkitallowfullscreen' mozallowfullscreen='mozallowfullscreen' width='320' height='266' src='https://www.blogger.com/video.g?token=AD6v5dz8HQTfEkl97fS3m59DtJqQUtFDhN9lnAmi_eLqL-T0J9BfCb4wBAbcCuLQdaKv8DSYvv7h-3lFT6BhwUQlcg' class='b-hbp-video b-uploaded' frameborder='0'></iframe></span></div>
+<br />
+<div class="separator" style="clear: both; text-align: left;">
+<span style="font-family: inherit;"><br /></span></div>
+<div class="separator" style="clear: both; text-align: left;">
+<span style="font-family: inherit;">Unfortunately, it seems music is too low-bandwidth to see significant changes in pitch. One thing I might do in the future is map notes to colors, rather than the entire band.</span></div>
+<div class="separator" style="clear: both; text-align: left;">
+<span style="font-family: inherit;"><br /></span></div>
+<div class="separator" style="clear: both; text-align: left;">
+<span style="font-family: inherit;">Thoughts? Feel free to leave a comment. :)</span></div>
+
+
+
+    </main>
+
+    <footer><div class="blurb"><a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC-BY-SA</a>.</div>
+  <div class="blurb">Last Updated <a href="https://github.com/rabidaudio/rabid.audio">2025-03-13</a>.</div>
+  <div class="blurb">Made with ♥ in Atlanta.</div>
+</footer>
+
+  </body>
+</html>

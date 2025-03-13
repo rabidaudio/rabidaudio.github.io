@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" /><meta name="viewport" content="initial-scale=1.0, width=device-width, user-scalable=yes, minimum-scale=1.0, maximum-scale=2.0">
+
+<title>
+  
+    
+  DSP + Arduino | rabid.audio
+  
+</title>
+
+<meta name="description" content="Documenting my work at the intersection of technology and music." />
+<meta name="theme-color" content="#d01040" />
+
+<link
+  rel="apple-touch-icon"
+  sizes="180x180"
+  href="/apple-touch-icon.png">
+<link
+  rel="icon"
+  type="image/png"
+  sizes="32x32"
+  href="/favicon-32x32.png">
+<link
+  rel="icon"
+  type="image/png"
+  sizes="16x16"
+  href="/favicon-16x16.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link
+  rel="preconnect"
+  href="https://fonts.gstatic.com"
+  crossorigin>
+<link
+  rel="preload"
+  href="https://fonts.googleapis.com/css2?family=Cutive+Mono&family=Oxygen:wght@400;700&display=swap"
+  as="style"
+  onload="this.onload=null;this.rel='stylesheet'" />
+<noscript>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cutive+Mono&family=Oxygen:wght@400;700&display=swap"
+    rel="stylesheet"
+    type="text/css" />
+</noscript>
+
+<link rel="stylesheet" href="/_bridgetown/static/index.LYLSXJQT.css" />
+<script src="/_bridgetown/static/index.LQD2JBNB.js" defer></script>
+
+
+
+<script type="module" src="https://kicanvas.org/kicanvas/kicanvas.js"></script>
+
+  </head>
+  <body class="blogspot_post ">
+    <header><a href="/">
+    <h1 class="logo">rabid.audio</h1>
+  </a>
+  <p class="tagline">Documenting my work at the intersection of technology and music.</p>
+
+  <nav>
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/projects/synth">Synthesizer</a></li>
+      <li><a href="/resources">Resources</a></li>
+      <li><a href="/music">Music</a></li>
+      <li><a href="/links">Links</a></li>
+    </ul>
+  </nav>
+</header>
+
+    <main>
+      
+        <h1>DSP + Arduino</h1>
+      
+      <div class="post-timestamp">
+    Published: 30 Apr 2013
+</div>
+
+
+    <ul class="post-categories">
+            
+                <li>arduino</li>
+            
+                <li>electronics</li>
+            
+                <li>music</li>
+            
+    </ul>
+
+
+<div class="alert">
+    <h3>Note</h3>
+    <p>
+        This is an old post which was migrated from blogspot. It may have broken links,
+        and it definitely has questionable opinions. Consume at your own risk.
+    </p>
+</div>
+
+<a href="http://www.amandaghassaei.com/about.html" target="_blank">Amanda Ghassaei</a>, who has <a href="http://www.amandaghassaei.com/3D_printed_record.html" target="_blank">this amazing project I just found out about</a>, also has <a href="http://www.instructables.com/id/Arduino-Audio-Input" target="_blank">a great Instructable for doing DSP with Arduino</a>. A few hours and one blown op-amp later, I was able to get my Arduino to pickup my bass playing. It samples around 38.5 kHz, but I only had it send serial data back every 10 ms (a measly 100 Hz). Still, I was able to generate this graph with the data. You can see the clipping where I cranked it up to test the peak indicator LED.<br />
+<br />
+<div class="separator" style="clear: both; text-align: center;">
+<a href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiMNA0d-tJcEJ4msZ1loEAkhIgJ6a0hxZv7DOJVpZ9lUuNnu6Ko_TVq95NQyZrbiQ3TA4bQGFF1qtulWs2pwyfm2RFYyvXpZAXTZ07YtFvWVddx3ous9zZErfDEdprhyphenhyphenVh-_66bUv4zGtA/s1600/arduino-dsp-bass.png" imageanchor="1" style="clear: left; float: left; margin-bottom: 1em; margin-right: 1em;"><img border="0" height="177" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiMNA0d-tJcEJ4msZ1loEAkhIgJ6a0hxZv7DOJVpZ9lUuNnu6Ko_TVq95NQyZrbiQ3TA4bQGFF1qtulWs2pwyfm2RFYyvXpZAXTZ07YtFvWVddx3ous9zZErfDEdprhyphenhyphenVh-_66bUv4zGtA/s320/arduino-dsp-bass.png" width="320" /></a></div>
+The atmega328 has 32Kb flash memory. If I used half of that for a delay line, 16,000 samples / 38500 samples/sec = .42 second delay. I could get a longer delay by using external flash (e.g. SD card), but I worry that the read/write time would be low. It will be interesting to apply some of the concepts from class to actual signals. What does a 50-point averager do to my tone? (answer: probably reverb)<br />
+<br />
+There's not a lot I can do with this now, since I can't hear the results of any processing yet. I just ordered a DAC0808 8-bit digital-analog converter. (The new DUE has two built-in DAC outputs, as well as PWM, although it still isn't an ideal platform for DSP). Eventually, I would like to get an FFT algorithm running and make a tuner. That will probably have to wait until after finals, though.<br />
+<br />
+<b>EDIT</b>: Just found out about <a href="http://wki.pe/Resistor_ladder">wki.pe/Resistor_ladder</a>&nbsp;s.
+
+
+    </main>
+
+    <footer><div class="blurb"><a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC-BY-SA</a>.</div>
+  <div class="blurb">Last Updated <a href="https://github.com/rabidaudio/rabid.audio">2025-03-13</a>.</div>
+  <div class="blurb">Made with ♥ in Atlanta.</div>
+</footer>
+
+  </body>
+</html>

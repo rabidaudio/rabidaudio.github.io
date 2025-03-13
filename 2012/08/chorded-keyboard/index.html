@@ -1,0 +1,355 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" /><meta name="viewport" content="initial-scale=1.0, width=device-width, user-scalable=yes, minimum-scale=1.0, maximum-scale=2.0">
+
+<title>
+  
+    
+  Chorded Keyboard | rabid.audio
+  
+</title>
+
+<meta name="description" content="Documenting my work at the intersection of technology and music." />
+<meta name="theme-color" content="#d01040" />
+
+<link
+  rel="apple-touch-icon"
+  sizes="180x180"
+  href="/apple-touch-icon.png">
+<link
+  rel="icon"
+  type="image/png"
+  sizes="32x32"
+  href="/favicon-32x32.png">
+<link
+  rel="icon"
+  type="image/png"
+  sizes="16x16"
+  href="/favicon-16x16.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link
+  rel="preconnect"
+  href="https://fonts.gstatic.com"
+  crossorigin>
+<link
+  rel="preload"
+  href="https://fonts.googleapis.com/css2?family=Cutive+Mono&family=Oxygen:wght@400;700&display=swap"
+  as="style"
+  onload="this.onload=null;this.rel='stylesheet'" />
+<noscript>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cutive+Mono&family=Oxygen:wght@400;700&display=swap"
+    rel="stylesheet"
+    type="text/css" />
+</noscript>
+
+<link rel="stylesheet" href="/_bridgetown/static/index.LYLSXJQT.css" />
+<script src="/_bridgetown/static/index.LQD2JBNB.js" defer></script>
+
+
+
+<script type="module" src="https://kicanvas.org/kicanvas/kicanvas.js"></script>
+
+  </head>
+  <body class="blogspot_post ">
+    <header><a href="/">
+    <h1 class="logo">rabid.audio</h1>
+  </a>
+  <p class="tagline">Documenting my work at the intersection of technology and music.</p>
+
+  <nav>
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/projects/synth">Synthesizer</a></li>
+      <li><a href="/resources">Resources</a></li>
+      <li><a href="/music">Music</a></li>
+      <li><a href="/links">Links</a></li>
+    </ul>
+  </nav>
+</header>
+
+    <main>
+      
+        <h1>Chorded Keyboard</h1>
+      
+      <div class="post-timestamp">
+    Published: 30 Apr 2013
+</div>
+
+
+    <ul class="post-categories">
+            
+                <li>arduino</li>
+            
+                <li>computing</li>
+            
+                <li>electronics</li>
+            
+                <li>software</li>
+            
+    </ul>
+
+
+<div class="alert">
+    <h3>Note</h3>
+    <p>
+        This is an old post which was migrated from blogspot. It may have broken links,
+        and it definitely has questionable opinions. Consume at your own risk.
+    </p>
+</div>
+
+Since I had first been introduced to the <a href="http://www.media.mit.edu/wearables/">wearable computing community</a>, I have always wanted to build a <a href="http://en.wikipedia.org/wiki/Chorded_keyboard">chorded keyboard</a>. I've had some basic design in my head for a while, but now that the hardware part has been&nbsp;started, I felt it was time for a post.<br />
+Simply put, a chorded keyboard is a keyboard device that you use with one hand, where different combinations of buttons ("chords") represent different keys on a keyboard. All the designs I have seen&nbsp;involve&nbsp;some bulky device you must either carry around or attach to your arm. They also have many buttons to increase the number of available chord combinations. I wanted a device that was not intrusive, easy to learn to use, and did not obstruct the use of my hand. Enter the glove.<br />
+<h3>
+Hardware</h3>
+<a href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhtmXUXJQZ4hyRqua8gvYUbaLmVE6xRlyL5qzDVG7vjULDfY9pPD3jWh_S3pT50wL4tOIyFutmyXZKJmYcWnXs5OxQIYAC-4nHJ-KNYszdctRRQms5_-zxoQR5lMIwxXlSD5PvEXr36eho/s1600/IMG_20120819_211509.jpg" imageanchor="1" style="clear: left; float: left; margin-bottom: 1em; margin-right: 1em;"><img border="0" height="150" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhtmXUXJQZ4hyRqua8gvYUbaLmVE6xRlyL5qzDVG7vjULDfY9pPD3jWh_S3pT50wL4tOIyFutmyXZKJmYcWnXs5OxQIYAC-4nHJ-KNYszdctRRQms5_-zxoQR5lMIwxXlSD5PvEXr36eho/s200/IMG_20120819_211509.jpg" width="200" /></a>I am building a glove where buttons are pressed by tapping them on a hard surface, such as a table. A conductive surface, such as conductive fabric, will be attached to the fingertips, and will act as capacitive switches. A small amount of fabric or foam will separate the fingertips from the plate, and the change in capacitance is measured (see <a href="http://en.wikipedia.org/wiki/Capacitive_sensing">Capacitive Sensing</a>). As this is my first project in the "wearables" subgenre of DIY electronics, I had planed on using a LilyPad. However, I settled on the&nbsp;<a href="http://www.pjrc.com/teensy/">Teensy 2.0</a>, which is much smaller, cheaper, and uses a ATmega32u4 instead, allowing native USB support (and can easily be made into a HID). The wearable community had a<a href="http://web.media.mit.edu/~leah/grad_work/diy/diy_tank.html"> great suggestion</a> of using crimp beads to attach smd devices to fabric. 4 LEDs will signal which mode the glove is in. There will also be a "soft-off" toggle switch (so I can pick up a pencil or open a door, for example).<br />
+<br />
+<br />
+<h3>
+Software</h3>
+Having only five fingers creates a problem for chorded keyboards. There are only 2^5 = 32 possible chord combinations with 5 buttons. If you subtract one (because&nbsp;the "null" chord, where no buttons are pressed, is unusable because that is when you aren't pressing anything!), we are down to 31 chord combinations. Considering there are 26 letters, we can see there certainly aren't going to be enough chords to emulate a full keyboard. The solution is the same as is used on phone keyboards (and&nbsp;traditional&nbsp;keyboards, for that matter): switchable modes.<br />
+<div class="" style="clear: both; text-align: left;">
+<a href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEipYKP57pQ8Pw__cfHKZgyqTPg4-WBr6I_vzSgz4B2ixvlkNleOdJFESxvxL49cyem4XFeUww3nq-lLA4uHniCL8suASfW97VCl7F911UYLJUMRgZkkpqHYPzYGprpiGuwpNfDWcSAkqqs/s1600/chart.png" imageanchor="1" style="clear: right; float: right; margin-bottom: 1em; margin-left: 1em;"><img border="0" height="200" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEipYKP57pQ8Pw__cfHKZgyqTPg4-WBr6I_vzSgz4B2ixvlkNleOdJFESxvxL49cyem4XFeUww3nq-lLA4uHniCL8suASfW97VCl7F911UYLJUMRgZkkpqHYPzYGprpiGuwpNfDWcSAkqqs/s200/chart.png" width="196" /></a>The colored X's correspond to each possible chord combo. I am an avid Guitar Hero player, so I used the color codes from the game. The left column is the decimal form of each chord. Take, for example, chord 17: green and orange. 17 is 10001 in binary. As you can see, the first '1' means that green is pressed, the last '1' means orange is pressed, and the '0's mean the other respective keys are not pressed. Chords 3 and 17 I am using as mode switch chords. Pressing one of these two shifts the glove through each of the modes: standard, capital, arrows, and symbols.</div>
+<div class="" style="clear: both; text-align: left;">
+I really need to point out that I am left handed (and planning to use this on my dominant hand), which explains the layout (PRMIT, for pinky, ring, middle, index, thumb; from left to right). If you are right-handed, and you want to build something like this, some software changes are probably&nbsp;necessary. I matched keys to chords, roughly such that more common letters have easier chords. I also tried to make them easy to remember. For example, 'm' is 11100, because the chord, green-red-yellow, looks like an upside-down 'm'. Similarly, 'w' is 01110 and 'n' is 01100. I then filled in symbols, numbers, and a few keyboard shortcuts in the remaining spots.</div>
+<div class="separator" style="clear: both; text-align: left;">
+<a href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjpbBvT8Ngqyw7Uunm0Df8RzHolZaQtpTFsHKW_xWvX-Eg4mFVQzOPqn_vSO2RRShk4q0W5rpdTBIYFYPgqKPXQQJV_7n-MocLoCyRAv_EjOO5K0c9XQhbjZmL6_yOAILUF-BjPRGJTnO8/s1600/table.png" imageanchor="1" style="clear: left; float: left; margin-bottom: 1em; margin-right: 1em;"><img border="0" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjpbBvT8Ngqyw7Uunm0Df8RzHolZaQtpTFsHKW_xWvX-Eg4mFVQzOPqn_vSO2RRShk4q0W5rpdTBIYFYPgqKPXQQJV_7n-MocLoCyRAv_EjOO5K0c9XQhbjZmL6_yOAILUF-BjPRGJTnO8/s1600/table.png" /></a>So we currently have 5 bits that&nbsp;correspond&nbsp;to the chord itself. If we tack on two more bits to represent the current mode (standard = 00, capital=01, arrows=10, symbols=11), we are up to 7. To make it an even byte, I tacked on a final bit where '1' refers to a "special case" (either a mode switch chord or a keyboard shortcut, such as Alt+Tab). I generated all the combinations, and made a table matching them to the ASCII keyboard code (and I converted both to HEX so it was easier to look at). Both columns are a single byte. We are dealing with &nbsp;less than 128 pairs of bytes. Really what we need then is a database that the Teensy can use to lookup which keyboard command to send with which chord.</div>
+<br />
+<a href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEisjnfXEhOi6MHNb6km9GU_AAneGL-9uTZ1SAVLwKbLGdCI2sJ_vBHGStDOK8oEzosLNHCRwShVAB7GrM5tDsJIM9aYih31rArJS2gUVIuJJRFxDdzRwHfi2Ue09ZO1tQ19I5d0ZZsQiN4/s1600/serial.png" imageanchor="1" style="clear: left; float: left; margin-bottom: 1em; margin-right: 1em;"><br /></a>Fortunately, the Teensy (and all Ardunios and&nbsp;compatibles, I think) have 1 KB of EEPROM. EEPROM is perfect for this task. It is for long term data storage which needs to persist after the device is powered off (devices with firmware, such as your motherboard's CMOS, use EEPROM or similar stuff). Also, it is pretty fast to do a lookup, which will lighten the load on the microprocessor, which will need to be able ot listen for button presses and do other strenuous calculations really fast. The chord byte we generated can be the address in the EEPROM, and the data stored there is the ASCII byte to send to the keyboard.<br />
+<br />
+Here is the sketch that writes and checks the firmware (it is just the EEPROM.read example sketch with a bunch of write() statements during setup):<br />
+<br />
+<pre><span style="color: #7e7e7e;">/*</span>
+<span style="color: #7e7e7e;">&nbsp;*&nbsp;EEPROM&nbsp;Read</span>
+<span style="color: #7e7e7e;">&nbsp;*</span>
+<span style="color: #7e7e7e;">&nbsp;*&nbsp;Reads&nbsp;the&nbsp;value&nbsp;of&nbsp;each&nbsp;byte&nbsp;of&nbsp;the&nbsp;EEPROM&nbsp;and&nbsp;prints&nbsp;it&nbsp;</span>
+<span style="color: #7e7e7e;">&nbsp;*&nbsp;to&nbsp;the&nbsp;computer.</span>
+<span style="color: #7e7e7e;">&nbsp;*&nbsp;This&nbsp;example&nbsp;code&nbsp;is&nbsp;in&nbsp;the&nbsp;public&nbsp;domain.</span>
+<span style="color: #7e7e7e;">&nbsp;*/</span>
+
+#include&nbsp;&lt;<span style="color: #cc6600;">EEPROM</span>.h&gt;
+
+<span style="color: #7e7e7e;">//&nbsp;start&nbsp;reading&nbsp;from&nbsp;the&nbsp;first&nbsp;byte&nbsp;(address&nbsp;0)&nbsp;of&nbsp;the&nbsp;EEPROM</span>
+<span style="color: #cc6600;">int</span> address = 0;
+<span style="color: #cc6600;">byte</span> value;
+
+<span style="color: #cc6600;">void</span> <span style="color: #cc6600;"><b>setup</b></span>()
+{
+&nbsp;&nbsp;<span style="color: #7e7e7e;">// initialize serial and wait for port to open:</span>
+&nbsp;&nbsp;<span style="color: #cc6600;"><b>Serial</b></span>.<span style="color: #cc6600;">begin</span>(9600);
+&nbsp;&nbsp;<span style="color: #cc6600;">while</span> (!<span style="color: #cc6600;"><b>Serial</b></span>) {
+&nbsp;&nbsp;&nbsp;&nbsp;;&nbsp;<span style="color: #7e7e7e;">// wait for serial port to connect. Needed for Leonardo only</span>
+&nbsp;&nbsp;}</pre>
+<pre></pre>
+<pre></pre>
+<pre><span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(0,0x0);<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(1,0x0);
+<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(3,0x0);<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(5,0x0);
+<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(7,0x0);<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(8,0x40);
+<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(10,0x20);<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(12,0x0A);
+<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(14,0x30);<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(16,0x6F);
+<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(18,0x4F);<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(20,0xD7);
+<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(22,0x31);<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(25,0x0);
+<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(27,0x0);<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(29,0x0);
+<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(31,0x0);<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(32,0x61);
+<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(34,0x41);<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(36,0xD9);
+<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(38,0x2E);<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(40,0x6C);
+<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(42,0x4C);<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(44,0xD6);
+<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(46,0x3F);<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(48,0x73);
+<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(50,0x53);<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(52,0x29);
+<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(54,0x32);<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(56,0x75);
+<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(58,0x55);<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(60,0x7D);
+<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(62,0x2A);<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(64,0x74);
+<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(66,0x54);<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(68,0xDA);
+<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(70,0x2C);<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(72,0x75);
+<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(74,0x55);<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(76,0xD3);
+<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(78,0x21);<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(80,0x64);
+<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(82,0x44);<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(84,0x5D);
+<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(86,0x22);<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(88,0x7A);
+<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(90,0x5A);<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(92,0x84);
+<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(94,0x2B);<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(96,0x6E);
+<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(98,0x4E);<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(100,0x28);
+<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(102,0x27);<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(104,0x79);
+<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(106,0x59);<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(109,0x0);
+<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(110,0x3D);<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(112,0x77);
+<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(114,0x57);<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(116,0x2F);
+<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(118,0x33);<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(120,0x6A);
+<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(122,0x4A);<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(124,0xD2);
+<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(126,0x39);<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(128,0x65);
+<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(130,0x45);<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(132,0xD8);
+<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(134,0x36);<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(137,0x0);
+<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(139,0x0);<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(141,0x0);
+<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(143,0x0);<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(144,0x68);
+<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(146,0x48);<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(148,0x5F);
+<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(150,0x3A);<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(152,0x67);
+<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(154,0x47);<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(156,0xB1);
+<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(158,0x23);<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(160,0x72);
+<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(162,0x52);<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(164,0x5B);
+<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(166,0x3B);<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(168,0x70);
+<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(170,0x50);<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(173,0x0);
+<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(174,0x5E);<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(176,0x66);
+<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(178,0x46);<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(180,0xC6);
+<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(182,0x40);<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(184,0x6B);
+<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(186,0x4B);<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(188,0x3C);
+<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(190,0x7E);<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(192,0x69);
+<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(194,0x49);<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(196,0x2D);
+<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(198,0x37);<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(200,0x62);
+<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(202,0x42);<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(204,0x7B);
+<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(206,0x25);<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(208,0x63);
+<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(210,0x43);<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(212,0x87);
+<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(214,0x24);<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(216,0x78);
+<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(218,0x58);<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(220,0x60);
+<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(222,0x7C);<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(224,0x6D);
+<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(226,0x4D);<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(228,0x5C);
+<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(230,0x38);<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(232,0x71);
+<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(234,0x51);<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(236,0x3E);
+<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(238,0x26);<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(240,0x8);
+<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(242,0x8);<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(244,0xD5);
+<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(246,0x34);<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(248,0xB0);
+<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(250,0xB0);<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(252,0xB3);
+<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(254,0x35);<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">write</span>(255,0x0);
+<span style="color: #cc6600;"><b>Serial</b></span>.<span style="color: #cc6600;">println</span>(<span style="color: #006699;">"Done writing. Reading:"</span>);
+}
+
+<span style="color: #cc6600;">void</span> <span style="color: #cc6600;"><b>loop</b></span>()
+{
+&nbsp;&nbsp;<span style="color: #7e7e7e;">// read a byte from the current address of the EEPROM</span>
+&nbsp;&nbsp;value&nbsp;=&nbsp;<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">read</span>(address);
+&nbsp;&nbsp;
+&nbsp;&nbsp;<span style="color: #7e7e7e;">//Serial.print(address);</span>
+&nbsp;&nbsp;<span style="color: #7e7e7e;">//Serial.print("\t");</span>
+&nbsp;&nbsp;<span style="color: #cc6600;"><b>Serial</b></span>.<span style="color: #cc6600;">print</span>(value, <span style="color: #006699;">HEX</span>);
+&nbsp;&nbsp;<span style="color: #7e7e7e;">//Serial.println();</span>
+&nbsp;&nbsp;
+&nbsp;&nbsp;<span style="color: #7e7e7e;">// advance to the next address of the EEPROM</span>
+&nbsp;&nbsp;address&nbsp;=&nbsp;address&nbsp;+&nbsp;1;
+&nbsp;&nbsp;
+&nbsp;&nbsp;<span style="color: #7e7e7e;">// there are only 512 bytes of EEPROM, from 0 to 511, so if we're</span>
+&nbsp;&nbsp;<span style="color: #7e7e7e;">// on address 512, wrap around to address 0</span>
+&nbsp;&nbsp;<span style="color: #cc6600;">if</span> (address == 512)
+&nbsp;&nbsp;&nbsp;&nbsp;address&nbsp;=&nbsp;0;
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;<span style="color: #cc6600;">delay</span>(500);
+}
+
+
+<span style="font-family: Times New Roman;"><span style="white-space: normal;">Then, a new sketch actually reads the button presses, formats the chord byte correctly, and does an EEPROM lookup. The code is nothing near complete. The special cases are still missing, mode switching still isn't implemented, and the program is still printing to Serial instead of emulating a keyboard (I don't have a Teensy yet, so I'm using a Duemilanove, which doesn't have native USB support short of serial via FTDI, to test the software). It is also littered with comments of future features and removed test lines, without any sort of explanation of the current lines in most places. I will update the code when it is more functional. It uses bitwise operations as often as possible to maximize speed and keep variables byte-size (no pun intended) for EEPROM.</span></span></pre>
+<pre></pre>
+<pre><span style="font-family: Times New Roman;"><span style="white-space: normal;">
+</span></span></pre>
+<pre>#include&nbsp;&lt;<span style="color: #cc6600;">CapSense</span>.h&gt;
+#include&nbsp;&lt;<span style="color: #cc6600;">EEPROM</span>.h&gt;
+
+<span style="color: #cc6600;">CapSense</span> cs_4_2 = <span style="color: #cc6600;">CapSense</span>(3,2);
+<span style="color: #cc6600;">CapSense</span> cs_4_6 = <span style="color: #cc6600;">CapSense</span>(7,6);
+<span style="color: #cc6600;">CapSense</span> cs_4_8 = <span style="color: #cc6600;">CapSense</span>(9,8);
+<span style="color: #cc6600;">CapSense</span> cs_4_10 = <span style="color: #cc6600;">CapSense</span>(11,10);
+<span style="color: #cc6600;">CapSense</span> cs_4_12 = <span style="color: #cc6600;">CapSense</span>(13,12);
+<span style="color: #cc6600;">byte</span> mode = 0;
+
+<span style="color: #cc6600;">void</span> <span style="color: #cc6600;"><b>setup</b></span>(){
+&nbsp;&nbsp;<span style="color: #cc6600;"><b>Serial</b></span>.<span style="color: #cc6600;">begin</span>(9600);
+&nbsp;&nbsp;<span style="color: #7e7e7e;">//wait for driver</span>
+}
+<span style="color: #cc6600;">void</span> <span style="color: #cc6600;"><b>loop</b></span>(){
+&nbsp;&nbsp;<span style="color: #cc6600;">byte</span> recd = 0;
+&nbsp;&nbsp;<span style="color: #cc6600;">long</span> start=<span style="color: #cc6600;">millis</span>();
+&nbsp;&nbsp;<span style="color: #cc6600;">while</span>(<span style="color: #cc6600;">millis</span>()&lt;start+300){
+&nbsp;&nbsp;&nbsp;&nbsp;recd&nbsp;=&nbsp;recd|listener();
+&nbsp;&nbsp;}
+&nbsp;&nbsp;<span style="color: #7e7e7e;">//Serial.print(cs_4_2.capSense(30));Serial.print("\t");</span>
+&nbsp;&nbsp;<span style="color: #7e7e7e;">//Serial.print(cs_4_6.capSense(30));Serial.print("\t");</span>
+&nbsp;&nbsp;<span style="color: #7e7e7e;">//Serial.print(cs_4_8.capSense(30));Serial.print("\t");</span>
+&nbsp;&nbsp;<span style="color: #7e7e7e;">//Serial.print(cs_4_10.capSense(30));Serial.print("\t");</span>
+&nbsp;&nbsp;<span style="color: #7e7e7e;">//Serial.print(cs_4_12.capSense(30));Serial.print("\t");</span>
+&nbsp;&nbsp;<span style="color: #cc6600;">if</span>(recd&gt;0){
+&nbsp;&nbsp;&nbsp;recd=recd&lt;&lt;2&nbsp;+mode;
+&nbsp;&nbsp;&nbsp;recd=recd&lt;&lt;1;
+&nbsp;&nbsp;&nbsp;<span style="color: #cc6600;">if</span> (recd==0x18
+&nbsp;&nbsp;&nbsp;||&nbsp;recd==0x88
+&nbsp;&nbsp;&nbsp;||&nbsp;recd==0x1A
+&nbsp;&nbsp;&nbsp;||&nbsp;recd==0x8A
+&nbsp;&nbsp;&nbsp;||&nbsp;recd==0x1C
+&nbsp;&nbsp;&nbsp;||&nbsp;recd==0x8C
+&nbsp;&nbsp;&nbsp;||&nbsp;recd==0x6C
+&nbsp;&nbsp;&nbsp;||&nbsp;recd==0xAC
+&nbsp;&nbsp;&nbsp;||&nbsp;recd==0x1E
+&nbsp;&nbsp;&nbsp;||&nbsp;recd==0x8E){
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;recd=recd+1;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;specialkey(recd);
+&nbsp;&nbsp;&nbsp;}<span style="color: #cc6600;">else</span>{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sendkey(recd);
+&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;<span style="color: #cc6600;"><b>Serial</b></span>.<span style="color: #cc6600;">print</span>(<span style="color: #006699;">"\t"</span>);
+&nbsp;&nbsp;&nbsp;<span style="color: #cc6600;"><b>Serial</b></span>.<span style="color: #cc6600;">println</span>(mode);
+&nbsp;&nbsp;}
+<span style="color: #7e7e7e;">//&nbsp;&nbsp;for&nbsp;miliseconds</span>
+<span style="color: #7e7e7e;">// recd=listener(recd)</span>
+
+<span style="color: #7e7e7e;">//if&nbsp;recd&nbsp;not&nbsp;null</span>
+<span style="color: #7e7e7e;">//recd=bitwise&nbsp;shift&nbsp;&lt;&lt;&nbsp;x2,&nbsp;add&nbsp;mode,&nbsp;bitwise&nbsp;shift&lt;&lt;</span>
+<span style="color: #7e7e7e;">//if&nbsp;recd=(list&nbsp;of&nbsp;special&nbsp;cases),&nbsp;add&nbsp;1</span>
+<span style="color: #7e7e7e;">//if&nbsp;first&nbsp;bit&nbsp;is&nbsp;1,&nbsp;specialkey(recd)&nbsp;else&nbsp;sendkey(recd)</span>
+}
+
+<span style="color: #cc6600;">byte</span> listener(){
+&nbsp;&nbsp;<span style="color: #cc6600;">byte</span> held=0;
+&nbsp;&nbsp;<span style="color: #cc6600;">if</span> (cs_4_2.<span style="color: #cc6600;">capSense</span>(30) &gt; 10){
+&nbsp;&nbsp;&nbsp;&nbsp;held=held+1;
+&nbsp;&nbsp;}held=held&lt;&lt;1;
+&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #cc6600;">if</span> (cs_4_6.<span style="color: #cc6600;">capSense</span>(30) &gt; 10){
+&nbsp;&nbsp;&nbsp;&nbsp;held=held+1;
+&nbsp;&nbsp;}held=held&lt;&lt;1;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #cc6600;">if</span> (cs_4_8.<span style="color: #cc6600;">capSense</span>(30) &gt; 10){
+&nbsp;&nbsp;&nbsp;&nbsp;held=held+1;
+&nbsp;&nbsp;}held=held&lt;&lt;1;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #cc6600;">if</span> (cs_4_10.<span style="color: #cc6600;">capSense</span>(30) &gt; 10){
+&nbsp;&nbsp;&nbsp;&nbsp;held=held+1;
+&nbsp;&nbsp;}held=held&lt;&lt;1;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #cc6600;">if</span> (cs_4_12.<span style="color: #cc6600;">capSense</span>(30) &gt; 10){
+&nbsp;&nbsp;&nbsp;&nbsp;held=held+1;
+&nbsp;&nbsp;}
+&nbsp;&nbsp;<span style="color: #cc6600;">return</span> held;
+}
+
+<span style="color: #cc6600;">void</span> sendkey(<span style="color: #cc6600;">byte</span> srecd){
+&nbsp;&nbsp;<span style="color: #7e7e7e;">//read eeprom, send key</span>
+&nbsp;&nbsp;<span style="color: #cc6600;"><b>Serial</b></span>.<span style="color: #cc6600;">write</span>(<span style="color: #cc6600;">EEPROM</span>.<span style="color: #cc6600;">read</span>(srecd));
+}
+
+<span style="color: #cc6600;">void</span> specialkey(<span style="color: #cc6600;">byte</span> srecd){
+&nbsp;&nbsp;<span style="color: #7e7e7e;">//mode forward: 19, 1B, 1D, 1F</span>
+&nbsp;&nbsp;<span style="color: #7e7e7e;">//mode backward: 89, 8B, 8D, 8F</span>
+&nbsp;&nbsp;<span style="color: #7e7e7e;">//alt-tab 6D</span>
+&nbsp;&nbsp;<span style="color: #7e7e7e;">//ctlaltdel AD</span>
+&nbsp;&nbsp;<span style="color: #cc6600;"><b>Serial</b></span>.<span style="color: #cc6600;">print</span>(<span style="color: #006699;">"SPECIAL:\t"</span>);
+&nbsp;&nbsp;<span style="color: #7e7e7e;">//if(srecd==0x6D){Serial.println("alt-tab");}</span>
+&nbsp;&nbsp;<span style="color: #7e7e7e;">//if(srecd==0xAD){Serial.println("ctlaltdel");}</span>
+&nbsp;&nbsp;<span style="color: #7e7e7e;">//if(srecd==0x19</span>
+&nbsp;&nbsp;<span style="color: #7e7e7e;">//|| srecd==0x1B</span>
+&nbsp;&nbsp;<span style="color: #7e7e7e;">//|| srecd==0x1D){Serial.println("up mode"); mode++;}</span>
+&nbsp;&nbsp;<span style="color: #7e7e7e;">//  if(srecd==0x8B</span>
+&nbsp;&nbsp;<span style="color: #7e7e7e;">//|| srecd==0x8D</span>
+&nbsp;&nbsp;<span style="color: #7e7e7e;">//|| srecd==0x8F){Serial.println("down mode"); mode--;}</span>
+&nbsp;&nbsp;<span style="color: #7e7e7e;">//if(srecd==0x1F){mode=0;}</span>
+&nbsp;&nbsp;<span style="color: #7e7e7e;">//if(srecd==0x89){mode=4;}</span>
+}
+
+</pre>
+<pre><div class="separator" style="clear: both; text-align: center;">
+<a href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEisjnfXEhOi6MHNb6km9GU_AAneGL-9uTZ1SAVLwKbLGdCI2sJ_vBHGStDOK8oEzosLNHCRwShVAB7GrM5tDsJIM9aYih31rArJS2gUVIuJJRFxDdzRwHfi2Ue09ZO1tQ19I5d0ZZsQiN4/s1600/serial.png" imageanchor="1" style="font-family: 'Times New Roman'; margin-left: 1em; margin-right: 1em; white-space: normal;"><img border="0" height="160" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEisjnfXEhOi6MHNb6km9GU_AAneGL-9uTZ1SAVLwKbLGdCI2sJ_vBHGStDOK8oEzosLNHCRwShVAB7GrM5tDsJIM9aYih31rArJS2gUVIuJJRFxDdzRwHfi2Ue09ZO1tQ19I5d0ZZsQiN4/s320/serial.png" width="320" /></a></div>
+<pre></pre>
+</pre>
+
+
+
+    </main>
+
+    <footer><div class="blurb"><a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC-BY-SA</a>.</div>
+  <div class="blurb">Last Updated <a href="https://github.com/rabidaudio/rabid.audio">2025-03-13</a>.</div>
+  <div class="blurb">Made with ♥ in Atlanta.</div>
+</footer>
+
+  </body>
+</html>

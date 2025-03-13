@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" /><meta name="viewport" content="initial-scale=1.0, width=device-width, user-scalable=yes, minimum-scale=1.0, maximum-scale=2.0">
+
+<title>
+  
+    
+  Circular buffer algorithm rates on Arduino | rabid.audio
+  
+</title>
+
+<meta name="description" content="Documenting my work at the intersection of technology and music." />
+<meta name="theme-color" content="#d01040" />
+
+<link
+  rel="apple-touch-icon"
+  sizes="180x180"
+  href="/apple-touch-icon.png">
+<link
+  rel="icon"
+  type="image/png"
+  sizes="32x32"
+  href="/favicon-32x32.png">
+<link
+  rel="icon"
+  type="image/png"
+  sizes="16x16"
+  href="/favicon-16x16.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link
+  rel="preconnect"
+  href="https://fonts.gstatic.com"
+  crossorigin>
+<link
+  rel="preload"
+  href="https://fonts.googleapis.com/css2?family=Cutive+Mono&family=Oxygen:wght@400;700&display=swap"
+  as="style"
+  onload="this.onload=null;this.rel='stylesheet'" />
+<noscript>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cutive+Mono&family=Oxygen:wght@400;700&display=swap"
+    rel="stylesheet"
+    type="text/css" />
+</noscript>
+
+<link rel="stylesheet" href="/_bridgetown/static/index.LYLSXJQT.css" />
+<script src="/_bridgetown/static/index.LQD2JBNB.js" defer></script>
+
+
+
+<script type="module" src="https://kicanvas.org/kicanvas/kicanvas.js"></script>
+
+  </head>
+  <body class="blogspot_post ">
+    <header><a href="/">
+    <h1 class="logo">rabid.audio</h1>
+  </a>
+  <p class="tagline">Documenting my work at the intersection of technology and music.</p>
+
+  <nav>
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/projects/synth">Synthesizer</a></li>
+      <li><a href="/resources">Resources</a></li>
+      <li><a href="/music">Music</a></li>
+      <li><a href="/links">Links</a></li>
+    </ul>
+  </nav>
+</header>
+
+    <main>
+      
+        <h1>Circular buffer algorithm rates on Arduino</h1>
+      
+      <div class="post-timestamp">
+    Published: 11 Aug 2013
+</div>
+
+
+    <ul class="post-categories">
+            
+                <li>arduino</li>
+            
+                <li>computing</li>
+            
+                <li>electronics</li>
+            
+                <li>software</li>
+            
+    </ul>
+
+
+<div class="alert">
+    <h3>Note</h3>
+    <p>
+        This is an old post which was migrated from blogspot. It may have broken links,
+        and it definitely has questionable opinions. Consume at your own risk.
+    </p>
+</div>
+
+For my chorded keyboard, I need a mode switch function. These modes increment and decrement in a loop. For example, if there are four modes (0, 1, 2, and 3), and I want to go to the next mode, 3 should loop back around to 0.&nbsp;<strike>I'm sure there is a name for these systems, but I'm not sure what it is.</strike>&nbsp;Apparently, they are called&nbsp;<a href="http://wki.pe/Circular_buffer">wki.pe/Circular_buffers</a>.<br />
+<br />
+This is an easy problem, and there are many ways to solve it (some more elegant than others). As I thought about all the ways to do this, I wondered which was the fastest. So I worked up 5 algorithms of varying elegance and methods and ran them against each other.<br />
+<br />
+F1 increments, and then moves 4 to 0.<br />
+<pre><code><span style="color: #cc6600;">byte</span> f1(<span style="color: #cc6600;">byte</span> a){
+&nbsp;&nbsp;a++;
+&nbsp;&nbsp;<span style="color: #cc6600;">if</span>(a&gt;=4){
+&nbsp;&nbsp;&nbsp;&nbsp;a=0;
+&nbsp;&nbsp;}
+&nbsp;&nbsp;<span style="color: #cc6600;">return</span> a;
+}
+</code></pre>
+<br />
+F2 uses modulo:<br />
+<pre><code><span style="color: #cc6600;">byte</span> f2(<span style="color: #cc6600;">byte</span> a){
+&nbsp;&nbsp;a++;
+&nbsp;&nbsp;<span style="color: #cc6600;">return</span> a % 4;
+}</code>
+</pre>
+<br />
+F3 is exactly the same as F2. I was curious wither it would be faster or slower to do it in one line. It is certainly more elegant.<br />
+<pre><code><span style="color: #cc6600;">byte</span> f3(<span style="color: #cc6600;">byte</span> a){
+&nbsp;&nbsp;<span style="color: #cc6600;">return</span> ++a % 4;
+}</code>
+</pre>
+<br />
+F4 is a case-switch:<br />
+<pre><code><span style="color: #cc6600;">byte</span> f4(<span style="color: #cc6600;">byte</span> a){
+&nbsp;&nbsp;<span style="color: #cc6600;">switch</span>(a){
+&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #cc6600;">case</span> 0:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #cc6600;">return</span> 1;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #cc6600;">break</span>;
+&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #cc6600;">case</span> 1:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #cc6600;">return</span> 2;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #cc6600;">break</span>;
+&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #cc6600;">case</span> 2:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #cc6600;">return</span> 3;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #cc6600;">break</span>;
+&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #cc6600;">case</span> 3:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #cc6600;">return</span> 0;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #cc6600;">break</span>;
+&nbsp;&nbsp;}
+}</code></pre>
+<br />
+F5 is if-esleif-else:<br />
+<pre><code><span style="color: #cc6600;">byte</span> f5(<span style="color: #cc6600;">byte</span> a){
+&nbsp;&nbsp;<span style="color: #cc6600;">if</span>(a==0){
+&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #cc6600;">return</span> 1;
+&nbsp;&nbsp;}<span style="color: #cc6600;">else</span> <span style="color: #cc6600;">if</span>(a==1){
+&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #cc6600;">return</span> 2;
+&nbsp;&nbsp;}<span style="color: #cc6600;">else</span> <span style="color: #cc6600;">if</span>(a==2){
+&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #cc6600;">return</span> 3;
+&nbsp;&nbsp;}<span style="color: #cc6600;">else</span>{
+&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #cc6600;">return</span> 0;
+&nbsp;&nbsp;}
+}</code></pre>
+<br />
+I suspected F4 and F5 to be very slow, as they are a lot of lines. I figured modulo is probably a longer function, so my hunch was F1 would win in terms of speed, modulo's elegance aside. The speed of the algorithms would depend on the number going in: F1(0) should be faster than F1(3). Each algorithm is run for each of {0,1,2,3} 100 times, and the microseconds to do that are returned. I repeated this for all 5 algorithms 10 times. Here is the test code:<br />
+<br />
+<pre><code><span style="color: #cc6600;">byte</span> a;
+<span style="color: #cc6600;">byte</span> b;
+<span style="color: #cc6600;">byte</span> c;
+<span style="color: #cc6600;">unsigned</span> <span style="color: #cc6600;">long</span> starts;
+<span style="color: #cc6600;">unsigned</span> <span style="color: #cc6600;">long</span> ends;
+<span style="color: #cc6600;">unsigned</span> <span style="color: #cc6600;">long</span> delta;
+
+<span style="color: #cc6600;">void</span> <span style="color: #cc6600;"><b>setup</b></span>() {
+&nbsp;&nbsp;<span style="color: #cc6600;"><b>Serial</b></span>.<span style="color: #cc6600;">begin</span>(9600);
+&nbsp;&nbsp;<span style="color: #cc6600;">delay</span>(2000);
+}
+
+<span style="color: #cc6600;">void</span> <span style="color: #cc6600;"><b>loop</b></span>() {
+&nbsp;&nbsp;<span style="color: #7e7e7e;">//f1</span>
+&nbsp;&nbsp;<span style="color: #cc6600;">for</span>(a=0; a&lt;=3; a++){
+&nbsp;&nbsp;&nbsp;&nbsp;starts&nbsp;=&nbsp;<span style="color: #cc6600;">micros</span>();
+&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #cc6600;">for</span>(b=0; b&lt;=100; b++){
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;c=f1(b);
+&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;ends&nbsp;=&nbsp;<span style="color: #cc6600;">micros</span>();
+&nbsp;&nbsp;&nbsp;&nbsp;delta&nbsp;=&nbsp;ends&nbsp;-&nbsp;starts;
+&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #cc6600;"><b>Serial</b></span>.<span style="color: #cc6600;">print</span>(delta);
+&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #cc6600;"><b>Serial</b></span>.<span style="color: #cc6600;">print</span>(<span style="color: #006699;">"\t"</span>);
+&nbsp;&nbsp;}
+&nbsp;&nbsp;<span style="color: #cc6600;"><b>Serial</b></span>.<span style="color: #cc6600;">println</span>(<span style="color: #006699;">"<f1 font="" n="">);
+&nbsp;&nbsp;<span style="color: #cc6600;">delay</span>(2000);
+
+&nbsp;&nbsp;<span style="color: #7e7e7e;">//f2</span>
+&nbsp;&nbsp;<span style="color: #cc6600;">for</span>(a=0; a&lt;=3; a++){
+&nbsp;&nbsp;&nbsp;&nbsp;starts&nbsp;=&nbsp;<span style="color: #cc6600;">micros</span>();
+&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #cc6600;">for</span>(b=0; b&lt;=100; b++){
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;c=f2(b);
+&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;ends&nbsp;=&nbsp;<span style="color: #cc6600;">micros</span>();
+&nbsp;&nbsp;&nbsp;&nbsp;delta&nbsp;=&nbsp;ends&nbsp;-&nbsp;starts;
+&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #cc6600;"><b>Serial</b></span>.<span style="color: #cc6600;">print</span>(delta);
+&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #cc6600;"><b>Serial</b></span>.<span style="color: #cc6600;">print</span>(<span style="color: #006699;">"\t"</span>);
+&nbsp;&nbsp;}
+&nbsp;&nbsp;<span style="color: #cc6600;"><b>Serial</b></span>.<span style="color: #cc6600;">println</span>(<span style="color: #006699;">"<f2 font="" n="">);
+&nbsp;&nbsp;<span style="color: #cc6600;">delay</span>(2000);
+&nbsp;&nbsp;
+&nbsp;&nbsp;<span style="color: #7e7e7e;">//f3</span>
+&nbsp;&nbsp;<span style="color: #cc6600;">for</span>(a=0; a&lt;=3; a++){
+&nbsp;&nbsp;&nbsp;&nbsp;starts&nbsp;=&nbsp;<span style="color: #cc6600;">micros</span>();
+&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #cc6600;">for</span>(b=0; b&lt;=100; b++){
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;c=f3(b);
+&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;ends&nbsp;=&nbsp;<span style="color: #cc6600;">micros</span>();
+&nbsp;&nbsp;&nbsp;&nbsp;delta&nbsp;=&nbsp;ends&nbsp;-&nbsp;starts;
+&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #cc6600;"><b>Serial</b></span>.<span style="color: #cc6600;">print</span>(delta);
+&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #cc6600;"><b>Serial</b></span>.<span style="color: #cc6600;">print</span>(<span style="color: #006699;">"\t"</span>);
+&nbsp;&nbsp;}
+&nbsp;&nbsp;<span style="color: #cc6600;"><b>Serial</b></span>.<span style="color: #cc6600;">println</span>(<span style="color: #006699;">"<f3 font="" n="">);
+&nbsp;&nbsp;<span style="color: #cc6600;">delay</span>(2000);
+&nbsp;&nbsp;
+&nbsp;&nbsp;<span style="color: #7e7e7e;">//f4</span>
+&nbsp;&nbsp;<span style="color: #cc6600;">for</span>(a=0; a&lt;=3; a++){
+&nbsp;&nbsp;&nbsp;&nbsp;starts&nbsp;=&nbsp;<span style="color: #cc6600;">micros</span>();
+&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #cc6600;">for</span>(b=0; b&lt;=100; b++){
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;c=f4(b);
+&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;ends&nbsp;=&nbsp;<span style="color: #cc6600;">micros</span>();
+&nbsp;&nbsp;&nbsp;&nbsp;delta&nbsp;=&nbsp;ends&nbsp;-&nbsp;starts;
+&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #cc6600;"><b>Serial</b></span>.<span style="color: #cc6600;">print</span>(delta);
+&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #cc6600;"><b>Serial</b></span>.<span style="color: #cc6600;">print</span>(<span style="color: #006699;">"\t"</span>);
+&nbsp;&nbsp;}
+&nbsp;&nbsp;<span style="color: #cc6600;"><b>Serial</b></span>.<span style="color: #cc6600;">println</span>(<span style="color: #006699;">"<f4 font="" n="">);
+&nbsp;&nbsp;<span style="color: #cc6600;">delay</span>(2000);
+&nbsp;&nbsp;
+&nbsp;&nbsp;<span style="color: #7e7e7e;">//f5</span>
+&nbsp;&nbsp;<span style="color: #cc6600;">for</span>(a=0; a&lt;=3; a++){
+&nbsp;&nbsp;&nbsp;&nbsp;starts&nbsp;=&nbsp;<span style="color: #cc6600;">micros</span>();
+&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #cc6600;">for</span>(b=0; b&lt;=100; b++){
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;c=f5(b);
+&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;ends&nbsp;=&nbsp;<span style="color: #cc6600;">micros</span>();
+&nbsp;&nbsp;&nbsp;&nbsp;delta&nbsp;=&nbsp;ends&nbsp;-&nbsp;starts;
+&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #cc6600;"><b>Serial</b></span>.<span style="color: #cc6600;">print</span>(delta);
+&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #cc6600;"><b>Serial</b></span>.<span style="color: #cc6600;">print</span>(<span style="color: #006699;">"\t"</span>);
+&nbsp;&nbsp;}
+&nbsp;&nbsp;<span style="color: #cc6600;"><b>Serial</b></span>.<span style="color: #cc6600;">println</span>(<span style="color: #006699;">"<f5 font="" n="">);
+&nbsp;&nbsp;<span style="color: #cc6600;">delay</span>(2000);</f5></span></f4></span></f3></span></f2></span></f1></span>
+}</code></pre>
+<br />
+The full data is <a href="https://docs.google.com/file/d/0B5FJD1eTFlPSNXdUczJ5cVpJcEU/edit?usp=sharing" target="_blank">available here</a>. The average time in microseconds for each algorithm:<br />
+<div>
+<br /></div>
+<table border="1" style="margin-left: auto; margin-right: auto; text-align: center;">
+<tbody>
+<tr>
+<td>F1</td>
+<td>F2</td>
+<td>F3</td>
+<td>F4</td>
+<td>F5</td>
+</tr>
+<tr>
+<td>0.662</td>
+<td>0.539</td>
+<td>0.539</td>
+<td>1.101</td>
+<td>0.979</td>
+</tr>
+</tbody></table>
+<div style="text-align: left;">
+<br /></div>
+<div>
+<div style="text-align: left;">
+It is worth noting that the modulus function is faster than any of the functions with conditionals, including the first. It is also interesting that there is really no difference between incrementing on a separate line vs. on the same line (this is probably because they compile to the same thing). Here is the chart of the results. Each group is for the inputs {0, 1, 2, 3}. There was no real change across inputs between each algorithm, which I thought was&nbsp;surprising.&nbsp;</div>
+</div>
+<div class="separator" style="clear: both; text-align: center;">
+<a href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgBIOpxAb56ODbfnVrG5dGfmQg0AJnm4SqzXNb841blGIP2qEqGixdnVncb34BMi1rHh-5RHvC490-rRzuF4h3Xzc0R1g4h_0OOFkON2o-JmgDfcEXXRUlPavXWvjNEJPRCs7el-Pn6S6c/s1600/graph.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" height="236" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgBIOpxAb56ODbfnVrG5dGfmQg0AJnm4SqzXNb841blGIP2qEqGixdnVncb34BMi1rHh-5RHvC490-rRzuF4h3Xzc0R1g4h_0OOFkON2o-JmgDfcEXXRUlPavXWvjNEJPRCs7el-Pn6S6c/s400/graph.png" width="400" /></a></div>
+<div>
+<br /></div>
+<div>
+This is a case where the most elegant solution is also the fastest.</div>
+
+
+
+    </main>
+
+    <footer><div class="blurb"><a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC-BY-SA</a>.</div>
+  <div class="blurb">Last Updated <a href="https://github.com/rabidaudio/rabid.audio">2025-03-13</a>.</div>
+  <div class="blurb">Made with ♥ in Atlanta.</div>
+</footer>
+
+  </body>
+</html>
