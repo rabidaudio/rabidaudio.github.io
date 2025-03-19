@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" /><meta name="viewport" content="initial-scale=1.0, width=device-width, user-scalable=yes, minimum-scale=1.0, maximum-scale=2.0">
+
+<title>
+  
+    
+  Crunch Time | rabid.audio
+  
+</title>
+
+<meta name="description" content="Documenting my work at the intersection of technology and music." />
+<meta name="theme-color" content="#d01040" />
+
+<link
+  rel="apple-touch-icon"
+  sizes="180x180"
+  href="/apple-touch-icon.png">
+<link
+  rel="icon"
+  type="image/png"
+  sizes="32x32"
+  href="/favicon-32x32.png">
+<link
+  rel="icon"
+  type="image/png"
+  sizes="16x16"
+  href="/favicon-16x16.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link
+  rel="preconnect"
+  href="https://fonts.gstatic.com"
+  crossorigin>
+<link
+  rel="preload"
+  href="https://fonts.googleapis.com/css2?family=Cutive+Mono&family=Oxygen:wght@400;700&display=swap"
+  as="style"
+  onload="this.onload=null;this.rel='stylesheet'" />
+<noscript>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cutive+Mono&family=Oxygen:wght@400;700&display=swap"
+    rel="stylesheet"
+    type="text/css" />
+</noscript>
+
+<link rel="stylesheet" href="/_bridgetown/static/index.LYLSXJQT.css" />
+<script src="/_bridgetown/static/index.LQD2JBNB.js" defer></script>
+
+
+
+<script type="module" src="https://kicanvas.org/kicanvas/kicanvas.js"></script>
+
+  </head>
+  <body class="blogspot_post ">
+    <header><a href="/">
+    <h1 class="logo">rabid.audio</h1>
+  </a>
+  <p class="tagline">Documenting my work at the intersection of technology and music.</p>
+
+  <nav>
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/projects/synth">Synthesizer</a></li>
+      <li><a href="/resources">Resources</a></li>
+      <li><a href="/music">Music</a></li>
+      <li><a href="/links">Links</a></li>
+    </ul>
+  </nav>
+</header>
+
+    <main>
+      
+        <h1>Crunch Time</h1>
+      
+      <div class="post-timestamp">
+    Published: 13 Nov 2015
+</div>
+
+
+    <ul class="post-categories">
+            
+                <li>hardware</li>
+            
+    </ul>
+
+
+<div class="alert">
+    <h3>Note</h3>
+    <p>
+        This is an old post or draft which was migrated from my old blog. It may have broken links,
+        and it definitely has questionable opinions. Consume at your own risk.
+    </p>
+</div>
+
+<p>I’ve tried out a few bass guitar distortion effects pedals in the past (as well as a few designed for guitar), but none of them really sounded
+great. Mostly they killed all the punchiness of the bass so that it just sounded flat and empty. 
+Then one day a few years ago, I plugged my <a href="http://www.musiciansfriend.com/bass/esp-ltd-b-50-bass-guitar">(budget, nothing special) electric bass</a>
+and was surprised to find this smooth, crunchy, synth-like distortion sound coming out, with no other effects plugged in. It took me a while to
+figure out, but eventually I learned what happened was the 9V battery for the active pickups had gotten pretty old, and was in a sweet spot
+to deliver just enough voltage for the amplification circuit to still function but clip ever so slightly. I replaced the battery, but I wanted
+a way to get that sound on demand.</p>
+
+<div class="image-container float left medium"><img src="/images/bass/circuit.png" /></div>
+
+<p>For a while, I had a weird attachment with a potentiometer hanging out of the bottom of my guitar by a few wires, but this was not a usable or
+pretty solution, so I removed it and forgot about it. But today I was reminiscing, and decided I could probably whip up a better solution.</p>
+
+<p>One issue is the sweet spot for the voltage is in a narrow range around 1.5V. Too low, and the active circuitry shuts off, and two high and it
+functions like normal. Also, as the battery voltage sags, the knob position for the spot moves. I found it very hard to dial in just the right
+amount with a potentiometer tracking the voltage between 0 and 9V. The ideal control would be a choice between 9V and a sweep from around .5V
+to 2.5V. One option was to use a regulator such as the <a href="http://www.ti.com/lit/ds/symlink/lm317.pdf">LM317</a> to regulate the voltage down to 2.5V
+and then sweep 0 to 2.5V.  Unfortunately I didn’t have a <a href="http://www.musiciansfriend.com/potentiometers-knobs-for-fretted-instruments/dimarzio-500k-push-pull-pot">switch pot</a> on hand, and a regulator is a constant current drain, which would probably eat the battery faster.</p>
+
+<p>The ideal solution would be a sweep which swept the sweet spot range slowly and then quickly accelerated to the 9V range at one end.
+I ended up accomplishing this using diodes. A very simplified model of an ideal diode is that it has zero resistance if the voltage is above a certain
+threshold and infinite below. For most diodes, this is around 0.6V. We can exploit this feature to get a nonlinear response out of a linear
+potentiometer. I played around in a circuit simulator for a while, and eventually came up with this.</p>
+
+<div class="image-container full center"><img src="/images/bass/graph.png" /></div>
+
+<p>The x axis is wiper position (0 to 100%). The upper graph is the output voltage, and the lower graph is the current sunk (that is, the current that)
+wouldn’t go out to the rest of the circuit. Notice the gradual voltage increase through most of the turn, and then the quick jump to 9V at the end.
+At first, I had a circuit with 4 diodes (thinking that 4*0.6 = 2.4V would be important to set my critical range), but after some experimentation,
+this seemed to work better. Below is an image of the earlier circuit, but the mounting I did for the final version was essentially the same, just with different components.</p>
+
+<div class="image-container caption= large center"><img src="/images/bass/underneath.jpg" alt="So cute!" /></div>
+
+<p>I decided since the tone pot (which I believe is a simple high-pass filter) only really sounded good full-on anyway, I’d keep that pot inside the guitar,
+and put my new distortion control through the body for use while playing.</p>
+
+<div class="image-container caption= xlarge center"><img src="/images/bass/surgery.jpg" alt="Surgery" /></div>
+
+<p>You can hear a sample below. Unfortunately the microphone on my old phone didn’t do the tone a lot of justice, but you can get an idea.</p>
+
+<div style="text-align: center;"><audio src="/raw/bass-sample.wav" controls=""></audio></div>
+
+<div class="image-container caption= xlarge center"><img src="/images/bass/inside.jpg" alt="Switched one knob for another" /></div>
+
+
+
+
+    </main>
+
+    <footer><div class="blurb"><a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC-BY-SA</a>.</div>
+  <div class="blurb">Last Updated <a href="https://github.com/rabidaudio/rabid.audio">2025-03-19</a>.</div>
+  <div class="blurb">Made with ♥ in Atlanta.</div>
+</footer>
+
+  </body>
+</html>

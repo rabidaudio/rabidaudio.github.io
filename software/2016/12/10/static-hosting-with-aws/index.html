@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" /><meta name="viewport" content="initial-scale=1.0, width=device-width, user-scalable=yes, minimum-scale=1.0, maximum-scale=2.0">
+
+<title>
+  
+    
+  Static hosting with AWS | rabid.audio
+  
+</title>
+
+<meta name="description" content="Documenting my work at the intersection of technology and music." />
+<meta name="theme-color" content="#d01040" />
+
+<link
+  rel="apple-touch-icon"
+  sizes="180x180"
+  href="/apple-touch-icon.png">
+<link
+  rel="icon"
+  type="image/png"
+  sizes="32x32"
+  href="/favicon-32x32.png">
+<link
+  rel="icon"
+  type="image/png"
+  sizes="16x16"
+  href="/favicon-16x16.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link
+  rel="preconnect"
+  href="https://fonts.gstatic.com"
+  crossorigin>
+<link
+  rel="preload"
+  href="https://fonts.googleapis.com/css2?family=Cutive+Mono&family=Oxygen:wght@400;700&display=swap"
+  as="style"
+  onload="this.onload=null;this.rel='stylesheet'" />
+<noscript>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cutive+Mono&family=Oxygen:wght@400;700&display=swap"
+    rel="stylesheet"
+    type="text/css" />
+</noscript>
+
+<link rel="stylesheet" href="/_bridgetown/static/index.LYLSXJQT.css" />
+<script src="/_bridgetown/static/index.LQD2JBNB.js" defer></script>
+
+
+
+<script type="module" src="https://kicanvas.org/kicanvas/kicanvas.js"></script>
+
+  </head>
+  <body class="blogspot_post ">
+    <header><a href="/">
+    <h1 class="logo">rabid.audio</h1>
+  </a>
+  <p class="tagline">Documenting my work at the intersection of technology and music.</p>
+
+  <nav>
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/projects/synth">Synthesizer</a></li>
+      <li><a href="/resources">Resources</a></li>
+      <li><a href="/music">Music</a></li>
+      <li><a href="/links">Links</a></li>
+    </ul>
+  </nav>
+</header>
+
+    <main>
+      
+        <h1>Static hosting with AWS</h1>
+      
+      <div class="post-timestamp">
+    Published: 10 Dec 2016
+</div>
+
+
+    <ul class="post-categories">
+            
+                <li>software</li>
+            
+    </ul>
+
+
+<div class="alert">
+    <h3>Note</h3>
+    <p>
+        This is an old post or draft which was migrated from my old blog. It may have broken links,
+        and it definitely has questionable opinions. Consume at your own risk.
+    </p>
+</div>
+
+<p>Create an S3 bucket:</p>
+
+<p>https://console.aws.amazon.com/s3/home</p>
+
+<p>Put in a name and select a region close to you (or the majority of your readers)</p>
+
+<p>Upload your compiled site files using</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"Version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2012-10-17"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"Id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Policy1481386227931"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"Statement"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"Sid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Stmt1481386199200"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"Effect"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Allow"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"Principal"</span><span class="p">:</span><span class="w"> </span><span class="s2">"*"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"Action"</span><span class="p">:</span><span class="w"> </span><span class="s2">"s3:GetObject"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"arn:aws:s3:::rabid-audio-site/*"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;RoutingRules&gt;</span>
+    <span class="nt">&lt;RoutingRule&gt;</span>
+        <span class="nt">&lt;Condition&gt;</span>
+            <span class="nt">&lt;KeyPrefixEquals&gt;</span>blog/<span class="nt">&lt;/KeyPrefixEquals&gt;</span>
+            <span class="nt">&lt;HttpErrorCodeReturnedEquals&gt;</span>404<span class="nt">&lt;/HttpErrorCodeReturnedEquals&gt;</span>
+        <span class="nt">&lt;/Condition&gt;</span>
+        <span class="nt">&lt;Redirect&gt;</span>
+            <span class="nt">&lt;ReplaceKeyWith&gt;</span>blog/error/<span class="nt">&lt;/ReplaceKeyWith&gt;</span>
+        <span class="nt">&lt;/Redirect&gt;</span>
+    <span class="nt">&lt;/RoutingRule&gt;</span>
+<span class="nt">&lt;/RoutingRules&gt;</span>
+</code></pre></div></div>
+
+<p>Create a cloudfront distribution</p>
+
+<p>https://console.aws.amazon.com/cloudfront/home</p>
+
+<p>but in the address of the static site provided above, NOT the recommended s3 bucket</p>
+
+<p>(the difference is web server versus just files)</p>
+
+<p>leave origin path blank</p>
+
+<p>give it some name for origin id</p>
+
+<p>HTTP / HTTPS</p>
+
+<p>you may want to wait to know everything works with HTTP before setting up HTTPS</p>
+
+<p>Enter your domain name in Alternate Domain Names (CNAMEs)</p>
+
+<p>distro takes ages to set up as it propigates files all over the world</p>
+
+<p>In your DNS hosting provider, add a CNAME record to the cloudfront distro</p>
+
+<p>Once you know it works, you can add your SSL cert to the cloudfront distribution and enable redirect HTTP to HTTPS</p>
+
+<p>because it is 2016 (almost 2017!) and you should be using HTTPS everywhere</p>
+
+<p>AWS provides certs for free</p>
+
+<p>https://console.aws.amazon.com/acm/home</p>
+
+<p>Be sure to add wildcard domain so you can use it if you ever add subdomains to your site</p>
+
+<p>It will send a validation email to a number of addresses associated with your site, for example webmaster@yourdomain.com.</p>
+
+<p>Click the link in the email and you now have a free certificate. Granted it’s only usable on AWS services (you can’t download
+the certificate files), but it is way better than paying $20-50 a year (common for wildcard certs) or working with letsencrypt which is awesome but is still a little ways from user-friendly</p>
+
+<p>You can also use AWS as your domain provider using Route 53</p>
+
+<p>https://console.aws.amazon.com/route53/home</p>
+
+<p>You will need to go to your domain registrar and change the DNS servers to the ones provided to you by Amazon</p>
+
+<p>updates will require you to invalidate cloudfront. AWS discourages you from doing this frequently (they charge a few dollars for every 1000 inalidations). you can use fingerprinting of files like rails does to avoid this: http://guides.rubyonrails.org/asset_pipeline.html#what-is-fingerprinting-and-why-should-i-care-questionmark</p>
+
+<p>then you never have to invalidate</p>
+
+<p>Costs</p>
+
+<p>s3 is likely free (assuming your site is less than 1 GB and you get less than a million requests to s3, which is likely thanks to cloudfront)</p>
+
+<p>As long as you aren’t makeing thousands of invalidations, cloudfront is likely to run less than .50</p>
+
+<p>Also, if you are on the AWS free tier, your S3 and CloudFront usage probably fall within the free limits.</p>
+
+<p>using Route 53 as your DNS will cost around another dollar per month</p>
+
+
+
+    </main>
+
+    <footer><div class="blurb"><a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC-BY-SA</a>.</div>
+  <div class="blurb">Last Updated <a href="https://github.com/rabidaudio/rabid.audio">2025-03-19</a>.</div>
+  <div class="blurb">Made with ♥ in Atlanta.</div>
+</footer>
+
+  </body>
+</html>

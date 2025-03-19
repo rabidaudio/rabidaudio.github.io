@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" /><meta name="viewport" content="initial-scale=1.0, width=device-width, user-scalable=yes, minimum-scale=1.0, maximum-scale=2.0">
+
+<title>
+  
+    
+  Android Interfaces | rabid.audio
+  
+</title>
+
+<meta name="description" content="Documenting my work at the intersection of technology and music." />
+<meta name="theme-color" content="#d01040" />
+
+<link
+  rel="apple-touch-icon"
+  sizes="180x180"
+  href="/apple-touch-icon.png">
+<link
+  rel="icon"
+  type="image/png"
+  sizes="32x32"
+  href="/favicon-32x32.png">
+<link
+  rel="icon"
+  type="image/png"
+  sizes="16x16"
+  href="/favicon-16x16.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link
+  rel="preconnect"
+  href="https://fonts.gstatic.com"
+  crossorigin>
+<link
+  rel="preload"
+  href="https://fonts.googleapis.com/css2?family=Cutive+Mono&family=Oxygen:wght@400;700&display=swap"
+  as="style"
+  onload="this.onload=null;this.rel='stylesheet'" />
+<noscript>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cutive+Mono&family=Oxygen:wght@400;700&display=swap"
+    rel="stylesheet"
+    type="text/css" />
+</noscript>
+
+<link rel="stylesheet" href="/_bridgetown/static/index.LYLSXJQT.css" />
+<script src="/_bridgetown/static/index.LQD2JBNB.js" defer></script>
+
+
+
+<script type="module" src="https://kicanvas.org/kicanvas/kicanvas.js"></script>
+
+  </head>
+  <body class="blogspot_post ">
+    <header><a href="/">
+    <h1 class="logo">rabid.audio</h1>
+  </a>
+  <p class="tagline">Documenting my work at the intersection of technology and music.</p>
+
+  <nav>
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/projects/synth">Synthesizer</a></li>
+      <li><a href="/resources">Resources</a></li>
+      <li><a href="/music">Music</a></li>
+      <li><a href="/links">Links</a></li>
+    </ul>
+  </nav>
+</header>
+
+    <main>
+      
+        <h1>Android Interfaces</h1>
+      
+      <div class="post-timestamp">
+    Published: 13 Aug 2014
+</div>
+
+
+    <ul class="post-categories">
+            
+                <li>software</li>
+            
+    </ul>
+
+
+<div class="alert">
+    <h3>Note</h3>
+    <p>
+        This is an old post or draft which was migrated from my old blog. It may have broken links,
+        and it definitely has questionable opinions. Consume at your own risk.
+    </p>
+</div>
+
+<p>I came to Android development after doing a lot of JavaScript (and falling in love with the callback methodology),
+so there are a lot of Java’s form of callbacks (that is, interfaces). If you aren’t familiar with the way this is
+done in Java, here is a little example:</p>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java">    <span class="kd">interface</span> <span class="nc">MyCallbacks</span> <span class="o">{</span>
+        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onSomeEvent</span><span class="o">();</span>
+        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onAnotherEvent</span><span class="o">(</span><span class="kt">int</span> <span class="n">data</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="kd">class</span> <span class="nc">SomeClassThatDoesStuff</span> <span class="o">{</span>
+        <span class="nc">MyCallbacks</span> <span class="n">callbacks</span><span class="o">;</span>
+        <span class="nc">SomeClassThatDoesStuff</span><span class="o">(</span><span class="nc">MyCallbacks</span> <span class="n">callbacks</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">callbacks</span> <span class="o">=</span> <span class="n">callbacks</span><span class="o">;</span>
+        <span class="o">}</span>
+       
+        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">doStuffAsynchronously</span><span class="o">(){</span>
+            <span class="c1">//do stuff</span>
+            <span class="n">callbacks</span><span class="o">.</span><span class="na">onSomeEvent</span><span class="o">();</span>
+        <span class="o">}</span>
+        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">doOtherStuffAsynchronously</span><span class="o">(){</span>
+            <span class="c1">//do stuff</span>
+            <span class="n">callbacks</span><span class="o">.</span><span class="na">onAnotherEvent</span><span class="o">(</span><span class="mi">0</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span></code></pre></figure>
+
+<p>Then, somewhere where you use <code class="highlighter-rouge">SomeClassThatDoesStuff</code>, you can construct it by passing in an instance of
+something that inherits <code class="highlighter-rouge">MyCallbacks</code>. This could be an anonymous interface (like anonymous callbacks in JavaScript):</p>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"> 
+<span class="nc">SomeClassThatDoesStuff</span> <span class="n">c</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">SomeClassThatDoesStuff</span><span class="o">(</span><span class="k">new</span> <span class="nc">MyCallbacks</span><span class="o">()</span> <span class="o">{</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onSomeEvent</span><span class="o">()</span> <span class="o">{</span>
+        <span class="c1">//do stuff</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onAnotherEvent</span><span class="o">(</span><span class="kt">int</span> <span class="n">data</span><span class="o">)</span> <span class="o">{</span>
+        <span class="c1">//do stuff</span>
+    <span class="o">}</span>
+<span class="o">});</span></code></pre></figure>
+
+<p>This is conceptually identical to what is below, but it doesn’t make a new class for something you will use exactly once.</p>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"> 
+<span class="kd">class</span> <span class="nc">MyCallbacksInstance</span> <span class="kd">implements</span> <span class="nc">MyCallbacks</span> <span class="o">{</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onSomeEvent</span><span class="o">()</span> <span class="o">{</span>
+        <span class="c1">//do stuff</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onAnotherEvent</span><span class="o">(</span><span class="kt">int</span> <span class="n">data</span><span class="o">)</span> <span class="o">{</span>
+        <span class="c1">//do stuff</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+<span class="nc">SomeClassThatDoesStuff</span> <span class="n">c</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">SomeClassThatDoesStuff</span><span class="o">(</span><span class="k">new</span> <span class="nc">MyCallbacksInstance</span><span class="o">());</span></code></pre></figure>
+
+<p>However, the anonymous callbacks can get a little confusing, so instead we implement the callbacks directly in the object
+which uses <code class="highlighter-rouge">SomeClassThatDoesStuff</code>:</p>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"> 
+<span class="kd">class</span> <span class="nc">MainClass</span> <span class="kd">implements</span> <span class="nc">MyCallbacks</span><span class="o">{</span>
+   
+    <span class="c1">//other class stuff (constructors, other methods...)</span>
+
+   
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onSomeEvent</span><span class="o">()</span> <span class="o">{</span>
+        <span class="c1">//do stuff</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onAnotherEvent</span><span class="o">(</span><span class="kt">int</span> <span class="n">data</span><span class="o">)</span> <span class="o">{</span>
+        <span class="c1">//do stuff</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre></figure>
+
+<p>Then, when making an instance of <code class="highlighter-rouge">SomeClassThatDoesStuff</code>, we pass in this (the current object instance instead):</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>SomeClassThatDoesStuff c = new SomeClassThatDoesStuff(this);
+</code></pre></div></div>
+
+<p>Now when we call <code class="highlighter-rouge">c.doStuffAsynchronously();</code> we know that our method <code class="highlighter-rouge">onSomeEvent()</code> will be called when it is done.</p>
+
+<p>This pattern is very common in Android development.  It totally confused me when I first saw it, until it was broken out into these three steps first. Then suddenly the skies cleared and a whole world of Java I had never seen before became available.</p>
+
+
+
+    </main>
+
+    <footer><div class="blurb"><a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC-BY-SA</a>.</div>
+  <div class="blurb">Last Updated <a href="https://github.com/rabidaudio/rabid.audio">2025-03-19</a>.</div>
+  <div class="blurb">Made with ♥ in Atlanta.</div>
+</footer>
+
+  </body>
+</html>
